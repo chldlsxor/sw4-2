@@ -3,5 +3,15 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.repository.FriendDao">
-
+	<insert id="follow" parameterType="friendDto">
+		insert into friend values(#{follower}, #{follow})
+	</insert>
+	
+	<delete id="unfollow" parameterType="friendDto">
+		delete friend where follow=#{follow}, follower=#{follower}
+	</delete>
+	
+	<select id="list" parameterType="String">
+		select follow from friend where follower=#{follower}
+	</select>
 </mapper>
