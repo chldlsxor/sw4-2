@@ -10,11 +10,21 @@ import project.bean.MemberDto;
 public class MemberDaoImpl implements MemberDao{
 	
 	@Autowired
-	private SqlSession slqSession;
+	private SqlSession sqlSession;
 
 	@Override
 	public void register(MemberDto memberDto) {
-		slqSession.insert("register", memberDto);
+		sqlSession.insert("register", memberDto);
+	}
+
+	@Override
+	public boolean login(MemberDto memberDto) {
+		return sqlSession.selectOne("login", memberDto)==null?false:true;
+	}
+
+	@Override
+	public void reset_pw(MemberDto memberDto) {
+		sqlSession.update("reset_pw", memberDto);
 	}
 	
 }

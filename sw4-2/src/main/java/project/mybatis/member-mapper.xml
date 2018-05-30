@@ -4,6 +4,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.repository.MemberDao">
 	<insert id="register" parameterType="memberDto">
-		insert into member(no, id, name, nick, pw) values(member_seq.nextval, #{id}, #{name}, #{nick}, #{pw})
+		insert into member(no, id, name, nick, pw, salt, loop) values(member_seq.nextval, #{id}, #{name}, #{nick}, #{pw}, #{salt}, #{loop})
 	</insert>
+	
+	<select id="login" parameterType="memberDto" resultType="memberDto">
+		select * from member where id=#{id} and pw=#{pw}
+	</select>
+	
+	<update id="reset_pw" parameterType="memberDto">
+		update member set pw=#{pw}, salt=#{salt}, loop=#{loop} where id=#{id}
+	</update>
 </mapper>
