@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 마이바티스의 행위를 제어하기 위한 값 설정 -->
+	<settings>
+		<setting name="cacheEnabled" value="true"/>
+		<setting name="autoMappingBehavior" value="FULL"/>
+	</settings>
+	
+	<!-- 별칭 : 마이바티스는 풀 패키지명을 이용해야 하는데 이를 축약할 수 있는 설정 -->
+	<typeAliases>
+		<typeAlias type="project.bean.BoardDto" alias="BoardDto"/>
+		<typeAlias type="project.bean.FriendDto" alias="FriendDto"/>
+		<typeAlias type="project.bean.HashtagDto" alias="HashtagDto"/>
+		<typeAlias type="project.bean.MemberDto" alias="MemberDto"/>
+		<typeAlias type="project.bean.MessageDto" alias="MessageDto"/>
+		<typeAlias type="project.bean.NoticeDto" alias="NoticeDto"/>
+		<typeAlias type="project.bean.PhotoDto" alias="PhotoDto"/>
+		<typeAlias type="project.bean.ReplyDto" alias="ReplyDto"/>
+	</typeAliases>
+	
+</configuration>

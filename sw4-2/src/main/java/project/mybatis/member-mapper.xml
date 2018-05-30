@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.repository.MemberDao">
+	<insert id="register" parameterType="memberDto">
+		insert into member(no, id, name, nick, pw) values(member_seq.nextval, #{id}, #{name}, #{nick}, #{pw})
+	</insert>
+</mapper>
