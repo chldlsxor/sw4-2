@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import project.bean.MemberDto;
+import project.repository.MemberDao;
 
 
 
@@ -21,8 +22,8 @@ public class HomeServiceImpl implements HomeService{
 	private MemberDao memberDao;
 	
 	//비밀번호
-	@Autowired
-	private EncryptService sha256;
+	/*@Autowired
+	private EncryptService sha256;*/
 
 	@Override
 	public String login(HttpServletRequest request, 
