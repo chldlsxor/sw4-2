@@ -1,6 +1,8 @@
 package project.service;
 
 import java.net.URLEncoder;
+import java.security.NoSuchAlgorithmException;
+import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -22,8 +24,11 @@ public class HomeServiceImpl implements HomeService{
 	private MemberDao memberDao;
 	
 	//비밀번호
-	/*@Autowired
-	private EncryptService sha256;*/
+	@Autowired
+	private EncryptService sha256;
+	
+	@Autowired
+	private EmailService emailService;
 
 	@Override
 	public String login(HttpServletRequest request, 
@@ -67,34 +72,21 @@ public class HomeServiceImpl implements HomeService{
 	}
 
 	@Override
-	public void register(MemberDto memberDto) {
+	public void register(MemberDto memberDto) throws NoSuchAlgorithmException {
 		//비밀번호 규칙 정하기!!
+		memberDto.setLoop((int)(Math.random()*9)+1);
+		memberDto.setSalt(UUID.randomUUID().toString());
+		String encpw = sha256.encrypt(memberDto.getPw(), memberDto.getSalt(), memberDto.getLoop());
+		memberDto.setPw(encpw);
 		
 		//회원가입하기
 		memberDao.register(memberDto);
 	}
 
 	@Override
-	public String find_id(MemberDto memberDto, 
+	public String reset_pw(MemberDto memberDto, 
 			HttpServletRequest request) {
-		String id = memberDao.findId(memberDto);
-		String text, link;
-		if(id == null) {
-			text = URLEncoder.encode("찾으시는 정보에 일치하는 ID가 없습니다", "UTF-8");
-			link = request.getContextPath()+"/find_id.do";
-		}else {
-			text = URLEncoder.encode("찾으시는 아이디는 "+id+" 입니다", "UTF-8");
-			link = request.getContextPath()+"/find_pw.do";
-		}
-		String param = "text="+text+"&link="+link;
-		return param;
-		
-	}
-
-	@Override
-	public String find_pw(MemberDto memberDto, 
-			HttpServletRequest request) {
-		String pw = memberDao.findPw(memberDto);
+		String pw = memberDao.reset_pw(memberDto);
 		
 		//[3] 결과 전송
 		String text, link;

@@ -1,5 +1,7 @@
 package project.controller;
 
+import java.security.NoSuchAlgorithmException;
+
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import project.bean.MemberDto;
 import project.service.HomeService;
-//
+
 @Controller
 public class HomeController {
 
@@ -49,36 +51,22 @@ public class HomeController {
 	
 	//회원가입(post)
 	@PostMapping("/register")
-	public String register(@ModelAttribute MemberDto memberDto) {
+	public String register(@ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException {
 		homeService.register(memberDto);
 		return "redirect:/register";
 	}
 	
-	//아이디 찾기
-	@RequestMapping("/find_id")
-	public String find_id() {
-		return "find_id";
-	}
-	
-	//아이디 찾기(post)
-	@PostMapping("/find_id")
-	public String find_id(@ModelAttribute MemberDto memberDto, 
-			HttpServletRequest request) {	
-		String param = homeService.find_id(memberDto, request);
-		return "redirect:/result?"+param;
-	}
-	
 	//비번 찾기
-	@RequestMapping("/find_pw")
-	public String find_pw() {
-		return "find_pw";
+	@RequestMapping("/reset_pw")
+	public String reset_pw() {
+		return "reset_pw";
 	}
 	
 	//비번 찾기(post)
-	@PostMapping("/find_pw")
+	@PostMapping("/reset_pw")
 	public String find_pw(@ModelAttribute MemberDto memberDto, 
 			HttpServletRequest request) {
-		String param =homeService.find_pw(memberDto, request);		
+		String param =homeService.reset_pw(memberDto, request);		
 		return "redirect:result.do?"+param;
 	}
 }
