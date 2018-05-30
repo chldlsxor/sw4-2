@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public class ReplyDaoImpl implements ReplyDao{
 	
 	@Autowired
-	private SqlSession slqSession;
+	private SqlSession sqlSession;
 	
 }

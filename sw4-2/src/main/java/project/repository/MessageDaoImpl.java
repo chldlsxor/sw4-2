@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public class MessageDaoImpl implements MessageDao{
 	
 	@Autowired
-	private SqlSession slqSession;
+	private SqlSession sqlSession;
 	
 }

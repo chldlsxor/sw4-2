@@ -13,6 +13,8 @@
 	<context:component-scan base-package="project.controller"></context:component-scan>
 
     <mvc:annotation-driven />
+    
+      <mvc:resources location="/WEB-INF/res/" mapping="/res/**"></mvc:resources>
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	        <!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->

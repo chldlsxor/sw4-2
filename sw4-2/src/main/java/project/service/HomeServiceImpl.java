@@ -1,5 +1,6 @@
 package project.service;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.security.NoSuchAlgorithmException;
 import java.util.UUID;
@@ -33,7 +34,7 @@ public class HomeServiceImpl implements HomeService{
 	@Override
 	public String login(HttpServletRequest request, 
 			HttpServletResponse response, 
-			HttpSession session, MemberDto memberDto) {
+			HttpSession session, MemberDto memberDto) throws UnsupportedEncodingException {
 		String text, link;
 		if(memberDao.login(memberDto)) {									//로그인 성공
 			text = URLEncoder.encode("로그인 성공", "UTF-8");
@@ -85,7 +86,7 @@ public class HomeServiceImpl implements HomeService{
 
 	@Override
 	public String reset_pw(MemberDto memberDto, 
-			HttpServletRequest request) {
+			HttpServletRequest request) throws UnsupportedEncodingException {
 		String pw = memberDao.reset_pw(memberDto);
 		
 		//[3] 결과 전송

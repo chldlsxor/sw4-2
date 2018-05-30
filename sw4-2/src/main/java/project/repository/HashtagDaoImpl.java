@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public class HashtagDaoImpl implements HashtagDao{
 	
 	@Autowired
-	private SqlSession slqSession;
+	private SqlSession sqlSession;
 	
 }
