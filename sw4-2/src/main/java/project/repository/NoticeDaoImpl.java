@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 public class NoticeDaoImpl implements NoticeDao{
 	
 	@Autowired
-	private SqlSession slqSession;
+	private SqlSession sqlSession;
 	
 }

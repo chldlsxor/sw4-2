@@ -22,9 +22,17 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("login", memberDto)==null?false:true;
 	}
 
+
 	@Override
-	public void reset_pw(MemberDto memberDto) {
-		sqlSession.update("reset_pw", memberDto);
+	public String reset_pw(MemberDto memberDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public MemberDto get(String id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

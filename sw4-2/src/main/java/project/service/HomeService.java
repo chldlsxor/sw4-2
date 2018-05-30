@@ -1,5 +1,6 @@
 package project.service;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +17,7 @@ import project.bean.MemberDto;
 public interface HomeService {
 	String login(HttpServletRequest request, 
 			HttpServletResponse response, 
-			HttpSession session, MemberDto memberDto);
+			HttpSession session, MemberDto memberDto) throws UnsupportedEncodingException;
 	void register(MemberDto memberDto) throws NoSuchAlgorithmException;
-	String reset_pw(MemberDto memberDto,HttpServletRequest request);
+	String reset_pw(MemberDto memberDto,HttpServletRequest request) throws UnsupportedEncodingException;
 }

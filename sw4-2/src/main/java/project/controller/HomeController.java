@@ -1,5 +1,6 @@
 package project.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
 import javax.servlet.http.Cookie;
@@ -38,7 +39,7 @@ public class HomeController {
 	@PostMapping("/login")
 	public String login(HttpServletRequest request, 
 			HttpServletResponse response, 
-			HttpSession session, @ModelAttribute MemberDto memberDto){		
+			HttpSession session, @ModelAttribute MemberDto memberDto) throws UnsupportedEncodingException{		
 		String param = homeService.login(request, response, session, memberDto);
 		return "redirect:/result?"+param;
 	}
@@ -65,7 +66,7 @@ public class HomeController {
 	//비번 찾기(post)
 	@PostMapping("/reset_pw")
 	public String find_pw(@ModelAttribute MemberDto memberDto, 
-			HttpServletRequest request) {
+			HttpServletRequest request) throws UnsupportedEncodingException {
 		String param =homeService.reset_pw(memberDto, request);		
 		return "redirect:result.do?"+param;
 	}
