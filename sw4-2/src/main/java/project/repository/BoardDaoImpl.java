@@ -17,7 +17,7 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public List<BoardDto> list() {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("list");
+		return sqlSession.selectList("boardList");
 	}
 	
 }

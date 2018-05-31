@@ -9,6 +9,7 @@ import project.bean.ContentDto;
 import project.service.ContentService;
 
 @Controller
+@RequestMapping("/board")
 public class BoardController {
 
 	@Autowired
