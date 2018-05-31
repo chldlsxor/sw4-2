@@ -15,9 +15,9 @@ import project.bean.MemberDto;
 //
 @Service
 public interface HomeService {
-	String login(HttpServletRequest request, 
+	boolean login(HttpServletRequest request, 
 			HttpServletResponse response, 
-			HttpSession session, MemberDto memberDto) throws UnsupportedEncodingException;
+			HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException;
 	void register(MemberDto memberDto) throws NoSuchAlgorithmException;
-	void reset_pw(MemberDto memberDto,HttpServletRequest request);
+	void reset_pw(MemberDto memberDto,HttpServletRequest request) throws UnsupportedEncodingException;
 }

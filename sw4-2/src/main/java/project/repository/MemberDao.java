@@ -1,5 +1,7 @@
 package project.repository;
 
+import java.util.List;
+
 import org.springframework.stereotype.Repository;
 
 import project.bean.MemberDto;
@@ -10,4 +12,7 @@ public interface MemberDao {
 	boolean login(MemberDto memberDto);
 	String reset_pw(MemberDto memberDto);
 	MemberDto get(String id);
+	String getSalt(String id);
+	int getLoop(String id);
+	List<MemberDto> member_list();
 }
