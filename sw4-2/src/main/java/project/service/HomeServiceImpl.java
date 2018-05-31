@@ -42,12 +42,11 @@ public class HomeServiceImpl implements HomeService{
 			HttpServletResponse response, 
 			HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException{
 		//비밀번호 암호화
-		String id = request.getParameter("id");
-		String encpw = sha256.encrypt(request.getParameter("pw"), memberDao.getSalt(id), memberDao.getLoop(id));
+		String id = memberDto.getId();
+		String encpw = sha256.encrypt(memberDto.getPw(), memberDao.getSalt(id), memberDao.getLoop(id));
 		
 		log.info("아이디 {}, 비번 {}", id, encpw);
 		
-		memberDto.setId(id);
 		memberDto.setPw(encpw);
 
 		//아이디화 암호화된 비번으로 로그인
@@ -56,7 +55,7 @@ public class HomeServiceImpl implements HomeService{
 			
 			//세션에 로그인 성공에 관련된 데이터를 추가
 			//이름 : success, 값 : 사용자ID
-			session.setAttribute("success", memberDto.getId());
+			session.setAttribute("success", id);
 			
 			
 			//이름 : power, 값 : 사용자 권한
@@ -72,7 +71,6 @@ public class HomeServiceImpl implements HomeService{
 	@Override
 	public void register(MemberDto memberDto) throws NoSuchAlgorithmException {
 		//비밀번호 규칙 정하기
-		//memberDto.setId(request().getParameter("id"));
 		memberDto.setLoop((int)(Math.random()*9)+1);
 		memberDto.setSalt(UUID.randomUUID().toString());
 		String encpw = sha256.encrypt(memberDto.getPw(), memberDto.getSalt(), memberDto.getLoop());
