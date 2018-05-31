@@ -105,7 +105,7 @@
                     <div id="email-check">
                     </div>
 
-                    <form action="" method="post">
+                    <form action="register" method="post">
                         <input type="hidden" name="id" id="id2">
                         <input class="form-input" type="text" name="name" required placeholder="이름">
                         <input class="form-input" type="text" name="nick" required placeholder="닉네임">

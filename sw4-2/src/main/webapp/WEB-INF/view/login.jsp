@@ -92,8 +92,8 @@
                 <div class="login-wrapper">
                     <h1>Instory</h1>
                     <form action="login" method="post">
-                        <input class="form-input" type="text" placeholder="이메일">
-                        <input class="form-input" type="password" placeholder="비밀번호">
+                        <input class="form-input" type="text" placeholder="이메일" name="id">
+                        <input class="form-input" type="password" placeholder="비밀번호" name="pw">
                         <input class="form-btn" type="submit" value="로그인">
                     </form>
                     <hr>
