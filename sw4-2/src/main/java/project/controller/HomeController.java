@@ -65,9 +65,9 @@ public class HomeController {
 	
 	//비번 찾기(post)
 	@PostMapping("/reset_pw")
-	public String find_pw(@ModelAttribute MemberDto memberDto, 
+	public String reset_pw(@ModelAttribute MemberDto memberDto, 
 			HttpServletRequest request) throws UnsupportedEncodingException {
-		String param =homeService.reset_pw(memberDto, request);		
-		return "redirect:result.do?"+param;
+		homeService.reset_pw(memberDto, request);		
+		return "redirect:/login";
 	}
 }
