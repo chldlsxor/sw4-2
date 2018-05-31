@@ -1,5 +1,7 @@
 package project.repository;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -33,6 +35,21 @@ public class MemberDaoImpl implements MemberDao{
 	public MemberDto get(String id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String getSalt(String id) {
+		return sqlSession.selectOne("get_salt", id);
+	}
+
+	@Override
+	public int getLoop(String id) {
+		return sqlSession.selectOne("get_loop", id);
+	}
+
+	@Override
+	public List<MemberDto> member_list() {
+		return sqlSession.selectList("member_list");
 	}
 	
 }

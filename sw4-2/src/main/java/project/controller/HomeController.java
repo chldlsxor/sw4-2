@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +24,8 @@ public class HomeController {
 
 	@Autowired
 	private HomeService homeService;
+	
+	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	//홈
 	@RequestMapping("/")
@@ -39,9 +43,10 @@ public class HomeController {
 	@PostMapping("/login")
 	public String login(HttpServletRequest request, 
 			HttpServletResponse response, 
-			HttpSession session, @ModelAttribute MemberDto memberDto) throws UnsupportedEncodingException{		
-		String param = homeService.login(request, response, session, memberDto);
-		return "redirect:/result?"+param;
+			HttpSession session, @ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException{
+		boolean login = homeService.login(request, response, session, memberDto);
+		if(login) return "redirect:/";
+		else return "redirect:/login";
 	}
 	
 	//회원가입

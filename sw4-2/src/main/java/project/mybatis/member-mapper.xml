@@ -14,4 +14,16 @@
 	<update id="reset_pw" parameterType="memberDto">
 		update member set pw=#{pw}, salt=#{salt}, loop=#{loop} where id=#{id}
 	</update>
+	
+	<select id="get_salt" parameterType="String" resultType="String">
+		select salt from member where id=#{id}
+	</select>
+	
+	<select id="get_loop" parameterType="String" resultType="int">
+		select loop from member where id=#{id}
+	</select>
+	
+	<select id="member_list"  resultType="memberDto">
+		select * from member order by no asc
+	</select>
 </mapper>
