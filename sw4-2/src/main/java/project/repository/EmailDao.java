@@ -1,12 +1,11 @@
-package project.service;
+package project.repository;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import project.bean.EmailDto;
 
-@Service
-public interface EmailService {
-	int send_email(String id);
+@Repository
+public interface EmailDao {
 	void register(EmailDto emailDto);
 	boolean check(EmailDto emailDto);
 	void check_ok(EmailDto emailDto);

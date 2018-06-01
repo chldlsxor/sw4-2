@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.repository.EmailDao">
+	<insert id="register" parameterType="emailDto">
+		insert into email(id, num) values(#{id}, #{num})
+	</insert>
+	
+	<select id="check" parameterType="emailDto" resultType="emailDto">
+		select * from email where id=#{id} and num=#{num}
+	</select>
+	
+	<update id="check_ok" parameterType="emailDto">
+		update email set check=1 where id=#{id} and num=#{num}
+	</update>
+	
+	<delete id="remove" parameterType="emailDto">
+		delete email where id=#{id}
+	</delete>
+</mapper>

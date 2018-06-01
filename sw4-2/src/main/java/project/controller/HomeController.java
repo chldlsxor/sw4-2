@@ -14,9 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import project.bean.EmailDto;
 import project.bean.MemberDto;
+import project.service.EmailService;
 import project.service.HomeService;
 
 @Controller
@@ -24,6 +29,9 @@ public class HomeController {
 
 	@Autowired
 	private HomeService homeService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -59,7 +67,32 @@ public class HomeController {
 	@PostMapping("/register")
 	public String register(@ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException {
 		homeService.register(memberDto);
-		return "redirect:/register";
+		return "redirect:/login";
+	}
+	
+	@RequestMapping("/email")
+	public String email() {
+		return "email";
+	}
+	
+	@RequestMapping("/email_send")
+	public void email_send(@ModelAttribute EmailDto emailDto) {
+		log.info("id={}",emailDto.getId());
+		emailDto.setNum(emailService.send_email(emailDto.getId()));
+		log.info("num={}",emailDto.getNum());
+		emailService.register(emailDto);
+	}
+	
+	@PostMapping("/email_check")
+	public String email_check(@ModelAttribute EmailDto emailDto) {
+		log.info("id={}",emailDto.getId());
+		log.info("num={}",emailDto.getNum());
+		if(emailService.check(emailDto)) {
+			emailService.check_ok(emailDto);
+			return "redirect:/register";
+		}
+		else
+			return "redirect:/email";
 	}
 	
 	//비번 찾기
