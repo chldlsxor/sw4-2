@@ -8,5 +8,5 @@ import project.bean.ContentDto;
 public interface ContentService {
 	
 	public ContentDto list();
-	
+	public ContentDto addList(int start);
 }

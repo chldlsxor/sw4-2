@@ -10,5 +10,5 @@ import project.bean.BoardDto;
 public interface BoardDao {
 
 	public List<BoardDto> list();
-	
+	public List<BoardDto> addlist(int start, int end);
 }
