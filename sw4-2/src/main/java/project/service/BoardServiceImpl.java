@@ -15,12 +15,14 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDao boardDao;
 	
 	public List<BoardDto> list(){
-		System.out.println("boardService 들어옴");
-		List<BoardDto> conList =	 boardDao.list();
-		for(BoardDto b : conList) {
-			System.out.println(b);
-		}
-		return conList;
+		return boardDao.list();
+	}
+
+	@Override
+	public List<BoardDto> addList(int start) {
+		// TODO Auto-generated method stub
+		int end = start + 1;
+		return boardDao.addlist(start, end);
 	}
 	
 }

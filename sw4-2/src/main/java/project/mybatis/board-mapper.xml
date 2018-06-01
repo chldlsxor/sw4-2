@@ -5,7 +5,11 @@
 <mapper namespace="project.repository.BoardDao">
 
 	<select id="boardList" resultType="BoardDto">
-		select * from board order by reg desc
+		select * from (select * from board order by reg desc) where rownum between 1 and 2
+	</select>
+	
+	<select id="addList" resultType="BoardDto" parameterType="map">
+		select * from (select no, writer, content, reg, good, Row_NUMBER() OVER(order by reg desc) rnum from board) where rnum between #{start} and #{end}
 	</select>
 
 </mapper>
