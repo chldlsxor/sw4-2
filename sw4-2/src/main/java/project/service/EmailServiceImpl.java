@@ -2,20 +2,27 @@ package project.service;
 
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
 
+import project.bean.EmailDto;
+import project.repository.EmailDao;
+
 @Service("emailService")
 public class EmailServiceImpl implements EmailService{
 
+	@Autowired
+	private EmailDao emailDao;
+	
 	@Override
 	public int send_email(String id) {
 		JavaMailSenderImpl sender = new JavaMailSenderImpl();
 		
-		sender.setHost("smtp.hanmail.com");
+		sender.setHost("smtp.gmail.com");
 		sender.setPort(587);
-		sender.setUsername("chldlsxor03@hanmail.net");
+		sender.setUsername("chldlsxor93@gmail.com");
 		sender.setPassword("tmvmfld123");
 		
 		Properties option = new Properties();
@@ -35,6 +42,29 @@ public class EmailServiceImpl implements EmailService{
 		sender.send(message);
 		
 		return num;
+	}
+
+	@Override
+	public void register(EmailDto emailDto) {
+		emailDao.register(emailDto);
+	}
+
+	@Override
+	public boolean check(EmailDto emailDto) {
+		if(emailDao.check(emailDto)) {
+			return true;
+		}else
+			return false;
+	}
+
+	@Override
+	public void check_ok(EmailDto emailDto) {
+		emailDao.check_ok(emailDto);
+	}
+
+	@Override
+	public void delete(EmailDto emailDto) {
+		emailDao.delete(emailDto);
 	}
 
 }

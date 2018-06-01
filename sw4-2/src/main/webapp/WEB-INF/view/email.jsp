@@ -17,7 +17,7 @@
                 margin: auto;
 /*                display: inline-block;*/
             }
-            .swiper-container, .login-container{
+            .swiper-container, .register-container{
                 width: 46%;
                 height: 550px;
                 margin: 10;
@@ -28,8 +28,11 @@
                 width: 100%;
                 height: 100%;
             }
-            .login-wrapper, .btn-wrapper{
+            .register-wrapper, .btn-wrapper{
                 margin: 10px;
+            }
+            #check{
+                display: none;
             }
             @media screen and (max-width:768px){
                 .swiper-container{
@@ -38,7 +41,7 @@
                 .container{
                     width: 320px;
                 }
-                .login-container{
+                .register-container{
                     width: 95%;
                 }
             }
@@ -46,7 +49,7 @@
                 .container{
                     width: 100%;
                 }
-                .login-container{
+                .register-container{
                     width: 95%;
                 }
             }
@@ -71,10 +74,45 @@
                         delay:1000,//전환 간격(밀리초)
                     },
                 });
+                
+                var handle;
+                var time=300;
+                function start(){
+                    handle = setInterval(decrease,1000);
+                }
+                
+                function decrease(){
+                    var min = document.querySelector("#min");
+                    var sec = document.querySelector("#sec");
+                    time--;
+                    min.innerText = parseInt(time/60)+"분";
+                    sec.innerText = parseInt(time%60)+"초";
+                    if(time==0)
+                    	clearInterval(handle);
+                }
+                
+                 $("#send").on("submit",function(event){
+                    event.preventDefault(); //기본 이벤트 수행 중지
+                    $("#id2").attr("value",$("#id").val())
+                    $.ajax({
+                        url:"email_send",
+                        data:$(this).serialize()
+                    })
+                     
+//                    $("#check").append(a);
+                     $("#check").css("display","block")
+                     start();
+                    $("#send_btn").css("display","none");
+                    $("#check").on("submit",function(){
+                        if(time==0)
+                            alert("시간초과됨")
+                    })
+                });
             });
         </script>
     </head>
     <body>
+    	
         <div class="empty-row"></div>
         <div class="container">
             <!-- 이미지 슬라이더 전체 공간 -->
@@ -88,19 +126,27 @@
                     <div class="swiper-slide"><img src="${root}/res/img/bg005.jpg"></div>
                 </div>
             </div>
-            <div class="login-container">
-                <div class="login-wrapper">
-                    <h1>Instory</h1>
-                    <form action="login" method="post">
-                        <input class="form-input" type="text" placeholder="이메일" name="id">
-                        <input class="form-input" type="password" placeholder="비밀번호" name="pw">
-                        <input class="form-btn" type="submit" value="로그인">
+			<div class="register-container">
+                <div class="register-wrapper">
+                    <h1>Instory 이메일 인증</h1>
+                    <form action="email_send" method="post" id="send">
+                    	<input class="form-input" type="text" name="id" id="id" placeholder="이메일">
+                    	<input type="submit" value="이메일 인증" class="form-btn" id="send_btn">
                     </form>
+                    
+                    <form action="email_check" method="post" id="check">
+                    	<input type="hidden" id="id2">
+                        <input type='text' placeholder='인증번호' name="num">
+                        <input type="submit" value="인증번호 확인">
+                    </form>
+                    <span id="min"></span>
+                    <span id="sec"></span>
+
                     <hr>
-                    <a href="#">비밀번호를 잊으셨나요?</a>
+                    Instory는 이메일 인증을 하셔야 가입이 가능합니다. 
                 </div>
                 <div class="btn-wrapper">
-                    계정이 없으신가요?<a href="email">가입하기</a>
+                    계정이 있으신가요?<a href="login">로그인</a>
                 </div>
             </div>
         </div>

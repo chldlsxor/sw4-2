@@ -20,6 +20,7 @@
 		<typeAlias type="project.bean.NoticeDto" alias="NoticeDto"/>
 		<typeAlias type="project.bean.PhotoDto" alias="PhotoDto"/>
 		<typeAlias type="project.bean.ReplyDto" alias="ReplyDto"/>
+		<typeAlias type="project.bean.EmailDto" alias="EmailDto"/>
 	</typeAliases>
 	
 </configuration>

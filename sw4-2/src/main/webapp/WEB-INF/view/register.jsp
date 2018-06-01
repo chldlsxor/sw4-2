@@ -31,6 +31,9 @@
             .register-wrapper, .btn-wrapper{
                 margin: 10px;
             }
+            #check{
+                display: none;
+            }
             @media screen and (max-width:768px){
                 .swiper-container{
                     display: none;
@@ -56,7 +59,6 @@
 <!--        스크립트 작성 공간-->
         <script src = "${root}/res/js/swiper.min.js"></script>
         <script>
-            var a = "<input type='text' placeholder='인증번호'><button id='numcheck'>인증번호 확인</button>";
             $(document).ready(function(){
                 //Swiper 생성
 //                var swiper = new Swiper("영역", {옵션});
@@ -72,17 +74,40 @@
                         delay:1000,//전환 간격(밀리초)
                     },
                 });
-                $("#email").on("click", function(){
-                    $("#email-check").append(a);
-                    $("#numcheck").on("click",function(){
-                        $("#id2").attr("value",$("#id").val());
-                    });
-                });
                 
+                var time=300;
+                function start(){
+                    handle = setInterval(decrease,1000);
+                }
+                
+                function decrease(){
+                    var min = document.querySelector("#min");
+                    var sec = document.querySelector("#sec");
+                    time--;
+                    min.innerText = parseInt(time/60)+"분";
+                    sec.innerText = parseInt(time%60)+"초";
+                    if(time==0)
+                        alert("끝")
+                }
+                
+                 $("#send").on("submit",function(event){
+                    event.preventDefault(); //기본 이벤트 수행 중지
+                    
+                    $.ajax({
+                        url:"email_send",
+                        data:$(this).serialize()
+                    })
+                     
+//                    $("#check").append(a);
+                     $("#check").css("display","block")
+                     start();
+                    $("#send_btn").css("display","none");
+                });
             });
         </script>
     </head>
     <body>
+    	
         <div class="empty-row"></div>
         <div class="container">
             <!-- 이미지 슬라이더 전체 공간 -->
@@ -96,24 +121,23 @@
                     <div class="swiper-slide"><img src="${root}/res/img/bg005.jpg"></div>
                 </div>
             </div>
-            <div class="register-container">
+			<div class="register-container">
                 <div class="register-wrapper">
-                    <h1>Instory</h1>
-                    <input class="form-input" type="text" id="id" placeholder="이메일">
-                    <button class="form-btn" id="email">이메일 인증</button>
-                    
-                    <div id="email-check">
-                    </div>
-
-                    <form action="register" method="post">
-                        <input type="hidden" name="id" id="id2">
-                        <input class="form-input" type="text" name="name" required placeholder="이름">
-                        <input class="form-input" type="text" name="nick" required placeholder="닉네임">
-                        <input class="form-input" type="password" name="pw" required placeholder="비밀번호">
-                        <input class="form-btn" type="submit" value="가입">
+                    <h1>Instory 이메일 인증</h1>
+                    <form action="email_send" method="post" id="send">
+                    	<input class="form-input" type="text" name="id" id="id" placeholder="이메일">
+                    	<input type="submit" value="이메일 인증" class="form-btn" id="send_btn">
                     </form>
+                    
+                    <form action="email_check" method="post" id="check">
+                        <input type='text' placeholder='인증번호' name="num">
+                        <input type="submit" value="인증번호 확인">
+                    </form>
+                    <span id="min"></span>
+                    <span id="sec"></span>
+
                     <hr>
-                    가입하면 Instargram의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.
+                    Instory는 이메일 인증을 하셔야 가입이 가능합니다. 
                 </div>
                 <div class="btn-wrapper">
                     계정이 있으신가요?<a href="login">로그인</a>
