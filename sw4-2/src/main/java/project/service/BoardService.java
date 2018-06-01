@@ -11,4 +11,6 @@ public interface BoardService {
 
 	public List<BoardDto> list();
 	public List<BoardDto> addList(int start);
+	public int write(BoardDto boardDto);
+	public List<String> loveList(BoardDto boardDto);
 }

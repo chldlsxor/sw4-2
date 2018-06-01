@@ -34,5 +34,19 @@ public class BoardDaoImpl implements BoardDao{
 		map.put("end", end);
 		return sqlSession.selectList("addList", map);
 	}
+
+	@Override
+	public void write(BoardDto boardDto) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("write",boardDto);
+	}
+
+	@Override
+	public int getNo() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getNo");
+	}
+	
+	
 	
 }
