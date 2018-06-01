@@ -14,8 +14,7 @@
 	<bean id="websocketServer" class="project.websocket.WebSocketServer"></bean>
 	<websocket:handlers>	
 		<!-- /echo로의 접속은 websocketServer에게 전달하겠습니다 -->
-		<websocket:mapping handler="websocketServer" path="/message/**"/>
-		
+		<websocket:mapping handler="websocketServer" path="/send_message/**"/>	
 		<!-- HttpSession의 정보를 같이 확인 할 수 있도록 인터 셉터 설정 -->
 		<websocket:handshake-interceptors>
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
@@ -26,8 +25,14 @@
 
     <mvc:annotation-driven />
     
-      <mvc:resources location="/WEB-INF/res/" mapping="/res/**"></mvc:resources>
-
+    <!-- 		파일 업로드 -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10000000"></property>
+		<property name="defaultEncoding" value="UTF-8"></property>
+	</bean>
+    
+    <mvc:resources location="/WEB-INF/res/" mapping="/res/**"></mvc:resources>
+<mvc:resources location="/WEB-INF/res/" mapping="/InStoryUpload/**"></mvc:resources>
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 	        <!-- Example: a logical view name of 'showMessage' is mapped to '/WEB-INF/jsp/showMessage.jsp' -->
 	        <property name="prefix" value="/WEB-INF/view/"/>

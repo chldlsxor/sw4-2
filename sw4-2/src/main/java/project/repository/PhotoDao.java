@@ -10,5 +10,6 @@ import project.bean.PhotoDto;
 public interface PhotoDao {
 
 	public List<PhotoDto> getPhoto(int no);
+	public void writePhoto(PhotoDto photoDto);
 	
 }

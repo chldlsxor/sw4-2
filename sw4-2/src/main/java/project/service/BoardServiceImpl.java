@@ -24,5 +24,22 @@ public class BoardServiceImpl implements BoardService {
 		int end = start + 1;
 		return boardDao.addlist(start, end);
 	}
+
+	@Override
+	public int write(BoardDto boardDto) {
+		// TODO Auto-generated method stub
+		int no = boardDao.getNo();
+		boardDto.setNo(no);
+		boardDao.write(boardDto);
+		return no;
+	}
+
+	@Override
+	public List<String> loveList(BoardDto boardDto) {
+		// TODO Auto-generated method stub
+		String love = boardDto.getGood();
+		
+		return null;
+	}
 	
 }

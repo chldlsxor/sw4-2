@@ -11,4 +11,6 @@ public interface BoardDao {
 
 	public List<BoardDto> list();
 	public List<BoardDto> addlist(int start, int end);
+	public void write(BoardDto boardDto);
+	public int getNo();
 }

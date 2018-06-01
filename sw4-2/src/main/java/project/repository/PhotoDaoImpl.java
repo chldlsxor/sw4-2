@@ -19,5 +19,11 @@ public class PhotoDaoImpl implements PhotoDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("getPhoto",no);
 	}
+
+	@Override
+	public void writePhoto(PhotoDto photoDto) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("writePhoto", photoDto);
+	}
 	
 }

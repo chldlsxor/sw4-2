@@ -7,5 +7,9 @@
 	<select id="getPhoto" resultType="PhotoDto" parameterType="Int">
 		select * from photo where bno = #{bno}
 	</select>
+	
+	<insert id="writePhoto" parameterType="PhotoDto">
+		insert into photo values(#{bno},#{name},#{type})
+	</insert>
 
 </mapper>
