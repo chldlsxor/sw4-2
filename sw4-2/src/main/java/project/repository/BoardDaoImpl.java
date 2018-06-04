@@ -46,6 +46,18 @@ public class BoardDaoImpl implements BoardDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("getNo");
 	}
+
+	@Override
+	public String goodList(int no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("goodList", no);
+	}
+
+	@Override
+	public void good(Map map) {
+		// TODO Auto-generated method stub
+		sqlSession.update("good", map);
+	}
 	
 	
 	

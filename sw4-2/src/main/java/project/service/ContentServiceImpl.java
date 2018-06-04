@@ -1,6 +1,7 @@
 package project.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -52,6 +53,16 @@ public class ContentServiceImpl implements ContentService {
 		PhotoDto photoDto = new PhotoDto();
 		photoDto.setBno(no);
 		photoService.writePhoto(photoDto, mRequest);
+	}
+
+	@Override
+	public List<Integer> loveCnt(List<BoardDto> boardDto) {
+		// TODO Auto-generated method stub
+		List<Integer> list = new ArrayList<>();
+		for(BoardDto b : boardDto) {
+			list.add(boardService.loveCnt(boardService.loveList(b)));
+		}
+		return list;
 	}
 
 }

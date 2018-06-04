@@ -12,5 +12,7 @@ public interface BoardService {
 	public List<BoardDto> list();
 	public List<BoardDto> addList(int start);
 	public int write(BoardDto boardDto);
-	public List<String> loveList(BoardDto boardDto);
+	public String[] loveList(BoardDto boardDto);
+	public int loveCnt(String[] loveList);
+	public int love(int bno,String id);
 }

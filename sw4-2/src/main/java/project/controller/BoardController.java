@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import project.bean.BoardDto;
 import project.bean.ContentDto;
 import project.bean.PhotoDto;
+import project.service.BoardService;
 import project.service.ContentService;
 import project.service.PhotoService;
 
@@ -28,6 +29,9 @@ public class BoardController {
 	private ContentService contentService;
 	
 	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
 	private PhotoService photoService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
@@ -37,6 +41,7 @@ public class BoardController {
 		ContentDto contentDto = contentService.list();
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
+		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));
 		return "board/main_view";
 	}
 	
@@ -64,6 +69,12 @@ public class BoardController {
 	@ResponseBody
 	public byte[] image(String name) throws IOException {
 		return photoService.loadImage(name);
+	}
+	
+	@RequestMapping("/good")
+	@ResponseBody
+	public int good(int bno, String id) {
+		return boardService.love(bno, id);
 	}
 	
 }
