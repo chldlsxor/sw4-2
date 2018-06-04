@@ -13,8 +13,8 @@ public class EmailDaoImpl implements EmailDao{
 	private SqlSession sqlSession;
 	
 	@Override
-	public void register(EmailDto emailDto) {
-		sqlSession.insert("register", emailDto);
+	public void plus(EmailDto emailDto) {
+		sqlSession.insert("plus", emailDto);
 	}
 
 	@Override
@@ -23,13 +23,8 @@ public class EmailDaoImpl implements EmailDao{
 	}
 
 	@Override
-	public void check_ok(EmailDto emailDto) {
-		sqlSession.update("check_ok",emailDto);
-	}
-
-	@Override
-	public void delete(EmailDto emailDto) {
-		sqlSession.delete("delete",emailDto);
+	public void remove(String id) {
+		sqlSession.delete("remove",id);
 		
 	}
 
