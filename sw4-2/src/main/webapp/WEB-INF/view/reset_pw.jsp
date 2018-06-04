@@ -91,19 +91,17 @@
             </div>
 			<div class="register-container">
                 <div class="register-wrapper">
-                    <h1>Instory 회원가입</h1>
-                    <form action="register" method="post">
-                        <input class="form-input" type="text" name="id" required value="${id}" readonly>
-                        <input class="form-input" type="text" name="name" required placeholder="이름">
-                        <input class="form-input" type="text" name="nick" required placeholder="닉네임">
+                    <h1>Instory 비밀번호 재설정</h1>
+                    <form action="reset_pw" method="post">
+                        <input class="form-input" type="text" name="id" id="id" required readonly value="${id}">
                         <input class="form-input" type="password" name="pw" required placeholder="비밀번호">
-                        <input class="form-btn" type="submit" value="가입">
+                        <input class="form-btn" type="submit" value="재설정">
                     </form>
                     <hr>
-                    가입하면 Instargram의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.
+                    재설정할 비밀번호를 입력하세용
                 </div>
                 <div class="btn-wrapper">
-                    계정이 있으신가요?<a href="login">로그인</a>
+                    비밀번호가 기억나셨나요?<a href="login">로그인</a>
                 </div>
             </div>
         </div>

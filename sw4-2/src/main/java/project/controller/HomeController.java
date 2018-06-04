@@ -11,7 +11,9 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
@@ -59,7 +61,8 @@ public class HomeController {
 	
 	//회원가입
 	@RequestMapping("/register")
-	public String register() {
+	public String register(String id, Model model) {
+		model.addAttribute("id", id);
 		return "register";
 	}
 	
@@ -71,25 +74,47 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/email")
-	public String email() {
+	public String email(HttpServletRequest request,Model model) {
+		String type = request.getParameter("type");
+		log.info("param={}",type);
+		model.addAttribute("type", type);
 		return "email";
 	}
 	
 	@RequestMapping("/email_send")
 	public void email_send(@ModelAttribute EmailDto emailDto) {
 		log.info("id={}",emailDto.getId());
-		emailDto.setNum(emailService.send_email(emailDto.getId()));
-		log.info("num={}",emailDto.getNum());
-		emailService.register(emailDto);
+		log.info("param={}",emailDto.getType());
+		if(emailDto.getType().equals("register")) {
+			if(homeService.select_id(emailDto.getId())) {//이미있는아이디
+				//이미있는 아이디임
+			}else {//없는아이디, 회원가입 가능
+				emailService.remove(emailDto.getId());
+				emailDto.setNum(emailService.send_email(emailDto.getId()));
+				log.info("num={}",emailDto.getNum());
+				emailService.plus(emailDto);
+				log.info("된다");
+			}
+		}else {
+			if(homeService.select_id(emailDto.getId())) {
+				emailService.remove(emailDto.getId());
+				emailDto.setNum(emailService.send_email(emailDto.getId()));
+				log.info("num={}",emailDto.getNum());
+				emailService.plus(emailDto);
+			}else {
+				//없는아이디임
+			}
+		}
 	}
 	
 	@PostMapping("/email_check")
-	public String email_check(@ModelAttribute EmailDto emailDto) {
+	public String email_check(@ModelAttribute EmailDto emailDto, Model model) {
 		log.info("id={}",emailDto.getId());
 		log.info("num={}",emailDto.getNum());
 		if(emailService.check(emailDto)) {
-			emailService.check_ok(emailDto);
-			return "redirect:/register";
+//			emailService.check_ok(emailDto);
+			model.addAttribute("id", emailDto.getId());
+			return "redirect:/"+emailDto.getType();
 		}
 		else
 			return "redirect:/email";
@@ -97,15 +122,16 @@ public class HomeController {
 	
 	//비번 찾기
 	@RequestMapping("/reset_pw")
-	public String reset_pw() {
+	public String reset_pw(String id, Model model) {
+		model.addAttribute("id", id);
 		return "reset_pw";
 	}
 	
 	//비번 찾기(post)
 	@PostMapping("/reset_pw")
 	public String reset_pw(@ModelAttribute MemberDto memberDto, 
-			HttpServletRequest request) throws UnsupportedEncodingException {
-		homeService.reset_pw(memberDto, request);		
+			HttpServletRequest request) throws NoSuchAlgorithmException {
+		homeService.reset_pw(memberDto);		
 		return "redirect:/login";
 	}
 }
