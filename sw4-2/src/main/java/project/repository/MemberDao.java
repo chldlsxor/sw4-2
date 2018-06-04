@@ -10,9 +10,10 @@ import project.bean.MemberDto;
 public interface MemberDao {
 	void register(MemberDto memberDto);
 	boolean login(MemberDto memberDto);
-	String reset_pw(MemberDto memberDto);
+	void reset_pw(MemberDto memberDto);
 	MemberDto get(String id);
 	String getSalt(String id);
 	int getLoop(String id);
 	List<MemberDto> member_list();
+	boolean select_id(String id);
 }

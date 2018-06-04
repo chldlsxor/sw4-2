@@ -6,8 +6,7 @@ import project.bean.EmailDto;
 
 @Repository
 public interface EmailDao {
-	void register(EmailDto emailDto);
+	void plus(EmailDto emailDto);
 	boolean check(EmailDto emailDto);
-	void check_ok(EmailDto emailDto);
-	void delete(EmailDto emailDto);
+	void remove(String id);
 }

@@ -19,5 +19,6 @@ public interface HomeService {
 			HttpServletResponse response, 
 			HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException;
 	void register(MemberDto memberDto) throws NoSuchAlgorithmException;
-	void reset_pw(MemberDto memberDto,HttpServletRequest request) throws UnsupportedEncodingException;
+	void reset_pw(MemberDto memberDto) throws NoSuchAlgorithmException;
+	boolean select_id(String id);
 }
