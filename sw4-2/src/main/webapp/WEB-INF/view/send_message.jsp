@@ -92,7 +92,7 @@
     		<div class="row">
     			<div id="result" class="col-md-offset-1 col-md-10">
     				<c:forEach var = "message" items="${message_list}">
-						<h4>[${message.send }] ${message.content }</h4>
+						<h4>[${message.send }] ${message.content } (${message.read })</h4>
 					</c:forEach>
     			</div>
     		</div>
