@@ -24,17 +24,14 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("login", memberDto)==null?false:true;
 	}
 
-
 	@Override
-	public String reset_pw(MemberDto memberDto) {
-		// TODO Auto-generated method stub
-		return null;
+	public void reset_pw(MemberDto memberDto) {
+		sqlSession.update("reset_pw",memberDto);
 	}
 
 	@Override
 	public MemberDto get(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return sqlSession.selectOne("member_get", id);
 	}
 
 	@Override
@@ -51,5 +48,11 @@ public class MemberDaoImpl implements MemberDao{
 	public List<MemberDto> member_list() {
 		return sqlSession.selectList("member_list");
 	}
+
+	@Override
+	public boolean select_id(String id) {
+		return sqlSession.selectOne("select_id", id)==null?false:true;
+	}
+
 	
 }

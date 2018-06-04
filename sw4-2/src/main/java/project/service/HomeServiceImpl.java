@@ -32,9 +32,6 @@ public class HomeServiceImpl implements HomeService{
 	@Autowired
 	private EncryptService sha256;
 	
-	@Autowired
-	private EmailService emailService;
-	
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
@@ -54,10 +51,12 @@ public class HomeServiceImpl implements HomeService{
 		if(memberDao.login(memberDto)) {									//로그인 성공
 			
 			//세션에 로그인 성공에 관련된 데이터를 추가
-			//이름 : success, 값 : 사용자ID
-			session.setAttribute("success", id);
+			//이름 : userid, 값 : 사용자ID
+			session.setAttribute("userid", id);
 			
-			
+			MemberDto mdto = memberDao.get(id);
+			session.setAttribute("userno", mdto.getNo());
+
 			//이름 : power, 값 : 사용자 권한
 			/*MemberDto mdto2 = memberDao.get(memberDto.getId());
 			session.setAttribute("power", memberDto.getPower());*/
@@ -81,9 +80,18 @@ public class HomeServiceImpl implements HomeService{
 	}
 
 	@Override
-	public void reset_pw(MemberDto memberDto, HttpServletRequest request) {	
+	public void reset_pw(MemberDto memberDto) throws NoSuchAlgorithmException {	
 		//비밀번호 재설정
+		memberDto.setLoop((int)(Math.random()*9)+1);
+		memberDto.setSalt(UUID.randomUUID().toString());
+		String encpw = sha256.encrypt(memberDto.getPw(), memberDto.getSalt(), memberDto.getLoop());
+		memberDto.setPw(encpw);
+		
 		memberDao.reset_pw(memberDto);
 	}
 
+	@Override
+	public boolean select_id(String id) {
+		return memberDao.select_id(id);
+	}
 }

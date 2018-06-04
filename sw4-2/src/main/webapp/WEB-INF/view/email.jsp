@@ -87,25 +87,32 @@
                     time--;
                     min.innerText = parseInt(time/60)+"분";
                     sec.innerText = parseInt(time%60)+"초";
-                    if(time==0)
+                    if(time==0){
                     	clearInterval(handle);
+                    	min.innerText = "시간이 초과되었습니다.";
+                    	sec.innerText = "";
+                    }
                 }
                 
                  $("#send").on("submit",function(event){
                     event.preventDefault(); //기본 이벤트 수행 중지
-                    $("#id2").attr("value",$("#id").val())
+
                     $.ajax({
                         url:"email_send",
                         data:$(this).serialize()
                     })
                      
-//                    $("#check").append(a);
                      $("#check").css("display","block")
                      start();
                     $("#send_btn").css("display","none");
-                    $("#check").on("submit",function(){
-                        if(time==0)
+                    
+                    $("#id2").attr("value",$("#id").val())
+                    
+                    $("#check").on("submit",function(event){
+                        if(time==0){
+                        	event.preventDefault();
                             alert("시간초과됨")
+                        }
                     })
                 });
             });
@@ -130,12 +137,14 @@
                 <div class="register-wrapper">
                     <h1>Instory 이메일 인증</h1>
                     <form action="email_send" method="post" id="send">
+                    	<input type="hidden" name="type" value="${type}">
                     	<input class="form-input" type="text" name="id" id="id" placeholder="이메일">
                     	<input type="submit" value="이메일 인증" class="form-btn" id="send_btn">
                     </form>
                     
                     <form action="email_check" method="post" id="check">
-                    	<input type="hidden" id="id2">
+	                    <input type="hidden" name="type" value="${type}">
+                    	<input type="hidden" name="id" id="id2">
                         <input type='text' placeholder='인증번호' name="num">
                         <input type="submit" value="인증번호 확인">
                     </form>

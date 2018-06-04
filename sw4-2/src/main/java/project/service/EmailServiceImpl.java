@@ -45,8 +45,8 @@ public class EmailServiceImpl implements EmailService{
 	}
 
 	@Override
-	public void register(EmailDto emailDto) {
-		emailDao.register(emailDto);
+	public void plus(EmailDto emailDto) {
+		emailDao.plus(emailDto);
 	}
 
 	@Override
@@ -58,13 +58,8 @@ public class EmailServiceImpl implements EmailService{
 	}
 
 	@Override
-	public void check_ok(EmailDto emailDto) {
-		emailDao.check_ok(emailDto);
-	}
-
-	@Override
-	public void delete(EmailDto emailDto) {
-		emailDao.delete(emailDto);
+	public void remove(String id) {
+		emailDao.remove(id);
 	}
 
 }
