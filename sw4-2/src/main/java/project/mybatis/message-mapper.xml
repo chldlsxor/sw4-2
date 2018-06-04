@@ -8,7 +8,7 @@
 	</insert>
 	
 	<select id="get_message" parameterType="messageDto" resultType="messageDto">
-		select * from message where send=#{send} and receive=#{receive} order by reg asc
+		select * from message where send=#{send} and receive=#{receive} or send=#{receive} and receive=#{send} order by reg asc
 	</select>
 	
 </mapper>

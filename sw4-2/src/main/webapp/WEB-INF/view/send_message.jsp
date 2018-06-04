@@ -16,13 +16,14 @@
         	$(document).ready(function(){
         		connect();
         		
-        		$("#send").click(function(){
+        		$("#send").on("click",function(){
+                     
         			if(!websocket) return;
         			var text = $("#chat").val();
         			if(!text) return;
         			
        				websocket.send(text);
-        			$("#chat").val("");
+        			 $("#chat").val(""); 
         		});
         		
         	});
@@ -34,7 +35,7 @@
         	function connect(){
         		if(window.websocket) return;
 				
-        		var uri = "ws://localhost:8080/sw4-2/send_message/**";
+        		var uri = "ws://localhost:8080/sw4-2/send_message";
         		
         		window.websocket = new WebSocket(uri);
         		
@@ -60,27 +61,40 @@
         	}
         </script>
     </head>
+    <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
     <body>
     	<div class="container-fluid">
     		<div class="jumbotron text-center">
     			<h1>메세지</h1>
+    			
     			<p>
-    				로그인 ID : ${success }
+    				로그인 ID : ${userid }
+    			</p>
+    			<p>
+    				messageFrom : ${userid }
+    			</p>
+    			<p>
+    				messageTo : ${messageto }
     			</p>
     		</div>
     		<div class="row">
     			
     		</div>
     		<div class="row">
-    			<div class="col-md-offset-1 col-md-8">
+    			<div class="col-md-offset-1 col-md-8">		
     				<input id="chat" type="text" placeholder="입력.." class="form-control">
     			</div>
     			<div class="col-md-2">
     				<input id="send" type="button" value="전송" class="btn btn-default btn-block">
     			</div>
     		</div>
+    		
     		<div class="row">
-    			<div id="result" class="col-md-offset-1 col-md-10"></div>
+    			<div id="result" class="col-md-offset-1 col-md-10">
+    				<c:forEach var = "message" items="${message_list}">
+						<h4>[${message.send }] ${message.content }</h4>
+					</c:forEach>
+    			</div>
     		</div>
     	</div>
     </body>

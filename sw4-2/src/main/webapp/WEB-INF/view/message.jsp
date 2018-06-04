@@ -12,7 +12,7 @@ $(document).ready(function(){
     });
  });
 </script>
-<h1>현재 로그인 아이디 : ${success}</h1>
+<h1>현재 로그인 아이디 : ${userid}</h1>
 
 <h1>message</h1>
 
