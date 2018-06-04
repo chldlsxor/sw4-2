@@ -45,7 +45,7 @@
                     <h2>글 쓰기</h2>
                 </div>
                 <form action="write" method="post" enctype="multipart/form-data">
-                    <input hidden name="writer" value="aaa">
+                    <input hidden name="writer" value="${userid }">
                     <div class="row">
                         <input type="file" name="file" multiple="multiple">
                     </div>

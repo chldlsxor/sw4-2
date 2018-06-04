@@ -26,6 +26,8 @@
 	var replyList;
 	var listSize = 0;
 	$(document).ready(function() {
+		var userNo = $("#userNo");
+		console.log("userNo = " userNo);
 		$(document).scroll(function() {
 			//                    console.log("스크롤 이동")
 			var scrollT = $(this).scrollTop(); //스크롤바의 상단위치
@@ -33,13 +35,13 @@
 			var scrollH = $(this).height(); //스크롤바를 갖는 div의 높이
 			//                    console.log("scrollH = "+scrollH);
 			if (scrollT >= scrollH * 0.5 && flag) { // 스크롤바가 맨 아래에 위치할 때
-				console.log("스크롤 이벤트3")
+// 				console.log("스크롤 이벤트3")
 				
 				flag = false;
-				console.log("스크롤 이벤트4")
+// 				console.log("스크롤 이벤트4")
 				start = start + 2;
-				console.log("스크롤 이벤트5")
-				console.log(start);
+// 				console.log("스크롤 이벤트5")
+// 				console.log(start);
 				$.ajax({
                     dataType : 'json',
                     url : "addlist",      
@@ -70,13 +72,36 @@
 			}
 		});
 		
-		$(".love")
+		$(".love").on("click",function(){
+			var now = $(this);
+			var bno = $(this).prevAll(".bno").val();
+			var list = $(this).prevAll(".loveList").val().split(',');
+			var userNo = $("#userNo");
+			console.log(list);
+			$.ajax({
+				url:"good",
+				data : {
+					"bno" : bno,
+					"id" : userNo
+					},
+				success:function(result){
+					console.log("좋아요 성공!", result);
+					now.parents("div.row").find(".loveCnt").text(result);
+				}
+			});
+		});
+		
+// 		$(".test").on("click",function(){
+// 			console.log("Hi");
+// 			console.log($(this).parents("div.row").find(".loveCnt").text());
+// 		});
 		
 	});
 </script>
 </head>
 <body>
 	<header>
+		<input id="userNo" type="hidden" value="${userno}">
 		<div id="menu" class="container-70">
 			<a><i class="fa fa-camera">&nbsp;</i></a>
 			<p>|</p>
@@ -112,6 +137,8 @@
 		</div>
 	</div>
 	<div id="main-view" class="container-70">
+		<div>session = ${userno }</div>
+		<div>session = ${userid }</div>
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
 			<div class="row">
 				<div>${boardDto.writer }</div>
@@ -121,11 +148,17 @@
 					</div>
 				</c:forEach>
 				<div>
-					<a href="#"><img class="love" src="${root}/res/image/outLineHeart.png" width="30px" height="30px"></a>
-					<a href=""><img class="mark" src="${root}/res/image/outLineBookmark.png" width="30px" height="30px"></a>
+					
+					<a>
+					<input class="loveList" type="hidden" value="${boardDto.good}">
+					<input class="bno" type="hidden" value="${boardDto.no }">
+					<img class="love" src="${root}/res/image/outLineHeart.png" width="30px" height="30px">
+<!-- 					<button class="test">클릭</button> -->
+					</a>
+					<a><img class="mark" src="${root}/res/image/outLineBookmark.png" width="30px" height="30px"></a>
 				</div>
 				<div>
-					<p>좋아요 ${boardDto.good}</p>
+					<p class="inline">좋아요&nbsp;&nbsp;</p><p class="inline loveCnt">${loveCnt[status.index]}</p>
 				</div>
 				<div>${boardDto.content }</div>
 				<%--             		<c:forEach var="replyDto" items="${ }"> --%>

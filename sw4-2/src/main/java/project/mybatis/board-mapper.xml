@@ -19,5 +19,13 @@
 	<insert id="write" parameterType="BoardDto">
 		insert into board values(#{no}, #{writer}, #{content}, sysdate, null)
 	</insert>
+	
+	<update id="good" parameterType="map">
+		update board set good = #{goodList} where no = #{no}
+	</update>
+	
+	<select id="goodList" parameterType="int" resultType="String">
+		select good from board where no = #{no} 
+	</select>
 
 </mapper>
