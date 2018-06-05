@@ -97,10 +97,10 @@
                         <input class="form-btn" type="submit" value="로그인">
                     </form>
                     <hr>
-                    <a href="#">비밀번호를 잊으셨나요?</a>
+                    <a href="email?type=reset_pw">비밀번호를 잊으셨나요?</a>
                 </div>
                 <div class="btn-wrapper">
-                    계정이 없으신가요?<a href="email">가입하기</a>
+                    계정이 없으신가요?<a href="email?type=register">가입하기</a>
                 </div>
             </div>
         </div>

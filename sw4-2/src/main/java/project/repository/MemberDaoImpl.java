@@ -54,5 +54,10 @@ public class MemberDaoImpl implements MemberDao{
 		return sqlSession.selectOne("select_id", id)==null?false:true;
 	}
 
+	@Override
+	public void edit(MemberDto memberDto) {
+		sqlSession.update("edit",memberDto);
+	}
+
 	
 }
