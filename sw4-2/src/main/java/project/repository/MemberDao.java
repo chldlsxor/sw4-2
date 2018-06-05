@@ -16,4 +16,5 @@ public interface MemberDao {
 	int getLoop(String id);
 	List<MemberDto> member_list();
 	boolean select_id(String id);
+	void edit(MemberDto memberDto);
 }

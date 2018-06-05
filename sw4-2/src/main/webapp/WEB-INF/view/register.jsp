@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>Javascript 배우기</title>    
+        <title>회원가입</title>    
 <!--        디자인 코드 작성 공간-->
         <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -71,6 +71,28 @@
                         delay:1000,//전환 간격(밀리초)
                     },
                 });
+                
+                $("#register").on("submit",function(event){
+                	event.preventDefault();
+                	
+                	var name_regex = /^[가-힣]{2,10}$/;
+                	var nick_regex = /^[a-zA-Z0-9]{2,60}$/;
+                	var pw_regex = /^[a-zA-Z0-9]{6,15}$/;
+                	
+                	if(!name_regex.test($("#name").val())){
+                		alert("이름은 한글 2~10자리 입니다.");
+                		return;
+                	}else if(!nick_regex.test($("#nick").val())){
+                		alert("닉네임은 영문숫자 2~60자리 입니다.");
+                		return;
+                	}else if(!pw_regex.test($("#pw").val())){
+                		alert("비밀번호는 영문숫자 6~15자리 입니다.");
+                		return;
+                	}
+                	else{
+                		document.querySelector("#register").submit();
+                	}
+                });
             });
         </script>
     </head>
@@ -92,11 +114,11 @@
 			<div class="register-container">
                 <div class="register-wrapper">
                     <h1>Instory 회원가입</h1>
-                    <form action="register" method="post">
+                    <form action="register" method="post" id="register">
                         <input class="form-input" type="text" name="id" required value="${id}" readonly>
-                        <input class="form-input" type="text" name="name" required placeholder="이름">
-                        <input class="form-input" type="text" name="nick" required placeholder="닉네임">
-                        <input class="form-input" type="password" name="pw" required placeholder="비밀번호">
+                        <input class="form-input" type="text" name="name" id="name" required placeholder="이름">
+                        <input class="form-input" type="text" name="nick" id="nick" required placeholder="닉네임(영문숫자 2~60자리)">
+                        <input class="form-input" type="password" name="pw" id="pw" required placeholder="비밀번호(영문숫자  6~15자리)">
                         <input class="form-btn" type="submit" value="가입">
                     </form>
                     <hr>

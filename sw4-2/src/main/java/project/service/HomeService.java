@@ -15,9 +15,7 @@ import project.bean.MemberDto;
 //
 @Service
 public interface HomeService {
-	boolean login(HttpServletRequest request, 
-			HttpServletResponse response, 
-			HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException;
+	boolean login(HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException;
 	void register(MemberDto memberDto) throws NoSuchAlgorithmException;
 	void reset_pw(MemberDto memberDto) throws NoSuchAlgorithmException;
 	boolean select_id(String id);

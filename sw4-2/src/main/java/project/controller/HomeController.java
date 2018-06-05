@@ -51,10 +51,8 @@ public class HomeController {
 	
 	//로그인(post)
 	@PostMapping("/login")
-	public String login(HttpServletRequest request, 
-			HttpServletResponse response, 
-			HttpSession session, @ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException{
-		boolean login = homeService.login(request, response, session, memberDto);
+	public String login(HttpSession session, @ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException{
+		boolean login = homeService.login(session, memberDto);
 		if(login) return "redirect:/";
 		else return "redirect:/login";
 	}
@@ -74,8 +72,7 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/email")
-	public String email(HttpServletRequest request,Model model) {
-		String type = request.getParameter("type");
+	public String email(Model model, @RequestParam String type) {
 		log.info("param={}",type);
 		model.addAttribute("type", type);
 		return "email";
@@ -129,8 +126,7 @@ public class HomeController {
 	
 	//비번 찾기(post)
 	@PostMapping("/reset_pw")
-	public String reset_pw(@ModelAttribute MemberDto memberDto, 
-			HttpServletRequest request) throws NoSuchAlgorithmException {
+	public String reset_pw(@ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException {
 		homeService.reset_pw(memberDto);		
 		return "redirect:/login";
 	}

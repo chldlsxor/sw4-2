@@ -35,9 +35,7 @@ public class HomeServiceImpl implements HomeService{
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	@Override
-	public boolean login(HttpServletRequest request, 
-			HttpServletResponse response, 
-			HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException{
+	public boolean login(HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException{
 		//비밀번호 암호화
 		String id = memberDto.getId();
 		String encpw = sha256.encrypt(memberDto.getPw(), memberDao.getSalt(id), memberDao.getLoop(id));

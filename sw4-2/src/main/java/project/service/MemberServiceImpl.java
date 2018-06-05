@@ -38,9 +38,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void edit() {
-		// TODO Auto-generated method stub
-		
+	public void edit(MemberDto memberDto) {
+		memberDao.edit(memberDto);
 	}
 
 	@Override
@@ -65,6 +64,11 @@ public class MemberServiceImpl implements MemberService{
 	public void friend() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public MemberDto get(String id) {
+		return memberDao.get(id);
 	}
 
 }

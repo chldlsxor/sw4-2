@@ -71,6 +71,21 @@
                         delay:1000,//전환 간격(밀리초)
                     },
                 });
+                
+                $("#reset").on("submit",function(event){
+                	event.preventDefault();
+                	
+                	var regex = /^[a-zA-Z0-9]{6,15}$/;
+                	
+                	if(regex.test($("#pw").val())){
+                		document.querySelector("#reset").submit();
+                	}
+                	else{
+                		alert("비밀번호는 영문숫자 6~15자리 입니다.");
+                		return;
+                	}
+                });
+                
             });
         </script>
     </head>
@@ -92,9 +107,9 @@
 			<div class="register-container">
                 <div class="register-wrapper">
                     <h1>Instory 비밀번호 재설정</h1>
-                    <form action="reset_pw" method="post">
-                        <input class="form-input" type="text" name="id" id="id" required readonly value="${id}">
-                        <input class="form-input" type="password" name="pw" required placeholder="비밀번호">
+                    <form action="reset_pw" method="post" id="reset">
+                        <input class="form-input" type="text" name="id" required readonly value="${id}">
+                        <input class="form-input" type="password" name="pw" id="pw" required placeholder="비밀번호">
                         <input class="form-btn" type="submit" value="재설정">
                     </form>
                     <hr>

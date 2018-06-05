@@ -152,10 +152,10 @@
                     <span id="sec"></span>
 
                     <hr>
-                    Instory는 이메일 인증을 하셔야 가입이 가능합니다. 
+                    Instory 이메일 인증창입니다~~
                 </div>
                 <div class="btn-wrapper">
-                    계정이 있으신가요?<a href="login">로그인</a>
+                    <a href="login">로그인</a>
                 </div>
             </div>
         </div>

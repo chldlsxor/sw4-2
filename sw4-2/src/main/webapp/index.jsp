@@ -5,3 +5,4 @@
 <h1><a href = "/sw4-2/member/logout">logout</a></h1>
 <h1><a href = "/sw4-2/email?type=register">회원가입</a></h1>
 <h1><a href = "/sw4-2/email?type=reset_pw">비밀번호 재설정</a></h1>
+<h1><a href = "/sw4-2/member/edit">회원정보 수정</a></h1>
