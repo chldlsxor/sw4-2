@@ -92,4 +92,10 @@ public class BoardServiceImpl implements BoardService {
 		return loveCnt(data.split(","));
 	}
 
+	@Override
+	public int listCnt() {
+		// TODO Auto-generated method stub
+		return boardDao.listCnt();
+	}
+
 }

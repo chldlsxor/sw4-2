@@ -65,4 +65,15 @@ public class ContentServiceImpl implements ContentService {
 		return list;
 	}
 
+	@Override
+	public List<String[]> loveList(List<BoardDto> boardDto) {
+		// TODO Auto-generated method stub
+		List<String[]> list = new ArrayList<>();
+		for(BoardDto b : boardDto) {
+			list.add(boardService.loveList(b));
+		}
+		
+		return list;
+	}
+
 }

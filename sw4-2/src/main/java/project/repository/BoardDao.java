@@ -16,4 +16,5 @@ public interface BoardDao {
 	public int getNo();
 	public String goodList(int no);
 	public void good(Map map);
+	public int listCnt();
 }

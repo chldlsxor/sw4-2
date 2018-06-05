@@ -16,4 +16,5 @@ public interface ContentService {
 	public ContentDto addList(int start);
 	public void write(BoardDto boardDto, MultipartHttpServletRequest mRequest) throws IllegalStateException, IOException;
 	public List<Integer> loveCnt(List<BoardDto> boardDto);
+	public List<String[]> loveList(List<BoardDto> boardDto);
 }

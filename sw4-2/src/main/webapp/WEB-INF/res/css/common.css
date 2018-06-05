@@ -244,6 +244,7 @@ header {
 	background-color: lightpink;
 	display: flex;
 	padding: 1em;
+	z-index: 1000;
 }
 
 #menu {

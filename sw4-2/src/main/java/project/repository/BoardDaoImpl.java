@@ -58,6 +58,12 @@ public class BoardDaoImpl implements BoardDao{
 		// TODO Auto-generated method stub
 		sqlSession.update("good", map);
 	}
+
+	@Override
+	public int listCnt() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("listCnt");
+	}
 	
 	
 	

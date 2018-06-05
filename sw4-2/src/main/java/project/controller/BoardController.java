@@ -1,6 +1,5 @@
 package project.controller;
 
-import java.awt.Image;
 import java.io.IOException;
 
 import org.slf4j.Logger;
@@ -16,7 +15,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import project.bean.BoardDto;
 import project.bean.ContentDto;
-import project.bean.PhotoDto;
 import project.service.BoardService;
 import project.service.ContentService;
 import project.service.PhotoService;
@@ -42,16 +40,19 @@ public class BoardController {
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
 		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));
+		model.addAttribute("loveList", contentService.loveList(contentDto.getListBoardDto()));
+		model.addAttribute("listCnt", boardService.listCnt());
 		return "board/main_view";
 	}
 	
 	@RequestMapping("/addlist")
-	@ResponseBody
-	public ContentDto addlist(int start, Model model) {
+	public String addlist(int start, Model model) {
 		ContentDto contentDto = contentService.addList(start);
-//		model.addAttribute("addList", contentDto.getListBoardDto());
-//		model.addAttribute("photoList", contentDto.getListPhotoDto());
-		return contentDto;
+		model.addAttribute("list", contentDto.getListBoardDto());
+		model.addAttribute("photoList", contentDto.getListPhotoDto());
+		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));
+		model.addAttribute("loveList", contentService.loveList(contentDto.getListBoardDto()));
+		return "board/addrow";
 	}
 	
 	@RequestMapping("/write")

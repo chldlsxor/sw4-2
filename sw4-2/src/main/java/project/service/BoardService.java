@@ -15,4 +15,5 @@ public interface BoardService {
 	public String[] loveList(BoardDto boardDto);
 	public int loveCnt(String[] loveList);
 	public int love(int bno,String id);
+	public int listCnt();
 }
