@@ -6,9 +6,14 @@
 	<insert id="send_message" parameterType="messageDto">
 		insert into message(no, content, send, receive, reg) values(message_seq.nextval, #{content}, #{send}, #{receive}, sysdate)
 	</insert>
-	
+
 	<select id="get_message" parameterType="messageDto" resultType="messageDto">
 		select * from message where send=#{send} and receive=#{receive} or send=#{receive} and receive=#{send} order by reg asc
 	</select>
+	
+	<!-- 리스트를 가져오는 순간 상대방이 보낸 메세지(보내는이: 상대방, 받는이 : 메세지를 보내려는 나)는 읽은거임 -->
+	<update id="read_list_message" parameterType="messageDto" >
+		update message set read = 1 where read = 0 and send=#{receive} and receive=#{send}
+	</update>
 	
 </mapper>
