@@ -24,5 +24,10 @@ public class MessageDaoImpl implements MessageDao{
 	public List<MessageDto> get_message(MessageDto messageDto) {
 		return sqlSession.selectList("get_message", messageDto);
 	}
+
+	@Override
+	public void read_list_message(MessageDto messageDto) {
+		sqlSession.update("read_list_message", messageDto);
+	}
 	
 }

@@ -16,16 +16,19 @@ public class MessageServiceImpl implements MessageService{
 	@Autowired
 	private MessageDao messageDao;
 	
+	//메세지 보내기
 	@Override
 	public void sendMessage(MessageDto messageDto) {
 		messageDao.send_message(messageDto);
 	}
 
+	//DB에 저장된 메세지 리스트 가져오기(리스트는 모두 읽음 처리해야)
 	@Override
 	public ModelAndView getMessage(HttpServletRequest request,HttpSession session) {
 		String messageTo = request.getParameter("messageto");
 		String messageFrom = session.getAttribute("userid").toString();
 		
+		//세션에 받는 사람 추가(연결 끊기면 삭제)
 		session.setAttribute("messageto", messageTo);
 		
 		ModelAndView mv = new ModelAndView();
@@ -34,6 +37,10 @@ public class MessageServiceImpl implements MessageService{
 		messageDto.setSend(messageFrom);
 		messageDto.setReceive(messageTo);
 		
+		//리스트 모두 읽음 처리
+		messageDao.read_list_message(messageDto);
+		
+		//리스트 가져오기
 		mv.addObject("message_list",messageDao.get_message(messageDto));
 		mv.setViewName("send_message");
 		return mv;

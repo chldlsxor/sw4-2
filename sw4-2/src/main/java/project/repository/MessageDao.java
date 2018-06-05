@@ -10,4 +10,5 @@ import project.bean.MessageDto;
 public interface MessageDao {
 	void send_message(MessageDto messageDto);
 	List<MessageDto> get_message(MessageDto messageDto);
+	void read_list_message(MessageDto messageDto);
 }
