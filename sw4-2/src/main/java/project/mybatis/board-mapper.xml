@@ -24,6 +24,10 @@
 		update board set good = #{goodList} where no = #{no}
 	</update>
 	
+	<select id="getBoardView" parameterType="int" resultType="BoardDto">
+		select * from board where no = #{no}
+	</select>
+	
 	<select id="goodList" parameterType="int" resultType="String">
 		select good from board where no = #{no} 
 	</select>

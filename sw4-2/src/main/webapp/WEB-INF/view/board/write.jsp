@@ -22,7 +22,7 @@
 </head>
 <body>
 	<header>
-		<div id="menu" class="container-70">
+		<div id="menu" class="container-60">
 			<a><i class="fa fa-camera">&nbsp;</i></a>
 			<p>|</p>
 			<a href="${root }/board/list" class="left"> InStory</a>

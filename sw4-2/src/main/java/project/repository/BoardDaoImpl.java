@@ -64,6 +64,12 @@ public class BoardDaoImpl implements BoardDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("listCnt");
 	}
+
+	@Override
+	public BoardDto getBoardView(int no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getBoardView", no);
+	}
 	
 	
 	
