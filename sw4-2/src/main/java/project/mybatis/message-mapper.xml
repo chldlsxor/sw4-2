@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.repository.MessageDao">
 	<insert id="send_message" parameterType="messageDto">
-		insert into message(no, content, send, receive, reg) values(message_seq.nextval, #{content}, #{send}, #{receive}, sysdate)
+		insert into message values(message_seq.nextval, #{content}, #{send}, #{receive}, sysdate, #{read})
 	</insert>
 
 	<select id="get_message" parameterType="messageDto" resultType="messageDto">

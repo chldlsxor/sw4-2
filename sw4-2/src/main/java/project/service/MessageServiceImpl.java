@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
 import project.bean.MessageDto;
+import project.repository.MemberDao;
 import project.repository.MessageDao;
 
 @Service("messageService")
@@ -15,6 +16,9 @@ public class MessageServiceImpl implements MessageService{
 
 	@Autowired
 	private MessageDao messageDao;
+	
+	@Autowired
+	private MemberDao memberDao;
 	
 	//메세지 보내기
 	@Override
@@ -42,6 +46,8 @@ public class MessageServiceImpl implements MessageService{
 		
 		//리스트 가져오기
 		mv.addObject("message_list",messageDao.get_message(messageDto));
+		//받는 사람 정보 가져오기
+		mv.addObject("receive_info",memberDao.get(messageTo));
 		mv.setViewName("send_message");
 		return mv;
 	}

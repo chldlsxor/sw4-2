@@ -1,24 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
 
     <head>
         <title>웹소켓 문제</title>
+        <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <style>
         	#result{
-        		max-height:50%;
-        		overflow-y:scroll;
+        		max-height:60%;
+         		overflow-y:scroll; 
         	}
         	.not-read{
     			color: purple;
     		}
+    		.message-header{
+    			position: fixed;
+    			left:0;
+    			right: 0;
+    			top: 0;
+    			padding: 10px;
+    			background-color: lightpink;
+    		}
+    		.userimg-container{
+    			width = 40%;
+    			display: inline-block;
+    		}
+    		.userinfo-container{
+    			width = 60%;
+    			display: inline-block;
+    		}
+    		.input-message{
+    			position: fixed;
+    			left:0;
+    			right: 0;
+    			bottom: 0;
+    		}
+    		.message-container > .message-header{
+    			 width: 350;
+    			 height : 700;
+    		}
         </style>
         
         <script src="http://code.jquery.com/jquery-latest.js"></script>
-        <script>
+   	    <script>
+         	
+        	
+        	
         	$(document).ready(function(){
-        		connect();
+        		connect();               	
         		
         		$("#send").on("click",function(){
                      
@@ -48,6 +80,8 @@
         		
         		websocket.onopen = function(e){
         			$("#result").append("<h4>서버에 접속하였습니다</h4>");
+        			$("#result").scrollTop($("#result")[0].scrollHeight);
+
         		};
         		websocket.onclose = function(e){
         			$("#result").append("<h4>서버와의 연결이 종료되었습니다</h4>");
@@ -59,25 +93,32 @@
         			console.log("넘어온 메세지 : "+e.data);
         			console.log("ismessage 값 : "+ ismassage);
         			console.log("메세지 보낸 사람 아이디 : "+send);
-        			console.log("userid 값(현재 로그인 유저 ) : "+$("#userid").text().trim());
+        			console.log("userid 값(현재 로그인 유저 ) : "+$("#userid").val().trim());
         		
         			if(e.data=="e9dc924f-238f-36cc-a946-5942875fe8f0"){
         				//class not read를 remove
-        				console.log("정원참..");
-        				$( '#message' ).removeClass("not-read");
+        				$(".message").removeClass("not-read");
+        				console.log("--> 멤버 정원참");
         			}else if(!ismassage){
+        				console.log("--> 보내는 이 저장")
         				ismassage = true;
         				send = e.data;
         			}
         			else{
+        				console.log("--> 메세지 표시")
         				ismassage = false;
-        				console.log(send==$("#userid").text().trim());
-        				if(send==$("#userid").text().trim()){
-        					$("#result").append("<div id='message' class = 'not-read' align = 'right'>"+e.data+"</div>")
+        				console.log(send==$("#userid").val().trim());
+        				if(send==$("#userid").val().trim()){
+        					$("#result").append("<div class = 'message not-read' align = 'right'>"+e.data+"</div>")
         				}
         				else{
-        					$("#result").append("<div id='message' class = 'not-read' align = 'left'>"+e.data+"</div>")
+        					$("#result").append("<div class = 'message not-read' align = 'left'>"+e.data+"</div>")
         				}
+        				console.log($("#result"));
+        				console.log($("#result")[0]);
+        				$("#result").scrollTop($("#result")[0].scrollHeight);
+
+        				
         			}
         			
         			
@@ -94,38 +135,49 @@
         </script>
     </head>
     <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
-    <body>
+    <body class = "message-container">
+    	<input type="hidden" id  = "userid" value = "${userid }">
     	<div class="container-fluid">
-    		<div class="jumbotron text-center" >
-    			<h1>메세지</h1>
+    		<header class = "message-header">
+    			<div class = "container-100">
+    				<div class = "userimg-container">
+    					<img alt="profile" src="http://via.placeholder.com/100x100">
+    				</div>
+    				<div class = "userinfo-container">	
+    					<div>ID : ${receive_info.id }</div>
+			   			<div>name : ${receive_info.name }</div>
+			   			<div>nick : ${receive_info.nick }</div>
+    				</div>
+    				
+    			</div>
     			
-    			<p id = "userid">
-    				${userid }
-    			</p>
-    			<p>
-    				messageFrom : ${userid }
-    			</p>
-    			<p>
-    				messageTo : ${messageto }
-    			</p>
-    		</div>
-    		<div class="row">
-    			
-    		</div>	
+    		</header>
+    		
+    		
+    		<div class="empty-row"></div>	
+    		<div class="empty-row"></div>
+    		<div class="empty-row"></div>
     		<div class="row">
     			<div id="result" class="col-md-offset-1 col-md-10">
     				<!-- DB리스트에 있는 메세지 리스트는 이 창이 열린 순간 다 읽음 처리 되므로 read 표시 안함 -->
     				<c:forEach var = "message" items="${message_list}">
+    					<!-- 내가 보낸 메세지 리스트 -->
     					<c:if test="${userid == message.send }">
-							<div align="right">[${message.send }] ${message.content }</div>
+    						<c:if test="${message.read==0 }">
+    							<div align="right" class = "message not-read">${message.content }</div>
+    						</c:if>
+    						<c:if test="${message.read==1 }">
+    							<div align="right" class="message"> ${message.content }</div>
+    						</c:if>					
 						</c:if>
+						<!-- 내가 받은 메세지 리스트 (창여는 순간 무조건 읽음 처리)-->
 						<c:if test="${messageto == message.send }">
-							<div align="left">[${message.send }] ${message.content }</div>
+							<div align="left" class = "message">${message.content }</div>
 						</c:if>
 					</c:forEach>
     			</div>
     		</div>
-    		<div class="row bottom">
+    		<div class="row input-message">
     			<div class="col-md-offset-1 col-md-8">		
     				<input id="chat" type="text" placeholder="입력.." class="form-control">
     			</div>
