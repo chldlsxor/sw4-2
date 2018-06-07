@@ -71,6 +71,25 @@
                         delay:1000,//전환 간격(밀리초)
                     },
                 });
+                $("form").on("submit",function(){
+                	$.ajax({
+                        url:"login",
+                        data:$(this).serialize(),
+                        
+/*                         success:function(result,status){
+                        	console.log(result);
+                        	console.log(status);
+                        	if($.trim(status)=="success"){
+                           		alert("됨");
+                        	}else{
+                        		alert("안됨");
+                        	}
+                        },
+                        error:function(err){
+                            alert(err);
+                        } */
+                    });
+                });
             });
         </script>
     </head>

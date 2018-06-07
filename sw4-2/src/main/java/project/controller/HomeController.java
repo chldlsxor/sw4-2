@@ -51,11 +51,29 @@ public class HomeController {
 	
 	//로그인(post)
 	@PostMapping("/login")
-	public String login(HttpSession session, @ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException{
+	public String login(Model model, HttpSession session, @ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException{
 		boolean login = homeService.login(session, memberDto);
-		if(login) return "redirect:/";
-		else return "redirect:/login";
+		if(login)
+			return "redirect:/";
+		else {
+			model.addAttribute("msg", "비번 틀렸씀");
+			model.addAttribute("go", "login");
+			return "redirect:/result";
+		}
 	}
+	
+	@RequestMapping("/result")
+	public String result(String msg, String go, Model model) {
+		model.addAttribute("msg", msg);
+		model.addAttribute("go", go);
+		return "result";
+	}
+	
+//	@PostMapping("/login")
+//	@ResponseBody
+//	public boolean login(HttpSession session, @ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException{
+//		return homeService.login(session, memberDto);
+//	}
 	
 	//회원가입
 	@RequestMapping("/register")
@@ -113,8 +131,11 @@ public class HomeController {
 			model.addAttribute("id", emailDto.getId());
 			return "redirect:/"+emailDto.getType();
 		}
-		else
-			return "redirect:/email";
+		else {
+			model.addAttribute("msg", "인증번호 틀렸씀");
+			model.addAttribute("go", "email?type="+emailDto.getType());
+			return "redirect:/result";
+		}
 	}
 	
 	//비번 찾기

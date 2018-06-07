@@ -82,14 +82,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("edit_pw")
-	public String edit_pw(@ModelAttribute MemberDto memberDto, HttpSession session, @RequestParam String new_pw) throws NoSuchAlgorithmException {
+	public String edit_pw(Model model, @ModelAttribute MemberDto memberDto, HttpSession session, @RequestParam String new_pw) throws NoSuchAlgorithmException {
 		log.info("new_pw={}",new_pw);
 		if(homeService.login(session, memberDto)) {
 			memberDto.setPw(new_pw);
 			homeService.reset_pw(memberDto);
+			return "member/edit_pw";
 		}else {
-			//비번틀림
+			model.addAttribute("msg", "비번 틀렸씀");
+			model.addAttribute("go", "member/edit_pw");
+			return "redirect:/result";
 		}
-		return "member/edit_pw";
 	}
 }

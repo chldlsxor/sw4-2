@@ -41,7 +41,7 @@
             td{
                 flex-grow: 1;
             }
-            input{
+            .form-input{
             	margin : 10px;
             }
             button{

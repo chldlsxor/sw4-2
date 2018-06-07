@@ -99,11 +99,11 @@
 
                     $.ajax({
                         url:"email_send",
-                        data:$(this).serialize()
+                        data:$(this).serialize(),
                     })
-                     
-                     $("#check").css("display","block")
-                     start();
+                    
+                    $("#check").css("display","block")
+                    start();
                     $("#send_btn").css("display","none");
                     
                     $("#id2").attr("value",$("#id").val())
