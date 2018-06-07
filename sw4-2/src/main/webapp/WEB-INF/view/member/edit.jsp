@@ -71,6 +71,10 @@
                     location.href="edit_pw";
                 });
                 
+                $("#f").on("change", function(){
+                    readURL(this);
+                });
+                
                 $("#member_edit").on("submit",function(event){
                 	event.preventDefault();
                 	
@@ -88,6 +92,19 @@
                 	}
                 });
             });
+            
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                        $('#profile').attr('src', e.target.result);
+                    }
+
+                  reader.readAsDataURL(input.files[0]);
+                }
+            }
+            
         </script>
     </head>
     <body>
@@ -105,8 +122,8 @@
                     <table>
                         <tbody>
                             <tr height=100>
-                                <th><img class="img-circle" src="http://placehold.it/300x300" width="50" height="50"></th>
-                                <td><input type="file" name="f"></td>
+                                <th><img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50" height="50" id="profile"></th>
+                                <td><input type="file" name="f" id="f" onchange="LoadImg(this)"></td>
                             </tr>
                             <tr>
                                 <th>아이디(이메일)</th>
