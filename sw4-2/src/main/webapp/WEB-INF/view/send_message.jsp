@@ -61,7 +61,7 @@
         			console.log("메세지 보낸 사람 아이디 : "+send);
         			console.log("userid 값(현재 로그인 유저 ) : "+$("#userid").text().trim());
         		
-        			if(e.date=="e9dc924f-238f-36cc-a946-5942875fe8f0"){
+        			if(e.data=="e9dc924f-238f-36cc-a946-5942875fe8f0"){
         				//class not read를 remove
         				console.log("정원참..");
         				$( '#message' ).removeClass("not-read");
