@@ -98,4 +98,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.listCnt();
 	}
 
+	@Override
+	public BoardDto getBoardView(int no) {
+		// TODO Auto-generated method stub
+		return boardDao.getBoardView(no);
+	}
+
 }

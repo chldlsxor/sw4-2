@@ -104,8 +104,14 @@ section {
 }
 
 .row {
+	width:100%;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	margin-left: 5px;
+}
+
+.my-align {
+	margin-right: 5%;
 }
 
 .empty-row {
@@ -248,6 +254,7 @@ header {
 }
 
 #menu {
+	width:65%;
 	position: fixed;
 	display: flex;
 	padding: 1em;
@@ -274,18 +281,22 @@ header {
 }
 
 #menu>a.right {
-	margin-left: auto;
+	margin-left: 47%;
 }
+
+/* #menu>a.inner-right { */
+/* 	margin-left: 0em; */
+/* } */
 /* 검색창 스타일*/
 .top-search {
-	width: 125%;
+	width: 300%;
 	text-align: center;
 	margin-left: 1em;
 }
 
 /* 삐져나와서 패딩처리 본문 내용 */
 #main-view>div {
-	padding-left: 2em;
+/* 	padding-left: 2em; */
 }
 
 /* 오른쪽 유저 상태 표시창 */
@@ -330,60 +341,50 @@ header {
 	width: 90%;
 }
 
-/* 반응형 웹 */
-@media screen and (min-width:891px) {
-	.container-70 {
-		width: 70%;
-	}
-	label {
-		display: block;
-		font-size: 3em;
-		color: white;
-	}
-	#menu {
-		width: 100%;
-		margin-left: 0px;
-	}
-	#menu>a.right, #menu>a.inner-right {
-		margin-right: 10px;
-	}
+/* 게시글 상세보기 스타일 */
+.content-view{
+	display : flex;
+	flex-wrap: wrap;
+	width: 1000px;
+	height: 575px;
 }
 
-@media screen and (max-width:890px) {
-	.inner-div {
-		width: 50%;
-		padding: 2px;
-		max-width: 50%;
-	}
-	#menu {
-		margin-left: 0px;
-		font-size: 1em;
-	}
-	.container-70 {
-		width: 100%;
-	}
-	.top-search {
-		width: auto;
-		margin-left: 0px;
-	}
-	.img {
-		width: 40%;
-	}
+.content-header{
+	order: 0;
+	flex-grow: 1;
+	width: 100%;
 }
 
-@media screen and (max-width:565px) {
-	#menu {
-		font-size: 0.5em;
-	}
-	.inner-div {
-		width: 100%;
-		padding: 2px;
-	}
-	.top-search {
-		width: 50px;
-		margin-left: 0px;
-	}
-	.img {
-		width: 30%;
-	}
+.content-photo{
+	width : 46%;
+	padding-top : 20px;
+	margin-left: 0;
+}
+
+.content-text{
+	padding : 3px;
+	width: 46%;
+	height : 500px;
+	background-color: lightgray;
+	margin-right: 35px;
+}
+
+.content-photo .content-text{
+	order : 1;
+}
+
+.content-post{
+	min-height: 50%;
+	margin: 1px;
+}
+
+.content-reply{
+	min-height: 43%;
+	margin: 1px;
+}
+
+.reply-input{
+	width: 80%;
+	min-height: 30px;
+	margin: 1px;
 }

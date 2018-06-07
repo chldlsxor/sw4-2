@@ -3,16 +3,17 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="flag" value="${false}"></c:set>
-
+<div class="row">
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
-			<div class="row">
-				<div>${boardDto.writer }</div>
+			<div>
+				<div><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.writer }</div>
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
+					<input id="boardNo" type="hidden" value="${boardDto.no }">
 						<c:forEach var="photoDto" items="${photoList[status.index]}">
-								<img class="img swiper-slide" src="${root }/board/image?name=${photoDto.name}">
+								<img class="imgs swiper-slide" src="${root }/board/image?name=${photoDto.name}">
 						</c:forEach>
-					</div>
+				</div>
 			           
 			        <!-- 스크롤바 -->
             		<div class="swiper-scrollbar"></div>
@@ -52,3 +53,4 @@
 				<input class="form-input" type="text" placeholder="댓글 달기...">
 			</div>
 		</c:forEach>
+</div>

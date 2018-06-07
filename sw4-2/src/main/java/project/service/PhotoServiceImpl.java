@@ -35,6 +35,10 @@ public class PhotoServiceImpl implements PhotoService {
 		}
 		return photoList;
 	}
+	
+	public List<PhotoDto> getPhoto(int no){
+		return photoDao.getPhoto(no);
+	}
 
 	@Override
 	public void writePhoto(PhotoDto photoDto, MultipartHttpServletRequest mRequest)

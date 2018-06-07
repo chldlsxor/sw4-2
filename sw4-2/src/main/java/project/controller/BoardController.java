@@ -78,4 +78,11 @@ public class BoardController {
 		return boardService.love(bno, id);
 	}
 	
+	@RequestMapping("/content_view")
+	public String contentView(int no, Model model) {
+		model.addAttribute("boardDto", boardService.getBoardView(no));
+		model.addAttribute("photoList", photoService.getPhoto(no));
+		return "board/content_view";
+	}
+	
 }

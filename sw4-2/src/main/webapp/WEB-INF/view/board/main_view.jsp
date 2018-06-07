@@ -6,6 +6,141 @@
 <html>
 <head>
 <style>
+#main-view{
+	display: flex;
+	flex-wrap: wrap;
+}
+/* 이미지 슬라이더 적용 */
+	.swiper-container {
+		width: 500px;
+		height: 500px;
+/* 		margin: auto; */
+		border: 1px solid black;
+	}
+	.swiper-container .swiper-slide>img {
+		height: 500px;
+		width: 500px;
+	}
+	
+/* 	레이어 프레임 적용 */
+        .mask {
+            position:absolute;
+            left:0;
+            top:0;
+            z-index:9999;
+            background-color:#000;
+            display:none;
+        }
+        .content-view {
+            display: none;
+            background-color: #ffffff;
+            height: 200px;
+            z-index:99999;
+        }
+
+/* 반응형 웹 */
+@media screen and (min-width:891px) {
+	
+	#main-view{
+		margin: auto;
+	}
+
+	.swiper-container {
+		width: 500px;
+		height: 500px;
+/* 		margin: auto; */
+		border: 1px solid black;
+	}
+	.swiper-container .swiper-slide>img {
+		height: 400px;
+		width: 400px;
+	}
+	.container-70 {
+		width: 70%;
+	}
+	label {
+		display: block;
+		font-size: 3em;
+		color: white;
+	}
+	#menu {
+		width: 100%;
+		margin-left: 0px;
+	}
+	#menu>a.right, #menu>a.inner-right {
+		margin-right: 10px;
+	}
+}
+
+@media screen and (max-width:890px) {
+
+		#main-view{
+		margin: 0;
+		}
+	
+		.swiper-container {
+		width: 400px;
+		height: 400px;
+/* 		margin: auto; */
+		border: 1px solid black;
+	}
+	.swiper-container .swiper-slide>img {
+		height: 300px;
+		width: 300px;
+	}
+
+	.inner-div {
+		width: 50%;
+		padding: 2px;
+		max-width: 50%;
+	}
+	#menu {
+		margin-left: 0px;
+		font-size: 1em;
+	}
+	.container-70 {
+		width: 100%;
+	}
+	.top-search {
+		width: auto;
+		margin-left: 0px;
+	}
+	.imgs {
+		width: 40%;
+	}
+}
+
+@media screen and (max-width:565px) {
+		#main-view{
+		margin: 0;
+		}
+		.swiper-container {
+		width: 300px;
+		height: 300px;
+		border: 1px solid black;
+	}
+	.swiper-container .swiper-slide>img {
+		height: 100px;
+		width: 200px;
+	}
+	#menu {
+		font-size: 0.5em;
+	}
+		#main-view {
+		width: 45%;
+	}
+	.inner-div {
+		width: 100%;
+		padding: 2px;
+	}
+	.top-search {
+		width: 50px;
+		margin-left: 0px;
+	}
+	.imgs {
+		width: 30%;
+	}
+}
 </style>
 <title>InStory</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
@@ -18,10 +153,50 @@
 <script src = "${root}/res/js/swiper.min.js"></script>
 
 <script>
+	//반응형 flex로 변경해야함
 	var flag = true;
 	var start = 1;
 	var isRun = false;
-	$(document).ready(function() {
+	
+    function wrapWindowByMask(){
+    	
+        $(document).on("mousewheel.disableScroll DOMMouseScroll.disableScroll touchmove.disableScroll", function(e) {
+            e.preventDefault();
+            return;
+        });
+        $(document).on("keydown.disableScroll", function(e) {
+            var eventKeyArray = [32, 33, 34, 35, 36, 37, 38, 39, 40];
+            for (var i = 0; i < eventKeyArray.length; i++) {
+                if (e.keyCode === eventKeyArray [i]) {
+                    e.preventDefault();
+                    return;
+                }
+            }
+        });
+    	
+        // 화면의 높이와 너비를 변수로 만듭니다.
+        var maskHeight = $(document).height();
+        var maskWidth = $(window).width();
+ 
+        // 마스크의 높이와 너비를 화면의 높이와 너비 변수로 설정합니다.
+        $('.mask').css({'width':maskWidth,'height':maskHeight});
+ 
+        // fade 애니메이션 : 1초 동안 검게 됐다가 80%의 불투명으로 변합니다.
+        $('.mask').fadeIn(1000);
+        $('.mask').fadeTo("slow",0.8);
+ 
+        // 레이어 팝업을 가운데로 띄우기 위해 화면의 높이와 너비의 가운데 값과 스크롤 값을 더하여 변수로 만듭니다.
+        var left = ($(window).scrollLeft() + ( $(window).width() - $('.content-view').width()) / 2 );
+        var top = ( $(window).scrollTop() +  50);
+ 
+        // css 스타일을 변경합니다.
+        $('.content-view').css({'left':left,'top':top, 'position':'absolute'});
+        
+        // 레이어 팝업을 띄웁니다.
+        $('.content-view').show();
+    }
+	
+	$(document).ready(function() {	
 	    var userNo = $("#userNo").val();
 	    var listCnt = $("#listCnt").val();
 	    console.log("userNo = ", userNo);
@@ -38,7 +213,7 @@
 									    
 									    isRun = true;
 									$.ajax({
-										url : "addlist",
+										url : "${root}/board/addlist",
 										data : {
 											"start" : start
 										},
@@ -71,6 +246,7 @@
 	}
 });
 
+	    
 	    //이벤트 바인딩
 	    $("body").on("click","img.love",loveClick);
 	    function loveClick(){
@@ -80,7 +256,7 @@
 			var mylove = now.parents("div.row").find(".loveCnt").text();
 			var userNo = $("#userNo").val();
 			$.ajax({
-						url : "good",
+						url : "${root}/board/good",
 						data : {
 							"bno" : bno,
 							"id" : userNo
@@ -95,6 +271,46 @@
 							now.parents("div.row").find(".loveCnt").text(result);
 						}
 					});
+	    };
+	    
+	    $("body").on("click","img.imgs",contentView);
+        // 뒤 검은 마스크를 클릭시 모두 제거하도록 처리합니다.
+ 		$("body").on("click",".mask",maskOff);
+        function maskOff(){
+ 			console.log("mask");
+            $(".mask").remove();
+            $('.content-view').remove();
+            $(document).off(".disableScroll");
+        };
+
+	    function contentView(){
+	    	var now = $(this);
+	    	var boardNo = $(this).prev().val();
+	    	$.ajax({
+	    		url:"${root}/board/content_view",
+	    		data: {"no":boardNo},
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				success : function(result){
+					console.log(result);
+                    result = $.parseHTML(result);
+                    var div = $("<div/>").html(result);
+					$("body").before(div);
+					// imgs를 클릭시 작동하며 검은 마스크 배경과 레이어 팝업을 띄웁니다.
+					wrapWindowByMask();
+					$(".mask").on("click",maskOff);
+					new Swiper(".swiper-container",{
+			        	  mode:'horizontal',
+				    	  loop: false,
+				    	//스크롤바 등록
+		                    scrollbar:{
+		                        el:".swiper-scrollbar",//대상
+		                        
+		                        //스크롤바 드래그 설정
+		                        draggable:true,
+		                    }
+			        });
+				}
+	    	});
 	    };
 	    
         new Swiper(".swiper-container",{
@@ -137,15 +353,14 @@
 	<div id="chaser">
 		<div class="row">
 			<div class="user-profile">
-				<img class="img-circle" src="http://via.placeholder.com/100x100">
+				<img class="img-circle" src="http://via.placeholder.com/50x50">
 			</div>
 			<div class="user-profile">
-				<p class="user-name">사용자 이름</p>
+				<p class="user-name">${userid }</p>
 			</div>
 			<hr>
 			<div>
-				<a class="pleft" href="#">스토리</a> <a class="pright" href="#">모두
-					보기</a>
+				<a class="pleft" href="#">스토리</a> <a class="pright" href="#">모두 보기</a>
 			</div>
 			<div>
 				<button type="button" class="profile-btn btn btn-info btn-lg"
@@ -154,15 +369,17 @@
 		</div>
 	</div>
 	<div id="main-view" class="container-70">
-		<div>session = ${userno }</div>
-		<div>session = ${userid }</div>
+<%-- 		<div>session = ${userno }</div> --%>
+<%-- 		<div>session = ${userid }</div> --%>
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
-			<div class="row">
-				<div>${boardDto.writer }</div>
+			<div class="row my-align">
+				<div><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.writer }</div>
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
+						<input id="boardNo" type="hidden" value="${boardDto.no }">
 						<c:forEach var="photoDto" items="${photoList[status.index]}">
-								<img class="img swiper-slide" src="${root }/board/image?name=${photoDto.name}" width="400px" height="400px;">
+<!-- 								크기 변경안됨 -->
+								<img class="imgs swiper-slide" src="${root }/board/image?name=${photoDto.name}" width="10px" height="10px;">
 						</c:forEach>
 					</div>
 			          
