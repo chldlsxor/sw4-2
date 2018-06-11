@@ -27,7 +27,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDto> addList(int start) {
 		// TODO Auto-generated method stub
-		int end = start + 1;
+		int end = start+1;
 		return boardDao.addlist(start, end);
 	}
 
