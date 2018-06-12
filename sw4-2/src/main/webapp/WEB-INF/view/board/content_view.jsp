@@ -23,13 +23,20 @@
 			${boardDto.content}
 		</div>
 		<div class="content-reply">
-			<p>댓글 자리</p>
-			<p>댓글 자리</p>
-			<p>댓글 자리</p>
-			<p>댓글 자리</p>
+			<c:forEach var="replyDto" items="${replyList}">
+				
+				<p class="reply-text">${replyDto.id} | ${replyDto.content}</p><img class="reply-love" src="${root}/res/image/outLineHeart.png"width="17px" height="17px">
+				<br>
+				<p>
+				${replyDto.reg }&nbsp;&nbsp;&nbsp;좋아요<i> 0</i>&nbsp;&nbsp;&nbsp;<a class="re-reply">답글 달기</a><input type="hidden" value="${replyDto.no }">
+				</p>
+				<a class="re-reply-view">답글 보기</a>
+				<br><br>
+			</c:forEach>
 		</div>
 		<div>
-			<input class="reply-input" type="text" placeholder="댓글 쓰기...">
+			<input class="content-view-bno" type="hidden" value="${boardDto.no }">
+			<input class="content-view-content reply-input" type="text" placeholder="댓글 쓰기...">
 			<button class="reply-btn btn btn-info">작성</button>
 		</div>
 	</div>
