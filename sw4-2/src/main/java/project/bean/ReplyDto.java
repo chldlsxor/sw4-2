@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ReplyDto {
-	int no,bno,gno;
+	int no,bno,gno, recnt;
 	String id,content,good,reg;
 }
