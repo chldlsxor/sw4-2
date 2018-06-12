@@ -31,6 +31,11 @@ public class AdminController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/")
+	public String admin() {
+		return "admin/admin_page";
+	}
+	
+	@RequestMapping("/member_list")
 	public ModelAndView member_list() {
 		return memberService.message("admin/member_list");
 	}

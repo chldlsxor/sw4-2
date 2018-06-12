@@ -5,7 +5,7 @@
 <html>
 
     <head>
-        <title>웹소켓 문제</title>
+        <title>메신져</title>
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <style>
