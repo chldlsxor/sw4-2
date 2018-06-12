@@ -65,8 +65,8 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public List<MemberDto> select_member(String name) {
-		return sqlSession.selectList("select_member", name);
+	public List<MemberDto> search_member(String name) {
+		return sqlSession.selectList("search_member", name);
 	}
 
 	

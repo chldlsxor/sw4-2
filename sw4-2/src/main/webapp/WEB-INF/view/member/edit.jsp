@@ -20,7 +20,7 @@
                 display: flex;
                 /*다음 줄로 넘어가는 것을 허용하겠다*/
                 flex-wrap: wrap;
-                width:100%;
+                width:80%;
             }
             aside{
                 width: 230px;
@@ -45,6 +45,7 @@
             .form-input{
             	margin : 10px;
             }
+            
             button{
                 width: 100%;
                 text-align: left;
