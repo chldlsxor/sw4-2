@@ -70,6 +70,12 @@ public class BoardDaoImpl implements BoardDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("getBoardView", no);
 	}
+
+	@Override
+	public List<BoardDto> getReportList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("reportList");
+	}
 	
 	
 	

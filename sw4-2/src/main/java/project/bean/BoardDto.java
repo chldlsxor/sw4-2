@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class BoardDto {
-	int no;
+	int no, report;
 	String writer,content,reg,good;
 }
