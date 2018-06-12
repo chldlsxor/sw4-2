@@ -106,11 +106,19 @@
             </div>
 			<div class="register-container">
                 <div class="register-wrapper">
-                    <h1>Instory 비밀번호 재설정</h1>
+                	<div class="row">
+                    	<h1>Instory 비밀번호 재설정</h1>
+                    </div>
                     <form action="reset_pw" method="post" id="reset">
-                        <input class="form-input" type="text" name="id" required readonly value="${id}">
-                        <input class="form-input" type="password" name="pw" id="pw" required placeholder="비밀번호">
-                        <input class="form-btn" type="submit" value="재설정">
+                    	<div class="row">
+                        	<input class="form-input" type="text" name="id" required readonly value="${id}">
+                        </div>
+                        <div class="row">
+                        	<input class="form-input" type="password" name="pw" id="pw" required placeholder="비밀번호">
+                        </div>
+                        <div class="row">
+                        	<input class="form-btn" type="submit" value="재설정">
+                        </div>
                     </form>
                     <hr>
                     재설정할 비밀번호를 입력하세용

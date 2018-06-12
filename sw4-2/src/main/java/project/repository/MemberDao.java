@@ -17,4 +17,6 @@ public interface MemberDao {
 	List<MemberDto> member_list();
 	boolean select_id(String id);
 	void edit(MemberDto memberDto);
+	boolean select_nick(String nick);
+	List<MemberDto> select_member(String name);
 }

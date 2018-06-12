@@ -47,7 +47,7 @@ public class MemberController {
 	
 	@RequestMapping("/message")
 	public ModelAndView message(HttpServletRequest request) {
-		return memberService.message();
+		return memberService.message("message");
 	}
 	
 	@RequestMapping("/send_message")
@@ -63,15 +63,34 @@ public class MemberController {
 	}
 	
 	@PostMapping("/edit")
-	public String edit(@ModelAttribute MemberDto memberDto, MultipartHttpServletRequest mRequest) throws IllegalStateException, IOException {
-		File dir = new File("E:/upload");
-		MultipartFile file = mRequest.getFile("f");
-		String fname = memberDto.getId()+"_"+file.getOriginalFilename();
-		File target = new File(dir, fname);
-		file.transferTo(target);
-		memberDto.setProfile(file.getOriginalFilename());
-		memberService.edit(memberDto);
-		return "member/edit";
+	public String edit(Model model, MemberDto memberDto, MultipartHttpServletRequest mRequest) throws IllegalStateException, IOException {
+		//닉네임변경이 없거나 중복검사
+		if(memberService.get(memberDto.getId()).getNick().equals(memberDto.getNick()) || !homeService.select_nick(memberDto.getNick())) {
+			log.info("프사={}",memberDto.getProfile());
+			log.info("프사={}",mRequest.getFile("f"));
+			log.info("프사={}",mRequest.getFile("f").getOriginalFilename());
+			//프로필사진 변경이 없는 경우
+			if(mRequest.getFile("f").getOriginalFilename()=="")
+				memberDto.setProfile(memberService.get(memberDto.getId()).getProfile());
+			else {
+//				File dir = new File("E:/upload");
+//				MultipartFile file = mRequest.getFile("f");
+//				String fname = memberDto.getId()+"_"+file.getOriginalFilename();
+//				File target = new File(dir, fname);
+//				file.transferTo(target);
+//				memberDto.setProfile(file.getOriginalFilename());
+				memberDto.setProfile(memberService.profile(mRequest, memberDto));
+			}
+			log.info("프사={}",memberDto.getProfile());
+			memberService.edit(memberDto);
+			model.addAttribute("msg", "회원정보가 변경되었습니다.");
+			model.addAttribute("go", "member/edit");
+			return "redirect:/result";
+		}else {
+			model.addAttribute("msg", memberDto.getNick()+"은(는) 이미 있는 닉네임");
+			model.addAttribute("go", "member/edit");
+			return "redirect:/result";
+		}
 	}
 	
 	@RequestMapping("/edit_pw")
@@ -81,17 +100,29 @@ public class MemberController {
 		return "member/edit_pw";
 	}
 	
-	@PostMapping("edit_pw")
-	public String edit_pw(Model model, @ModelAttribute MemberDto memberDto, HttpSession session, @RequestParam String new_pw) throws NoSuchAlgorithmException {
+	@PostMapping("/edit_pw")
+	public String edit_pw(Model model, MemberDto memberDto, HttpSession session, String new_pw) throws NoSuchAlgorithmException {
 		log.info("new_pw={}",new_pw);
 		if(homeService.login(session, memberDto)) {
 			memberDto.setPw(new_pw);
 			homeService.reset_pw(memberDto);
-			return "member/edit_pw";
+			model.addAttribute("msg", "비밀번호가 변경되었습니다.");
+			model.addAttribute("go", "member/edit_pw");
+			return "redirect:/result";
 		}else {
-			model.addAttribute("msg", "비번 틀렸씀");
+			model.addAttribute("msg", "이전 비밀번호가 다릅니다.");
 			model.addAttribute("go", "member/edit_pw");
 			return "redirect:/result";
 		}
+	}
+	
+	@RequestMapping("/list")
+	public String detail(String name) {
+		return "member/list";
+	}
+	
+	@PostMapping("/list")
+	public String detail() {
+		return "member/list";
 	}
 }

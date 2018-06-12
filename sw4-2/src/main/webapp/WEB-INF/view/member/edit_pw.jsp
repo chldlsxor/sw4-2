@@ -102,10 +102,6 @@
                 	<input type="hidden" name="id" value="${memberDto.id}">
                     <table>
                         <tbody>
-                            <tr height=100>
-                                <th>사진</th>
-                                <td><a>프로필 사진 수정</a></td>
-                            </tr>
                             <tr>
                                 <th>이전 비밀번호</th>
                                 <td><input class="form-input" type="password" name="pw" id="pw" required></td>

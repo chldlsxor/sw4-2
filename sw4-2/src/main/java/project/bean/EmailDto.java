@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class EmailDto {
-	String id,type;
+	String id;
 	int num;
 }
