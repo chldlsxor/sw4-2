@@ -1,35 +1,32 @@
 package project.controller;
 
-import java.util.List;
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import project.bean.BoardDto;
-import project.repository.BoardDao;
+import project.service.AdminService;
 import project.service.BoardService;
 import project.service.MemberService;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-/*	@Autowired
-	private AdminService adminService;*/
+	
+	@Autowired
+	private AdminService adminService;
 	
 	@Autowired
 	private MemberService memberService;
 	
-	/*@Autowired
-	private BoardService boardService;*/
-	
-	//나중에 지워
 	@Autowired
-	private BoardDao boardDao;
+	private BoardService boardService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -38,14 +35,43 @@ public class AdminController {
 		return memberService.message("admin/member_list");
 	}
 	
-	@RequestMapping("/report_list")
+	//신고글 확인하기
+	@GetMapping("/report_list")
 	public ModelAndView report_list() {
-		//service에 만들기
-		ModelAndView mv = new ModelAndView();
-		//나중에 memberList가 아니라 친구 리스트로 바꿔야 됨!!!!★☆
-		mv.addObject("reportList",boardDao.getReportList());
-		mv.setViewName("admin/report_list");
-		return mv;
+		log.info("신고 리스트 실행");
+		return boardService.get_report_list();
 	}
+	
+	//신고글 삭제하기 (그전에 알람 보내기)
+	@PostMapping("/report_list")
+	public String  delete_report(HttpServletRequest request) {
+		//가능하면 삭제확인 메세지 띄우기
+		log.info("삭제 요청 받음 {}", request.getParameter("id") );
+		adminService.delete_report(request);
+		return "redirect:report_list";
+	}
+	
+	
+	//사용자 상세보기
+	@RequestMapping("/detail_user")
+	public String  detail_user() {
+		return "detail_user";
+	}
+	
+	//사용자 수정하기
+	@RequestMapping("/edit_user")
+	public String  edit_user() {
+		adminService.edit_user();
+		return "edit_user";
+	}
+	
+	//사용자 삭제하기
+	@RequestMapping("/delete_user")
+	public String  delete_user() {
+		//가능하면 삭제 확인 메세지 띄우기
+		adminService.delete_member();
+		return "redirect:/";
+	}
+	
 	
 }

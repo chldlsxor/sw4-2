@@ -76,6 +76,11 @@ public class BoardDaoImpl implements BoardDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("reportList");
 	}
+
+	@Override
+	public void remove_board(int no) {
+		sqlSession.delete("remove_board", no);
+	}
 	
 	
 	

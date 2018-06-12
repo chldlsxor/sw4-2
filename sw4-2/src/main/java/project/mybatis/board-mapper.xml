@@ -39,5 +39,9 @@
 	<select id="reportList" resultType="BoardDto" >
 		select * from board where report > 0 order by report desc, reg asc 
 	</select>
+	
+	<delete id="remove_board" parameterType="int">
+		delete board where no = #{no}
+	</delete>
 
 </mapper>
