@@ -1,8 +1,8 @@
 package project.controller;
 
-import java.io.File;
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,11 +12,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -117,12 +114,22 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/list")
-	public String detail(String name) {
+	public String list(Model model, String name) {
+		List<MemberDto> list = null;
+		
+		if(name != null) {
+			list = memberService.search_member(name);
+		}
+		
+		model.addAttribute("list",list);
+		
 		return "member/list";
 	}
 	
-	@PostMapping("/list")
-	public String detail() {
-		return "member/list";
+	@RequestMapping("/detail")
+	public String detail(Model model, HttpSession session) {
+		MemberDto memberDto = memberService.get(session.getAttribute("userid").toString());
+		model.addAttribute("memberDto", memberDto);
+		return "member/detail";
 	}
 }

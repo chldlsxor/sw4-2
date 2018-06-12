@@ -86,4 +86,9 @@ public class MemberServiceImpl implements MemberService{
 		
 	}
 
+	@Override
+	public List<MemberDto> search_member(String name) {
+		return memberDao.search_member(name);
+	}
+
 }

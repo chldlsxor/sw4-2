@@ -43,7 +43,7 @@
 		update member set name=#{name}, nick=#{nick}, open=#{open}, profile=#{profile} where id=#{id}
 	</update>
 	
-	<select id="select_member" parameterType="String" resultType="memberDto">
+	<select id="search_member" parameterType="String" resultType="memberDto">
 		select * from member where name like #{name}||'%'
 	</select> 
 </mapper>

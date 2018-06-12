@@ -18,5 +18,5 @@ public interface MemberDao {
 	boolean select_id(String id);
 	void edit(MemberDto memberDto);
 	boolean select_nick(String nick);
-	List<MemberDto> select_member(String name);
+	List<MemberDto> search_member(String name);
 }

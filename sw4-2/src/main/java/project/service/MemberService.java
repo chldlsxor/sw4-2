@@ -1,11 +1,11 @@
 package project.service;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,4 +22,5 @@ public interface MemberService {
 	void friend();
 	void notice();
 	String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException;
+	List<MemberDto> search_member(String name);
 }
