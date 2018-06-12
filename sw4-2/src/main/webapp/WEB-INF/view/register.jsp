@@ -113,13 +113,25 @@
             </div>
 			<div class="register-container">
                 <div class="register-wrapper">
-                    <h1>Instory 회원가입</h1>
+                	<div class="row">
+                    	<h1>Instory 회원가입</h1>
+                    </div>
                     <form action="register" method="post" id="register">
-                        <input class="form-input" type="text" name="id" required value="${id}" readonly>
-                        <input class="form-input" type="text" name="name" id="name" required placeholder="이름">
-                        <input class="form-input" type="text" name="nick" id="nick" required placeholder="닉네임(영문숫자 2~60자리)">
-                        <input class="form-input" type="password" name="pw" id="pw" required placeholder="비밀번호(영문숫자  6~15자리)">
-                        <input class="form-btn" type="submit" value="가입">
+                    	<div class="row">
+                        	<input class="form-input" type="text" name="id" required value="${id}" readonly>
+                        </div>
+                        <div class="row">
+                        	<input class="form-input" type="text" name="name" id="name" required placeholder="이름">
+                        </div>
+                        <div class="row">
+                        	<input class="form-input" type="text" name="nick" id="nick" required placeholder="닉네임(영문숫자 2~60자리)">
+                        </div>
+                        <div class="row">
+                        	<input class="form-input" type="password" name="pw" id="pw" required placeholder="비밀번호(영문숫자  6~15자리)">
+                        </div>
+                        <div class="row">
+                        	<input class="form-btn" type="submit" value="가입">
+                        </div>
                     </form>
                     <hr>
                     가입하면 Instargram의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.

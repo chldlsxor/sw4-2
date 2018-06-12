@@ -17,7 +17,7 @@
                 margin: auto;
 /*                display: inline-block;*/
             }
-            .swiper-container, .login-container{
+            .swiper-container, .register-container{
                 width: 46%;
                 height: 550px;
                 margin: 10;
@@ -28,9 +28,10 @@
                 width: 100%;
                 height: 100%;
             }
-            .login-wrapper, .btn-wrapper{
+            .register-wrapper, .btn-wrapper{
                 margin: 10px;
             }
+
             @media screen and (max-width:768px){
                 .swiper-container{
                     display: none;
@@ -38,7 +39,7 @@
                 .container{
                     width: 320px;
                 }
-                .login-container{
+                .register-container{
                     width: 95%;
                 }
             }
@@ -46,7 +47,7 @@
                 .container{
                     width: 100%;
                 }
-                .login-container{
+                .register-container{
                     width: 95%;
                 }
             }
@@ -71,10 +72,39 @@
                         delay:1000,//전환 간격(밀리초)
                     },
                 });
+                
+                var handle;
+                var time=300;
+                function start(){
+                    handle = setInterval(decrease,1000);
+                }
+                
+                function decrease(){
+                    var min = document.querySelector("#min");
+                    var sec = document.querySelector("#sec");
+                    time--;
+                    min.innerText = parseInt(time/60)+"분";
+                    sec.innerText = parseInt(time%60)+"초";
+                    if(time==0){
+                    	clearInterval(handle);
+                    	min.innerText = "시간이 초과되었습니다.";
+                    	sec.innerText = "";
+                    }
+                }
+                
+                start();
+                
+                $("#check").on("submit",function(event){
+                   if(time==0){
+						event.preventDefault();
+						alert("시간초과됨")
+                   }
+				})
             });
         </script>
     </head>
     <body>
+    	
         <div class="empty-row"></div>
         <div class="container">
             <!-- 이미지 슬라이더 전체 공간 -->
@@ -88,31 +118,31 @@
                     <div class="swiper-slide"><img src="${root}/res/img/bg005.jpg"></div>
                 </div>
             </div>
-            <div class="login-container">
-                <div class="login-wrapper">
+			<div class="register-container">
+                <div class="register-wrapper">
                 	<div class="row">
-                    	<h1>Instory</h1>
+                    	<h1>Instory 이메일 인증</h1>
                     </div>
-                    <form action="login" method="post">
+                    <form action="email_check" method="post" id="check">
+                    	<input type="hidden" name="type" value="${type}">
                     	<div class="row">
-                        	<input class="form-input" type="text" placeholder="이메일" name="id" required value="${cookie.save.value}">
+                    		<input type="text" name="id" value="${id}" class="form-input" required readonly>
+                    	</div>
+                    	<div class="row">
+                        	<input type='text' placeholder='인증번호' name="num" required>
                         </div>
                         <div class="row">
-                        	<input class="form-input" type="password" placeholder="비밀번호" name="pw" required>
-                        </div>
-                        <div class="row left">
-							<input type="checkbox" name="save" value="remember"
-							<c:if test="${cookie.save.value != null}"> checked </c:if>>	아이디 저장
-						</div> 
-                        <div class="row">
-                        	<input class="form-btn" type="submit" value="로그인">
+                        	<input type="submit" value="인증번호 확인">
                         </div>
                     </form>
+                    <span id="min"></span>
+                    <span id="sec"></span>
+
                     <hr>
-                    <a href="email?type=reset_pw">비밀번호를 잊으셨나요?</a>
+                    Instory 이메일 인증창입니다~~
                 </div>
                 <div class="btn-wrapper">
-                    계정이 없으신가요?<a href="email?type=register">가입하기</a>
+                    <a href="login">로그인</a>
                 </div>
             </div>
         </div>

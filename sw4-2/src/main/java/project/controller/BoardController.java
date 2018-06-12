@@ -18,6 +18,7 @@ import project.bean.ContentDto;
 import project.service.BoardService;
 import project.service.ContentService;
 import project.service.PhotoService;
+import project.service.ReplyService;
 
 @Controller
 @RequestMapping("/board")
@@ -31,6 +32,9 @@ public class BoardController {
 	
 	@Autowired
 	private PhotoService photoService;
+	
+	@Autowired
+	private ReplyService replyService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -82,6 +86,7 @@ public class BoardController {
 	public String contentView(int no, Model model) {
 		model.addAttribute("boardDto", boardService.getBoardView(no));
 		model.addAttribute("photoList", photoService.getPhoto(no));
+		model.addAttribute("replyList", replyService.replyList(no));
 		return "board/content_view";
 	}
 	

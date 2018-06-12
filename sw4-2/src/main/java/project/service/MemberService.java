@@ -1,8 +1,12 @@
 package project.service;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import project.bean.MemberDto;
@@ -10,11 +14,12 @@ import project.bean.MemberDto;
 @Service
 public interface MemberService {
 	void logout(HttpServletRequest request);
-	ModelAndView message();
+	ModelAndView message(String view);
 	MemberDto get(String id);
 	void edit(MemberDto memberDto);
 	void editPassword();
 	void range();
-	void notice();
 	void friend();
+	void notice();
+	String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException;
 }

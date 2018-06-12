@@ -31,9 +31,7 @@
             .register-wrapper, .btn-wrapper{
                 margin: 10px;
             }
-            #check{
-                display: none;
-            }
+
             @media screen and (max-width:768px){
                 .swiper-container{
                     display: none;
@@ -75,46 +73,10 @@
                     },
                 });
                 
-                var handle;
-                var time=300;
-                function start(){
-                    handle = setInterval(decrease,1000);
-                }
-                
-                function decrease(){
-                    var min = document.querySelector("#min");
-                    var sec = document.querySelector("#sec");
-                    time--;
-                    min.innerText = parseInt(time/60)+"분";
-                    sec.innerText = parseInt(time%60)+"초";
-                    if(time==0){
-                    	clearInterval(handle);
-                    	min.innerText = "시간이 초과되었습니다.";
-                    	sec.innerText = "";
-                    }
-                }
-                
-                 $("#send").on("submit",function(event){
-                    event.preventDefault(); //기본 이벤트 수행 중지
-
-                    $.ajax({
-                        url:"email_send",
-                        data:$(this).serialize(),
-                    })
-                    
-                    $("#check").css("display","block")
-                    start();
-                    $("#send_btn").css("display","none");
-                    
-                    $("#id2").attr("value",$("#id").val())
-                    
-                    $("#check").on("submit",function(event){
-                        if(time==0){
-                        	event.preventDefault();
-                            alert("시간초과됨")
-                        }
-                    })
-                });
+                $("#email").on("submit",function(event){
+                  	var min = document.querySelector("#msg");
+                	min.innerText = "인증번호를 전송중입니다.";  
+                })
             });
         </script>
     </head>
@@ -135,22 +97,19 @@
             </div>
 			<div class="register-container">
                 <div class="register-wrapper">
-                    <h1>Instory 이메일 인증</h1>
-                    <form action="email_send" method="post" id="send">
+                	<div class="row">
+                    	<h1>Instory 이메일 인증</h1>
+                    </div>
+                    <form action="email" method="post" id="email">
                     	<input type="hidden" name="type" value="${type}">
-                    	<input class="form-input" type="text" name="id" id="id" placeholder="이메일">
-                    	<input type="submit" value="이메일 인증" class="form-btn" id="send_btn">
+                    	<div class="row">
+                    		<input class="form-input" type="email" name="id" placeholder="이메일" required>
+                    	</div>
+                    	<div class="row">
+                    		<input type="submit" value="이메일 인증" class="form-btn">
+                    	</div>
                     </form>
-                    
-                    <form action="email_check" method="post" id="check">
-	                    <input type="hidden" name="type" value="${type}">
-                    	<input type="hidden" name="id" id="id2">
-                        <input type='text' placeholder='인증번호' name="num">
-                        <input type="submit" value="인증번호 확인">
-                    </form>
-                    <span id="min"></span>
-                    <span id="sec"></span>
-
+                    <span id="msg"></span>
                     <hr>
                     Instory 이메일 인증창입니다~~
                 </div>
