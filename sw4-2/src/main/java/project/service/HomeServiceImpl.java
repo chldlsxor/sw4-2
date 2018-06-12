@@ -52,11 +52,14 @@ public class HomeServiceImpl implements HomeService{
 					session.setAttribute("userid", id);
 					
 					MemberDto mdto = memberDao.get(id);
+					//이름 : userno , 값 : 사용자 번호		
 					session.setAttribute("userno", mdto.getNo());
 
-					//이름 : power, 값 : 사용자 권한
-//					MemberDto mdto2 = memberDao.get(memberDto.getId());
-					session.setAttribute("power", mdto.getPower());
+					//이름 : userpwr, 값 : 사용자 권한
+					session.setAttribute("userpwr", mdto.getPower());
+					
+					//이름 : usernick, 값 : 사용자 닉네임
+					session.setAttribute("usernick", mdto.getPower());
 					return true;
 				}
 				else {																	//로그인 실패
@@ -83,11 +86,14 @@ public class HomeServiceImpl implements HomeService{
 			session.setAttribute("userid", id);
 			
 			MemberDto mdto = memberDao.get(id);
+			//이름 : userno , 값 : 사용자 번호		
 			session.setAttribute("userno", mdto.getNo());
 
-			//이름 : power, 값 : 사용자 권한
-//			MemberDto mdto2 = memberDao.get(memberDto.getId());
-			session.setAttribute("power", mdto.getPower());
+			//이름 : userpwr, 값 : 사용자 권한
+			session.setAttribute("userpwr", mdto.getPower());
+			
+			//이름 : usernick, 값 : 사용자 닉네임
+			session.setAttribute("usernick", mdto.getPower());
 			
 			if(save == null) {			//체크 안한 경우 ---> 쿠키 삭제(remove.jsp)
 				Cookie c = new Cookie("save", mdto.getId());

@@ -15,13 +15,17 @@
 	<!-- 나중에 회원하고 관리자하고 분리(리스트에 회원만 들어가게) -->
 		<c:forEach var = "board" items="${reportList }">
 			<tr>
-				<td> ${board.writer }</button></td>
+			
+				<td> ${board.writer }</td>
 				<td> ${board.content }</td>
 				<td> ${board.reg}</td>
 				<td> ${board.report }</td>
 				<td>
-					<button>알림 보내기</button>
-					<button>삭제하기</button>
+					<form action="report_list" method="post">
+						<input type = "hidden" name = "id" value = "${board.writer}">
+						<input type = "hidden" name = "no" value = "${board.no }">
+						<input type = "submit" value = "게시물 삭제하기">
+					</form>
 				</td>
 			</tr>
 		</c:forEach>

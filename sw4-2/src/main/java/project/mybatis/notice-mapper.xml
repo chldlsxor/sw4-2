@@ -3,5 +3,11 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.repository.NoticeDao">
-
+	<insert id="send_notice" parameterType="noticeDto">
+		insert into notice values(#{id}, #{content}, sysdate)
+	</insert>
+	
+	<select id = "get_my_notice" parameterType="String" resultType="noticeDto">
+	 	select * from notice where id = #{id} order by reg desc
+	</select>
 </mapper>

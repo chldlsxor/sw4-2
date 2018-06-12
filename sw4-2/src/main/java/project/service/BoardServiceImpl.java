@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
 
 import project.bean.BoardDto;
 import project.repository.BoardDao;
@@ -102,6 +103,19 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDto getBoardView(int no) {
 		// TODO Auto-generated method stub
 		return boardDao.getBoardView(no);
+	}
+
+	@Override
+	public ModelAndView get_report_list() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("reportList",boardDao.getReportList());
+		mv.setViewName("admin/report_list");
+		return mv;
+	}
+
+	@Override
+	public void remove_board(int no) {
+		boardDao.remove_board(no);
 	}
 
 }
