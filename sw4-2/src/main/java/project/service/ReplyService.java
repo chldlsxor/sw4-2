@@ -12,4 +12,6 @@ public interface ReplyService {
 	public List<ReplyDto> replyList(int bno);
 	public int getReplyNo();
 	public List<ReplyDto> reReplyView(int gno);
+	public int getReplyCnt(int no);
+	public void setReCnt(ReplyDto replyDto);
 }

@@ -5,11 +5,11 @@
 <mapper namespace="project.repository.ReplyDao">
 
 	<insert id="replyWrite" parameterType="ReplyDto">
-		insert into reply values(#{no},#{bno},#{id},#{content},null,sysdate,#{gno})
+		insert into reply values(#{no},#{bno},#{id},#{content},null,sysdate,#{gno},0)
 	</insert>
 	
 	<select id="replyList" parameterType="int" resultType="ReplyDto">
-		select * from reply where bno = #{bno} order by reg asc
+		select * from reply where bno = #{bno} and gno = 0 order by reg asc
 	</select>
 	
 	<select id="getReplyNo" resultType="int">
@@ -23,5 +23,13 @@
 	<select id="reReplyView" parameterType="int" resultType="ReplyDto">
 		select * from reply where gno = #{gno} order by reg asc
 	</select>
+	
+	<select id="getReplyCnt" parameterType="int" resultType="int">
+		select count(*) from reply where gno = #{no}
+	</select>
+	
+	<update id="setReCnt" parameterType="ReplyDto">
+		update reply set recnt = #{recnt} where no = #{no}
+	</update>
 
 </mapper>

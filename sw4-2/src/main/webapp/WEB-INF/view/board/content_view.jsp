@@ -28,9 +28,17 @@
 				<p class="reply-text">${replyDto.id} | ${replyDto.content}</p><img class="reply-love" src="${root}/res/image/outLineHeart.png"width="17px" height="17px">
 				<br>
 				<p>
-				${replyDto.reg }&nbsp;&nbsp;&nbsp;좋아요<i> 0</i>&nbsp;&nbsp;&nbsp;<a class="re-reply">답글 달기</a><input type="hidden" value="${replyDto.no }">
-				</p>
-				<a class="re-reply-view">답글 보기</a>
+				${replyDto.reg }&nbsp;&nbsp;&nbsp;좋아요<i> 0</i>&nbsp;&nbsp;&nbsp;
+				<c:if test="${replyDto.gno == 0 }">
+					<a class="re-reply">답글 달기</a>
+					<input type="hidden" value="${replyDto.no }">
+					<input type="hidden" value="${replyDto.id }">
+					</p>
+					<c:if test="${replyDto.recnt != 0 }">
+						<a class="re-reply-view">답글 보기(${replyDto.recnt})</a>
+					</c:if>
+					<a class="re-reply-hide" style="display: none">답글 접기</a>
+				</c:if>
 				<br><br>
 			</c:forEach>
 		</div>

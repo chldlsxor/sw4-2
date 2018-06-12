@@ -43,5 +43,17 @@ public class ReplyDaoImpl implements ReplyDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("reReplyView", gno);
 	}
+
+	@Override
+	public int getReplyCnt(int no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("getReplyCnt", no);
+	}
+
+	@Override
+	public void setReCnt(ReplyDto replyDto) {
+		// TODO Auto-generated method stub
+		sqlSession.update("setReCnt", replyDto);
+	}
 	
 }

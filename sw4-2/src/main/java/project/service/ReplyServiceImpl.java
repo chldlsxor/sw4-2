@@ -20,6 +20,13 @@ public class ReplyServiceImpl implements ReplyService{
 		int no = getReplyNo();
 		replyDto.setNo(no);
 		replyDao.replyWrite(replyDto);
+		int gno = replyDto.getGno();
+		if(gno != 0) {
+			ReplyDto rdto = replyDao.getReply(gno);
+			System.out.println(replyDao.getReplyCnt(rdto.getNo()));
+			rdto.setRecnt(replyDao.getReplyCnt(rdto.getNo()));
+			replyDao.setReCnt(rdto);
+		}
 		return replyDao.getReply(no);
 	}
 
@@ -39,6 +46,18 @@ public class ReplyServiceImpl implements ReplyService{
 	public List<ReplyDto> reReplyView(int gno) {
 		// TODO Auto-generated method stub
 		return replyDao.reReplyList(gno);
+	}
+
+	@Override
+	public int getReplyCnt(int no) {
+		// TODO Auto-generated method stub
+		return replyDao.getReplyCnt(no);
+	}
+
+	@Override
+	public void setReCnt(ReplyDto replyDto) {
+		// TODO Auto-generated method stub
+		replyDao.setReCnt(replyDto);
 	}
 
 }

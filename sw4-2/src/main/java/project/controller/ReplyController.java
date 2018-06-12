@@ -36,7 +36,7 @@ public class ReplyController {
 		return "board/addreply";
 	}
 	
-	@RequestMapping("re-reply-view")
+	@RequestMapping("/re-reply-view")
 	public String reReplyView(int gno, Model model) { 
 		model.addAttribute("replyList", replyService.reReplyView(gno));
 		return "board/addreply";

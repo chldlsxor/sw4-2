@@ -75,6 +75,7 @@
 	var flag = true;
 	var start = 1;
 	var isRun = false;
+	var gno = 0;
 
 	function wrapWindowByMask() {
 
@@ -128,7 +129,6 @@
 	});
 	
 	$(document).ready(function() {
-						
 						var userNo = $("#userNo").val();
 						var listCnt = $("#listCnt").val();
 						console.log("userNo = ", userNo);
@@ -245,6 +245,7 @@
 											$(".reply-btn").on("click",replyWrite);
 											$(".re-reply-view").on("click",reReplyView);
 											$(".re-reply").on("click",reReply);
+											$(".re-reply-hide").on("click",reReplyHide);
 											
 											// imgs를 클릭시 작동하며 검은 마스크 배경과 레이어 팝업을 띄웁니다.
 											wrapWindowByMask();
@@ -269,7 +270,9 @@
 							var userId = "${userid}";
 							var bno = $(".content-view-bno").val();
 							var content = $(".content-view-content").val();
-							var gno = 0;
+							if(content.charAt(0) != "@"){
+								gno = 0;
+							}
 							$.ajax({
 								url : "${root}/reply/write",
 								data:{
@@ -289,6 +292,8 @@
 											$(".content-view-content").val("");
 											$(".re-reply-view").on("click",reReplyView);
 											$(".re-reply").on("click",reReply);
+											$(".re-reply-hide").on("click",reReplyHide);
+											gno = 0;
 										}
 									});
 								}
@@ -297,10 +302,34 @@
 						
 						function reReplyView(){
 							console.log("답글 보기")
+							var now = $(this);
+							var reNo = $(this).prev().find("input").val();
+							$.ajax({
+								url : "${root}/reply/re-reply-view",
+								data : {"gno" : reNo},
+								success : function(result){
+									var replyView = result;
+									result = $.parseHTML(result);
+									var addP = $("<p/>").html(result);
+									now.next().show();
+									now.after(addP);
+									now.hide();
+								}
+							});
 						};
 						
+						function reReplyHide(){
+							$(this).prev().remove();
+							$(this).prev().show();
+							$(this).hide();
+						}
+						
 						function reReply(){
-							console.log("답글 쓰기")
+							console.log("답글 쓰기");
+							gno = $(this).next().val();
+							var id = $(this).next().next().val();
+							$(".reply-input").val("@"+id);
+							console.log(gno);
 						}
 						
 						new Swiper(".swiper-container", {
