@@ -26,9 +26,9 @@ public class ContentServiceImpl implements ContentService {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Override
-	public ContentDto list() {
+	public ContentDto list(String key) {
 		// TODO Auto-generated method stub
-		List<BoardDto> conList = boardService.list();
+		List<BoardDto> conList = boardService.list(key);
 		ContentDto contentDto = new ContentDto();
 		contentDto.setListBoardDto(conList);
 		contentDto.setListPhotoDto(photoService.getPhoto(conList));
@@ -37,9 +37,9 @@ public class ContentServiceImpl implements ContentService {
 	}
 
 	@Override
-	public ContentDto addList(int start) {
+	public ContentDto addList(int start, String key) {
 		// TODO Auto-generated method stub
-		List<BoardDto> conList = boardService.addList(start);
+		List<BoardDto> conList = boardService.addList(start,key);
 		ContentDto contentDto = new ContentDto();
 		contentDto.setListBoardDto(conList);
 		contentDto.setListPhotoDto(photoService.getPhoto(conList));

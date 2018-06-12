@@ -17,8 +17,6 @@
 	border: 1px solid black;
 }
 
-
-
 .swiper-wrapper{
 	
 }
@@ -46,15 +44,21 @@
 
 /* 반응형 웹 */
 @MEDIA SCREEN AND (MIN-WIDTH:891PX) {
-
+	#menu > i{
+		font-size: 2em;
+	}
 }
 
 @MEDIA SCREEN AND (MAX-WIDTH:890PX) {
-
+		#menu > i{
+		font-size: 1.5em;
+	}
 }
 
 @MEDIA SCREEN AND (MAX-WIDTH:565PX) {
-
+		#menu > i{
+		font-size: 0.9em;
+	}
 }
 </style>
 <title>InStory</title>
@@ -129,6 +133,7 @@
 	});
 	
 	$(document).ready(function() {
+		$("#search").hide();
 						var userNo = $("#userNo").val();
 						var listCnt = $("#listCnt").val();
 						console.log("userNo = ", userNo);
@@ -139,17 +144,18 @@
 											if (scrollT >= scrollH * 0.5
 													&& flag) { // 스크롤바가 맨 아래에 위치할 때
 												flag = false;
-												start = start + 2;
+												start = start + 3;
 												if (isRun == true) {
 													return;
 												}
-
+												
 												isRun = true;
 												$
 														.ajax({
 															url : "${root}/board/addlist",
 															data : {
-																"start" : start
+																"start" : start,
+																"key" : "${param.key}"
 															},
 															success : function(
 																	result,
@@ -343,7 +349,12 @@
 								draggable : true,
 							}
 						});
-
+						
+						//검색 기능 
+						$(".fa-search").on("click",function(){
+							$("#search").slideToggle();
+						});
+		
 					});
 </script>
 </head>
@@ -356,19 +367,20 @@
 			<p>|</p>
 			<a href="${root }/board/list" class="left"> InStory</a>
 
-			<form action="#">
-				<input class="top-search" type="text" placeholder="검색">
-			</form>
-
-			<a href="#" class="right"><i class="fa fa-history"></i></a> &nbsp;
-			&nbsp; <a href="#" class="inner-right"><i class="fa fa-heart"></i></a>
-			&nbsp; &nbsp; <a href="#" class="inner-right"><i
-				class="fa fa-user"></i></a>
+			<a class="right"><i class="fa fa-search"></i></a>&nbsp;&nbsp;<a class="inner-right"><i class="fa fa-history"></i></a> &nbsp;
+			&nbsp; <a class="inner-right"><i class="fa fa-heart"></i></a>
+			&nbsp; &nbsp; <a class="inner-right"><i class="fa fa-user"></i></a>
 		</div>
 	</header>
 	<div class="empty-row"></div>
 	<div class="empty-row"></div>
 	<div class="empty-row"></div>
+		<form action="list">
+			<div id="search">
+					<input class="top-search" type="text" name="key" placeholder="검색">
+					<button class="btn-search btn btn-success" type="submit">검색!</button>
+			</div>
+		</form>
 	<session>
 	<div id="chaser">
 		<div class="row">
@@ -403,7 +415,6 @@
 					<div class="swiper-wrapper">
 						<input id="boardNo" type="hidden" value="${boardDto.no }">
 						<c:forEach var="photoDto" items="${photoList[status.index]}">
-							<!-- 								크기 변경안됨 -->
 							<img class="imgs swiper-slide"
 								src="${root }/board/image?name=${photoDto.name}" width="10px"
 								height="10px;">
@@ -444,6 +455,9 @@
 			</div>
 			</div>
 		</c:forEach>
+	</div>
+	<div id="add-view">
+		<button class="btn btn-info">글 더 보기</button>
 	</div>
 	</session>
 	<footer> 제작사 등등 </footer>

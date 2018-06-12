@@ -39,8 +39,8 @@ public class BoardController {
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/list")
-	public String list(Model model) {
-		ContentDto contentDto = contentService.list();
+	public String list(Model model, String key) {
+		ContentDto contentDto = contentService.list(key);
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
 		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));
@@ -50,8 +50,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/addlist")
-	public String addlist(int start, Model model) {
-		ContentDto contentDto = contentService.addList(start);
+	public String addlist(int start, Model model, String key) {
+		ContentDto contentDto = contentService.addList(start, key);
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
 		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));

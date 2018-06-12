@@ -5,7 +5,7 @@
 <mapper namespace="project.repository.BoardDao">
 
 	<select id="boardList" resultType="BoardDto">
-		select * from (select * from board order by reg desc) where rownum between 1 and 5
+		select * from (select * from board order by reg desc) where rownum between 1 and 3
 	</select>
 	
 	<select id="addList" resultType="BoardDto" parameterType="map">
@@ -43,5 +43,13 @@
 	<delete id="remove_board" parameterType="int">
 		delete board where no = #{no}
 	</delete>
+	
+	<select id="searchList" resultType="BoardDto" parameterType="String">
+		select * from (select * from board order by reg desc) where content like '%'||#{key}||'%' and rownum between 1 and 5
+	</select>
+	
+	<select id="addSearchList" resultType="BoardDto" parameterType="map">
+		select * from (select no, writer, content, reg, good, Row_NUMBER() OVER(order by reg desc) rnum from board) where rnum between #{start} and #{end} and content like '%'||#{key}||'%'
+	</select>
 
 </mapper>

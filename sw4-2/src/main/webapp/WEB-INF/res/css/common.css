@@ -287,12 +287,7 @@ header {
 /* #menu>a.inner-right { */
 /* 	margin-left: 0em; */
 /* } */
-/* 검색창 스타일*/
-.top-search {
-	width: 300%;
-	text-align: center;
-	margin-left: 1em;
-}
+
 
 /* 삐져나와서 패딩처리 본문 내용 */
 #main-view>div {
@@ -407,4 +402,18 @@ header {
 	width:100%;
 	float:left;
 }
+
+/* 검색창 스타일 */
+#search{
+	display: flex;
+}
+
+/* 검색창 스타일*/
+.top-search {
+	text-align: center;
+	flex-grow: 0.8;
+	margin-left: 10%;
+}
+
+
 

@@ -21,15 +21,21 @@ public class BoardServiceImpl implements BoardService {
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	public List<BoardDto> list() {
-		return boardDao.list();
+	public List<BoardDto> list(String key) {
+		if(key != null)
+			return boardDao.searchList(key);
+		else
+			return boardDao.list();
 	}
 
 	@Override
-	public List<BoardDto> addList(int start) {
+	public List<BoardDto> addList(int start, String key) {
 		// TODO Auto-generated method stub
-		int end = start+1;
-		return boardDao.addlist(start, end);
+		int end = start+2;
+		if(key != null)
+			return boardDao.addSearchList(start, end, key);
+		else
+			return boardDao.addlist(start, end);
 	}
 
 	@Override
