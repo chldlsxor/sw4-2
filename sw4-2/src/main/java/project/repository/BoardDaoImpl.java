@@ -81,6 +81,22 @@ public class BoardDaoImpl implements BoardDao{
 	public void remove_board(int no) {
 		sqlSession.delete("remove_board", no);
 	}
+
+	@Override
+	public List<BoardDto> searchList(String key) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("searchList", key);
+	}
+
+	@Override
+	public List<BoardDto> addSearchList(int start, int end, String key) {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("key", key);
+		return sqlSession.selectList("addSearchList", map);
+	}
 	
 	
 	

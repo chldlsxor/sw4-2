@@ -10,8 +10,8 @@ import project.bean.BoardDto;
 @Service
 public interface BoardService {
 
-	public List<BoardDto> list();
-	public List<BoardDto> addList(int start);
+	public List<BoardDto> list(String key);
+	public List<BoardDto> addList(int start, String key);
 	public int write(BoardDto boardDto);
 	public String[] loveList(BoardDto boardDto);
 	public int loveCnt(String[] loveList);

@@ -11,7 +11,9 @@ import project.bean.BoardDto;
 public interface BoardDao {
 
 	public List<BoardDto> list();
+	public List<BoardDto> searchList(String key);
 	public List<BoardDto> addlist(int start, int end);
+	public List<BoardDto> addSearchList(int start, int end, String key);
 	public void write(BoardDto boardDto);
 	public int getNo();
 	public String goodList(int no);
