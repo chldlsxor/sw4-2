@@ -51,12 +51,19 @@ public class HomeController {
 	
 	//로그인(post)
 	@PostMapping("/login")
-	public String login(Model model, HttpSession session, @ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException{
-		boolean login = homeService.login(session, memberDto);
-		if(login)
-			return "redirect:/";
-		else {
-			model.addAttribute("msg", "비번 틀렸씀");
+	public String login(HttpServletRequest request, HttpServletResponse response, Model model, HttpSession session, MemberDto memberDto, String save) throws NoSuchAlgorithmException{
+		if(homeService.select_id(memberDto.getId())) {
+			boolean login = homeService.login(session, memberDto, request, response, save);
+			if(login) {
+				return "redirect:/";
+			}
+			else {
+				model.addAttribute("msg", "비밀번호가 틀렸습니다.");
+				model.addAttribute("go", "login");
+				return "redirect:/result";
+			}
+		}else {
+			model.addAttribute("msg", "존재하지 않는 아이디입니다.");
 			model.addAttribute("go", "login");
 			return "redirect:/result";
 		}
@@ -84,31 +91,43 @@ public class HomeController {
 	
 	//회원가입(post)
 	@PostMapping("/register")
-	public String register(@ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException {
-		homeService.register(memberDto);
-		return "redirect:/login";
+	public String register(MemberDto memberDto,Model model) throws NoSuchAlgorithmException {
+		if(homeService.select_nick(memberDto.getNick())) {
+			model.addAttribute("msg", memberDto.getNick()+"은(는) 이미 있는 닉네임");
+			model.addAttribute("go", "register?id="+memberDto.getId());
+			return "redirect:/result";
+		}else {
+			homeService.register(memberDto);
+			model.addAttribute("msg", "회원가입이 완료되었습니다.");
+			model.addAttribute("go", "login");
+			return "redirect:/result";
+		}
 	}
 	
 	@RequestMapping("/email")
-	public String email(Model model, @RequestParam String type) {
+	public String email(Model model, String type) {
 		log.info("param={}",type);
 		model.addAttribute("type", type);
 		return "email";
 	}
 	
-	@RequestMapping("/email_send")
-	public void email_send(@ModelAttribute EmailDto emailDto) {
+	@PostMapping("/email")
+	public String email_send(Model model, EmailDto emailDto, String type) {
 		log.info("id={}",emailDto.getId());
-		log.info("param={}",emailDto.getType());
-		if(emailDto.getType().equals("register")) {
+		log.info("param={}",type);
+		if(type.equals("register")) {
 			if(homeService.select_id(emailDto.getId())) {//이미있는아이디
 				//이미있는 아이디임
+				model.addAttribute("msg", emailDto.getId()+"은(는) 이미 존재하는 아이디입니다.");
+				model.addAttribute("go", "email?type="+type);
+				return "redirect:/result";
 			}else {//없는아이디, 회원가입 가능
 				emailService.remove(emailDto.getId());
 				emailDto.setNum(emailService.send_email(emailDto.getId()));
 				log.info("num={}",emailDto.getNum());
 				emailService.plus(emailDto);
-				log.info("된다");
+				model.addAttribute("id",emailDto.getId());
+				return "redirect:/email_check?type="+type;
 			}
 		}else {
 			if(homeService.select_id(emailDto.getId())) {
@@ -116,39 +135,54 @@ public class HomeController {
 				emailDto.setNum(emailService.send_email(emailDto.getId()));
 				log.info("num={}",emailDto.getNum());
 				emailService.plus(emailDto);
+				model.addAttribute("id",emailDto.getId());
+				return "redirect:/email_check?type="+type;
 			}else {
 				//없는아이디임
+				model.addAttribute("msg", emailDto.getId()+"은(는) 이미 존재하지 않는 아이디입니다.");
+				model.addAttribute("go", "email?type="+type);
+				return "redirect:/result";
 			}
 		}
 	}
 	
+	@RequestMapping("/email_check")
+	public String email_check(Model model, String type, String id) {
+		model.addAttribute("type", type);
+		model.addAttribute("id", id);
+		
+		return "email_check";
+	}
+	
 	@PostMapping("/email_check")
-	public String email_check(@ModelAttribute EmailDto emailDto, Model model) {
+	public String email_check(EmailDto emailDto, Model model, String type) {
 		log.info("id={}",emailDto.getId());
 		log.info("num={}",emailDto.getNum());
 		if(emailService.check(emailDto)) {
 //			emailService.check_ok(emailDto);
 			model.addAttribute("id", emailDto.getId());
-			return "redirect:/"+emailDto.getType();
+			return "redirect:/"+type;
 		}
 		else {
-			model.addAttribute("msg", "인증번호 틀렸씀");
-			model.addAttribute("go", "email?type="+emailDto.getType());
+			model.addAttribute("msg", "인증번호가 틀렸습니다.");
+			model.addAttribute("go", "email?type="+type);
 			return "redirect:/result";
 		}
 	}
 	
-	//비번 찾기
+	//비번 재설정
 	@RequestMapping("/reset_pw")
 	public String reset_pw(String id, Model model) {
 		model.addAttribute("id", id);
 		return "reset_pw";
 	}
 	
-	//비번 찾기(post)
+	//비번 재설정(post)
 	@PostMapping("/reset_pw")
-	public String reset_pw(@ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException {
+	public String reset_pw(MemberDto memberDto, Model model) throws NoSuchAlgorithmException {
 		homeService.reset_pw(memberDto);		
-		return "redirect:/login";
+		model.addAttribute("msg", "비밀번호가 재설정 되었습니다.");
+		model.addAttribute("go", "login");
+		return "redirect:/result";
 	}
 }

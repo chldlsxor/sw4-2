@@ -34,8 +34,38 @@ public class HomeServiceImpl implements HomeService{
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 
+	public boolean login(HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException {
+		//비밀번호 암호화
+				String id = memberDto.getId();
+				String encpw = sha256.encrypt(memberDto.getPw(), memberDao.getSalt(id), memberDao.getLoop(id));
+				
+				log.info("아이디 {}, 비번 {}", id, encpw);
+				
+				memberDto.setPw(encpw);
+
+				//아이디화 암호화된 비번으로 로그인
+				//성공하면 true 아니면 false
+				if(memberDao.login(memberDto)) {									//로그인 성공
+					
+					//세션에 로그인 성공에 관련된 데이터를 추가
+					//이름 : userid, 값 : 사용자ID
+					session.setAttribute("userid", id);
+					
+					MemberDto mdto = memberDao.get(id);
+					session.setAttribute("userno", mdto.getNo());
+
+					//이름 : power, 값 : 사용자 권한
+//					MemberDto mdto2 = memberDao.get(memberDto.getId());
+					session.setAttribute("power", mdto.getPower());
+					return true;
+				}
+				else {																	//로그인 실패
+					return false;
+				}
+	}
+	
 	@Override
-	public boolean login(HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException{
+	public boolean login(HttpSession session, MemberDto memberDto, HttpServletRequest request, HttpServletResponse response, String save) throws NoSuchAlgorithmException{
 		//비밀번호 암호화
 		String id = memberDto.getId();
 		String encpw = sha256.encrypt(memberDto.getPw(), memberDao.getSalt(id), memberDao.getLoop(id));
@@ -56,8 +86,21 @@ public class HomeServiceImpl implements HomeService{
 			session.setAttribute("userno", mdto.getNo());
 
 			//이름 : power, 값 : 사용자 권한
-			/*MemberDto mdto2 = memberDao.get(memberDto.getId());
-			session.setAttribute("power", memberDto.getPower());*/
+//			MemberDto mdto2 = memberDao.get(memberDto.getId());
+			session.setAttribute("power", mdto.getPower());
+			
+			if(save == null) {			//체크 안한 경우 ---> 쿠키 삭제(remove.jsp)
+				Cookie c = new Cookie("save", mdto.getId());
+				c.setPath(request.getContextPath());
+				c.setMaxAge(0);
+				response.addCookie(c);
+			}else {							//체크 한 경우 -----> 쿠키 생성(create.jsp)
+				Cookie c = new Cookie("save", mdto.getId());
+				c.setPath(request.getContextPath());	//프로젝트 전체에서 사용하도록 설정
+				c.setMaxAge(4 * 7 * 24 * 60 * 60);//4주뒤에 뵙겠습니다
+				response.addCookie(c);
+			}
+			
 			return true;
 		}
 		else {																	//로그인 실패
@@ -92,4 +135,10 @@ public class HomeServiceImpl implements HomeService{
 	public boolean select_id(String id) {
 		return memberDao.select_id(id);
 	}
+
+	@Override
+	public boolean select_nick(String nick) {
+		return memberDao.select_nick(nick);
+	}
+	
 }

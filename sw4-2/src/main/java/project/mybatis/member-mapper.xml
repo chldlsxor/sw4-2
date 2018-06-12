@@ -31,6 +31,10 @@
 		select id from member where id=#{id}
 	</select>
 	
+	<select id="select_nick" parameterType="String" resultType="String">
+		select nick from member where nick=#{nick}
+	</select>
+	
 	<select id="member_get" parameterType="String" resultType="memberDto">
 		select * from member where id = #{id}
 	</select>
@@ -38,4 +42,8 @@
 	<update id="edit" parameterType="memberDto">
 		update member set name=#{name}, nick=#{nick}, open=#{open}, profile=#{profile} where id=#{id}
 	</update>
+	
+	<select id="select_member" parameterType="String" resultType="memberDto">
+		select * from member where name like #{name}||'%'
+	</select> 
 </mapper>

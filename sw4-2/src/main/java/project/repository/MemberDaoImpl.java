@@ -59,5 +59,15 @@ public class MemberDaoImpl implements MemberDao{
 		sqlSession.update("edit",memberDto);
 	}
 
+	@Override
+	public boolean select_nick(String nick) {
+		return sqlSession.selectOne("select_nick", nick)==null?false:true;
+	}
+
+	@Override
+	public List<MemberDto> select_member(String name) {
+		return sqlSession.selectList("select_member", name);
+	}
+
 	
 }
