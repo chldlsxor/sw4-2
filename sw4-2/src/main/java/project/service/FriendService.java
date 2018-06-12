@@ -1,13 +1,13 @@
-package project.repository;
+package project.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import project.bean.FriendDto;
 
-@Repository
-public interface FriendDao {
+@Service
+public interface FriendService{
 	void follow(FriendDto friendDto);
 	void unfollow(FriendDto friendDto);
 	List<FriendDto> follow_list(String id);

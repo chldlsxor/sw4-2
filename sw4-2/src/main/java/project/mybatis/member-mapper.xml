@@ -39,6 +39,10 @@
 		select * from member where id = #{id}
 	</select>
 	
+	<select id="member_get2" parameterType="String" resultType="memberDto">
+		select * from member where nick = #{nick}
+	</select>
+	
 	<update id="edit" parameterType="memberDto">
 		update member set name=#{name}, nick=#{nick}, open=#{open}, profile=#{profile} where id=#{id}
 	</update>

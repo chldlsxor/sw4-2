@@ -35,6 +35,11 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
+	public MemberDto get2(String nick) {
+		return sqlSession.selectOne("member_get2", nick);
+	}
+	
+	@Override
 	public String getSalt(String id) {
 		return sqlSession.selectOne("get_salt", id);
 	}
@@ -68,6 +73,8 @@ public class MemberDaoImpl implements MemberDao{
 	public List<MemberDto> search_member(String name) {
 		return sqlSession.selectList("search_member", name);
 	}
+
+	
 
 	
 }

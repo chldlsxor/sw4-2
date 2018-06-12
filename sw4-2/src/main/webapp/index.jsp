@@ -11,4 +11,4 @@
 <c:if test="${userpwr=='관리자'}">
 	<h1><a href = "/sw4-2/admin/">admin_page</a></h1>
 </c:if>
-<h1><a href = "/sw4-2/member/detail">내정보</a></h1>
+<h1><a href = "/sw4-2/member/detail?nick=${usernick}">내정보</a></h1>

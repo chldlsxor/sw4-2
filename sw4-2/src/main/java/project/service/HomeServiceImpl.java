@@ -34,37 +34,23 @@ public class HomeServiceImpl implements HomeService{
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	public boolean login(HttpSession session, MemberDto memberDto) throws NoSuchAlgorithmException {
+	public boolean pw_check(MemberDto memberDto) throws NoSuchAlgorithmException {
 		//비밀번호 암호화
-				String id = memberDto.getId();
-				String encpw = sha256.encrypt(memberDto.getPw(), memberDao.getSalt(id), memberDao.getLoop(id));
-				
-				log.info("아이디 {}, 비번 {}", id, encpw);
-				
-				memberDto.setPw(encpw);
+		String id = memberDto.getId();
+		String encpw = sha256.encrypt(memberDto.getPw(), memberDao.getSalt(id), memberDao.getLoop(id));
+		
+		log.info("아이디 {}, 비번 {}", id, encpw);
+		
+		memberDto.setPw(encpw);
 
-				//아이디화 암호화된 비번으로 로그인
-				//성공하면 true 아니면 false
-				if(memberDao.login(memberDto)) {									//로그인 성공
-					
-					//세션에 로그인 성공에 관련된 데이터를 추가
-					//이름 : userid, 값 : 사용자ID
-					session.setAttribute("userid", id);
-					
-					MemberDto mdto = memberDao.get(id);
-					//이름 : userno , 값 : 사용자 번호		
-					session.setAttribute("userno", mdto.getNo());
-
-					//이름 : userpwr, 값 : 사용자 권한
-					session.setAttribute("userpwr", mdto.getPower());
-					
-					//이름 : usernick, 값 : 사용자 닉네임
-					session.setAttribute("usernick", mdto.getPower());
-					return true;
-				}
-				else {																	//로그인 실패
-					return false;
-				}
+		//아이디화 암호화된 비번으로 로그인
+		//성공하면 true 아니면 false
+		if(memberDao.login(memberDto)) {//로그인 성공
+			return true;
+		}
+		else {//로그인 실패
+			return false;
+		}
 	}
 	
 	@Override
@@ -79,7 +65,7 @@ public class HomeServiceImpl implements HomeService{
 
 		//아이디화 암호화된 비번으로 로그인
 		//성공하면 true 아니면 false
-		if(memberDao.login(memberDto)) {									//로그인 성공
+		if(memberDao.login(memberDto)) {//로그인 성공
 			
 			//세션에 로그인 성공에 관련된 데이터를 추가
 			//이름 : userid, 값 : 사용자ID
@@ -93,7 +79,7 @@ public class HomeServiceImpl implements HomeService{
 			session.setAttribute("userpwr", mdto.getPower());
 			
 			//이름 : usernick, 값 : 사용자 닉네임
-			session.setAttribute("usernick", mdto.getPower());
+			session.setAttribute("usernick", mdto.getNick());
 			
 			if(save == null) {			//체크 안한 경우 ---> 쿠키 삭제(remove.jsp)
 				Cookie c = new Cookie("save", mdto.getId());
@@ -109,7 +95,7 @@ public class HomeServiceImpl implements HomeService{
 			
 			return true;
 		}
-		else {																	//로그인 실패
+		else {//로그인 실패
 			return false;
 		}
 	}

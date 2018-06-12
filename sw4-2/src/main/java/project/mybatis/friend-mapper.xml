@@ -8,10 +8,26 @@
 	</insert>
 	
 	<delete id="unfollow" parameterType="friendDto">
-		delete friend where follow=#{follow}, follower=#{follower}
+		delete friend where follow=#{follow} and follower=#{follower}
 	</delete>
 	
-	<select id="list" parameterType="String">
+	<select id="follow_list" parameterType="String" resultType="friendDto">
 		select follow from friend where follower=#{follower}
+	</select>
+	
+	<select id="follower_list" parameterType="String" resultType="friendDto">
+		select follower from friend where follow=#{follow}
+	</select>
+	
+	<select id="follow_cnt" parameterType="String" resultType="int">
+		select count(*) from friend where follower=#{follower}
+	</select>
+	
+	<select id="follower_cnt" parameterType="String" resultType="int">
+		select count(*) from friend where follow=#{follow}
+	</select>
+	
+	<select id="search" parameterType="friendDto" resultType="friendDto">
+		select * from friend where follow=#{follow} and follower=#{follower} 
 	</select>
 </mapper>

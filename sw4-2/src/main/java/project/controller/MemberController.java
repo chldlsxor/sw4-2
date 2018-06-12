@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import project.bean.FriendDto;
 import project.bean.MemberDto;
+import project.service.FriendService;
 import project.service.HomeService;
 import project.service.MemberService;
 import project.service.MessageService;
@@ -33,6 +35,8 @@ public class MemberController {
 	
 	@Autowired
 	private HomeService homeService;
+	
+	@Autowired FriendService friendService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -98,9 +102,9 @@ public class MemberController {
 	}
 	
 	@PostMapping("/edit_pw")
-	public String edit_pw(Model model, MemberDto memberDto, HttpSession session, String new_pw) throws NoSuchAlgorithmException {
+	public String edit_pw(Model model, MemberDto memberDto, String new_pw) throws NoSuchAlgorithmException {
 		log.info("new_pw={}",new_pw);
-		if(homeService.login(session, memberDto)) {
+		if(homeService.pw_check(memberDto)) {
 			memberDto.setPw(new_pw);
 			homeService.reset_pw(memberDto);
 			model.addAttribute("msg", "비밀번호가 변경되었습니다.");
@@ -122,14 +126,32 @@ public class MemberController {
 		}
 		
 		model.addAttribute("list",list);
+		model.addAttribute("name",name);
 		
 		return "member/list";
 	}
 	
 	@RequestMapping("/detail")
-	public String detail(Model model, HttpSession session) {
-		MemberDto memberDto = memberService.get(session.getAttribute("userid").toString());
+	public String detail(FriendDto friendDto, Model model, String nick,HttpSession session) {
+		MemberDto memberDto = memberService.get2(nick);
 		model.addAttribute("memberDto", memberDto);
+		
+		int follow_cnt = friendService.follow_cnt(memberDto.getId());
+		int follower_cnt = friendService.follower_cnt(memberDto.getId());
+		model.addAttribute("follow_cnt",follow_cnt);
+		model.addAttribute("follower_cnt",follower_cnt);
+		
+		friendDto.setFollower(session.getAttribute("userid").toString());
+		log.info(friendDto.getFollower());
+		friendDto.setFollow(memberDto.getId());
+		log.info(friendDto.getFollow());
+		boolean follow_check = friendService.search(friendDto);
+		model.addAttribute("follow_check",follow_check);
 		return "member/detail";
+	}
+	
+	@PostMapping("follow")
+	public void follow(FriendDto friendDto) {
+		friendService.follow(friendDto);
 	}
 }
