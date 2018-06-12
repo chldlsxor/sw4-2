@@ -16,6 +16,7 @@ public interface MemberService {
 	void logout(HttpServletRequest request);
 	ModelAndView message(String view);
 	MemberDto get(String id);
+	MemberDto get2(String nick);
 	void edit(MemberDto memberDto);
 	void editPassword();
 	void range();

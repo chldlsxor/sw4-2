@@ -74,6 +74,11 @@ public class MemberServiceImpl implements MemberService{
 	public MemberDto get(String id) {
 		return memberDao.get(id);
 	}
+	
+	@Override
+	public MemberDto get2(String nick) {
+		return memberDao.get2(nick);
+	}
 
 	@Override
 	public String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException {
@@ -90,5 +95,6 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberDto> search_member(String name) {
 		return memberDao.search_member(name);
 	}
+
 
 }

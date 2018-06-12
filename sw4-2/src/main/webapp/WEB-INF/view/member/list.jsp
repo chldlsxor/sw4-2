@@ -25,7 +25,7 @@
     	<div class="container-80">
     		<form action="list" method="get">
 	        	<div class="row">
-	        		<input value="${p.keyword}" type="text" name="name" placeholder="검색어" required>
+	        		<input value="${name}" type="text" name="name" placeholder="검색어" required>
 	        		<input type="submit" value="검색">
 	        	</div>
 	        </form>
@@ -46,7 +46,7 @@
 							<td align="left">
 								
 								<!-- 제목 : 누르면 detail 페이지로 이동 -->
-								<a href="detail?no=${memberDto.no}">
+								<a href="detail?nick=${memberDto.nick}">
 									${memberDto.nick}
 								</a>
 
