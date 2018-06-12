@@ -35,5 +35,9 @@
 	<select id="listCnt" resultType="int">
 		select count(no) from board
 	</select>
+	
+	<select id="reportList" resultType="BoardDto" >
+		select * from board where report > 0 order by report desc, reg asc 
+	</select>
 
 </mapper>

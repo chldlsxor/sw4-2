@@ -10,17 +10,15 @@
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <style>
         	#result{
-        		max-height:60%;
-         		overflow-y:scroll; 
+        		/* max-height:100%;  */
         	}
         	.not-read{
-    			color: purple;
+    			color: fuchsia;
     		}
     		.message-header{
-    			position: fixed;
-    			left:0;
-    			right: 0;
-    			top: 0;
+    			position: fixed; 
+    			width:100%;
+    			min-width : 350px;
     			padding: 10px;
     			background-color: lightpink;
     		}
@@ -34,13 +32,22 @@
     		}
     		.input-message{
     			position: fixed;
-    			left:0;
+    			left: 0;
     			right: 0;
     			bottom: 0;
     		}
     		.message-container > .message-header{
-    			 width: 350;
-    			 height : 700;
+    			 width: 350px;
+    			 height : 700px;
+    		}
+    		.result-message{
+    			height: 100%;   		
+    		}
+    		.my-message{
+    			background-color: lightpink;
+    		}
+    		.your-message{
+    			background-color: lightyellow;
     		}
         </style>
         
@@ -80,7 +87,8 @@
         		
         		websocket.onopen = function(e){
         			$("#result").append("<h4>서버에 접속하였습니다</h4>");
-        			$("#result").scrollTop($("#result")[0].scrollHeight);
+        			//스크롤바 맨 아래로
+        			$("body").scrollTop($("body")[0].scrollHeight);
 
         		};
         		websocket.onclose = function(e){
@@ -109,10 +117,10 @@
         				ismassage = false;
         				console.log(send==$("#userid").val().trim());
         				if(send==$("#userid").val().trim()){
-        					$("#result").append("<div class = 'message not-read' align = 'right'>"+e.data+"</div>")
+        					$("#result").append("<div align= 'right' class = 'message not-read'><span class = 'my-message'>"+e.data+"</span></div>")
         				}
         				else{
-        					$("#result").append("<div class = 'message not-read' align = 'left'>"+e.data+"</div>")
+        					$("#result").append("<div align= 'left' class = 'message not-read'><span class = 'my-message'>"+e.data+"</span></div>")
         				}
         				console.log($("#result"));
         				console.log($("#result")[0]);
@@ -139,9 +147,9 @@
     	<input type="hidden" id  = "userid" value = "${userid }">
     	<div class="container-fluid">
     		<header class = "message-header">
-    			<div class = "container-100">
+    			<div class = "container-100">  
     				<div class = "userimg-container">
-    					<img alt="profile" src="http://via.placeholder.com/100x100">
+    					<img class = "img-circle" alt="profile" src="http://via.placeholder.com/100x100">
     				</div>
     				<div class = "userinfo-container">	
     					<div>ID : ${receive_info.id }</div>
@@ -152,39 +160,41 @@
     			</div>
     			
     		</header>
-    		
-    		
     		<div class="empty-row"></div>	
     		<div class="empty-row"></div>
     		<div class="empty-row"></div>
-    		<div class="row">
+    		<section class = "">
+    		<div class="row" >
     			<div id="result" class="col-md-offset-1 col-md-10">
     				<!-- DB리스트에 있는 메세지 리스트는 이 창이 열린 순간 다 읽음 처리 되므로 read 표시 안함 -->
     				<c:forEach var = "message" items="${message_list}">
     					<!-- 내가 보낸 메세지 리스트 -->
     					<c:if test="${userid == message.send }">
     						<c:if test="${message.read==0 }">
-    							<div align="right" class = "message not-read">${message.content }</div>
+    							<div align= "right" class = "message not-read"><span class = "my-message">${message.content }</span></div>
     						</c:if>
     						<c:if test="${message.read==1 }">
-    							<div align="right" class="message"> ${message.content }</div>
+    							<div align="right" class = "message"> <span class = "right my-message">${message.content }</span></div>
     						</c:if>					
 						</c:if>
 						<!-- 내가 받은 메세지 리스트 (창여는 순간 무조건 읽음 처리)-->
 						<c:if test="${messageto == message.send }">
-							<div align="left" class = "message">${message.content }</div>
+							<div  align= "left" class= "message"><span class = "your-message">${message.content }</span></div>
 						</c:if>
 					</c:forEach>
     			</div>
     		</div>
-    		<div class="row input-message">
-    			<div class="col-md-offset-1 col-md-8">		
-    				<input id="chat" type="text" placeholder="입력.." class="form-control">
-    			</div>
-    			<div class="col-md-2">
-    				<input id="send" type="button" value="전송" class="btn btn-default btn-block">
-    			</div>
-    		</div>
+    		<div class="empty-row"></div>
+    		<div class="empty-row"></div>
+    		</section>
+	    		<div class="row input-message">
+	    			<div class="col-md-offset-1 col-md-8">		
+	    				<input id="chat" type="text" placeholder="입력.." class="form-control">
+	    			</div>
+	    			<div class="col-md-2">
+	    				<input id="send" type="button" value="전송" class="btn btn-default btn-block">
+	    			</div>
+	    		</div>
     	</div>
     </body>
 </html>
