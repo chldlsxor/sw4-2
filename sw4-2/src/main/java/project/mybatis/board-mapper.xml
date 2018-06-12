@@ -17,7 +17,7 @@
 	</select>
 	
 	<insert id="write" parameterType="BoardDto">
-		insert into board values(#{no}, #{writer}, #{content}, sysdate, null)
+		insert into board values(#{no}, #{writer}, #{content}, sysdate, null,0)
 	</insert>
 	
 	<update id="good" parameterType="map">
