@@ -24,6 +24,14 @@
 	<context:component-scan base-package="project.controller"></context:component-scan>
 	<context:component-scan base-package="spring.exception"></context:component-scan>
 
+	<!-- interceptor 설정 -->
+	<mvc:interceptors>
+	 	<mvc:interceptor>
+	 		<mvc:mapping path="/**"/>
+	 		<bean class = "project.interceptor.CountInterceptor"></bean>
+	 	</mvc:interceptor>
+	 </mvc:interceptors>
+
     <mvc:annotation-driven />
     
     <!-- 		파일 업로드 -->
