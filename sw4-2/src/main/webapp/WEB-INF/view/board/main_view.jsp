@@ -42,6 +42,10 @@
 	z-index: 99999;
 }
 
+.text-red {
+    color: red;
+}
+
 /* 반응형 웹 */
 @MEDIA SCREEN AND (MIN-WIDTH:891PX) {
 	#menu > i{
@@ -108,7 +112,7 @@
 		});
 
 		// fade 애니메이션 : 1초 동안 검게 됐다가 80%의 불투명으로 변합니다.
-		$('.mask').fadeIn(1000);
+		$('.mask').fadeIn(500);
 		$('.mask').fadeTo("slow", 0.8);
 
 		// 레이어 팝업을 가운데로 띄우기 위해 화면의 높이와 너비의 가운데 값과 스크롤 값을 더하여 변수로 만듭니다.
@@ -132,7 +136,12 @@
 		$(".swiper-container").height(w);
 	});
 	
+	//해쉬태그 색칠
+
+	
 	$(document).ready(function() {
+		var w = $(".swiper-container").width();
+		$(".swiper-container").height(w);
 		$("#search").hide();
 						var userNo = $("#userNo").val();
 						var listCnt = $("#listCnt").val();
