@@ -1,15 +1,18 @@
 package project.controller;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
 
 import project.service.AdminService;
 import project.service.BoardService;
@@ -76,6 +79,11 @@ public class AdminController {
 		//가능하면 삭제 확인 메세지 띄우기
 		adminService.delete_member();
 		return "redirect:/";
+	}
+	
+	@RequestMapping("/admin_count")
+	public String admin_count(HttpServletRequest request) {
+		return "admin/admin_count";
 	}
 	
 	

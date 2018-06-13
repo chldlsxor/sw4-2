@@ -12,3 +12,7 @@
 	<h1><a href = "/sw4-2/admin/">admin_page</a></h1>
 </c:if>
 <h1><a href = "/sw4-2/member/detail?nick=${usernick}">내정보</a></h1>
+<h1>userid : ${userid}</h1>
+<h1>session-id : ${pageContext.session.id}</h1>
+<h1>applicaion: ${servletContext.applicaion.scMap}</h1>
+<h1><%=application.getAttribute("scMap") %></h1>

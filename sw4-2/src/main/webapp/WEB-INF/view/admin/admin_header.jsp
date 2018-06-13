@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
+<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
         <title>관리자 페이지</title>
@@ -11,62 +13,55 @@
                 flex-wrap: wrap; 
             } 
             
-            header, footer{
+            .admin_header, .admin_footer{
                 min-height: 70px;
                 width: 100%;
             }            
-            header{
+            .admin_header{
                 background-color : lightpink;
+                color: white;
+                padding-left: 25px;
             }
-            footer{
+            .admin_footer{
                 background-color: azure;
             }
-            nav{
+            .admin_nav{
                 background-color: lightyellow;
                 width: 150px;
-                min-height: 500px;
-                
+                min-height: 500px;                
             }
-            nav > a{
+            .admin_nav > a{
             	color : indianred;
             	text-decoration: none;
             	display : block;
+            	padding : 5px;
             }
             
             
-            section{
+            .admin_section{
                background-color : aliceblue;
                 flex-grow: 1;
                 min-height: 500px;
             }
-            
-            
-            /*미디어 스크린 중간 사이즈 하나더 만들기  */
+        
             @media screen and (max-width:1000px){
-                header{
+                .admin_header{
                     order:1;
                 }
-                nav{
+                .admin_nav{
                     width: 100%;
                     min-height: 70px;
                     order: 2;
                 }
-                nav > a{
-            		display : inline-block;
-           		}
-                nav > a.left{
-            		margin-right: 1.5em;
-            	}
-                section{
+                .admin_section{
                     width: 100%;
                     order:3;
                 }
-                footer{
+                .admin_footer{
                     order:4;
                 }             
             } 
-            
-           
+      
             #hamburger, #hamburger + label{
                 display:none;
                 color:indianred;
@@ -76,6 +71,7 @@
             @media screen and (max-width:1000px){
                 #hamburger + label{
                     display:block;
+                    padding: 5px;
                 }
                 
                 #hamburger ~ a{
@@ -83,16 +79,15 @@
                 }
 
                 #hamburger:checked ~ a{
-                    display:block;
+                    display:inline-block;
                 }
             }     
-             
-            
-              
+      
         </style>
         
         <!--Jquery를 사용하기 위해 라이브러리를 불러오도록 설정-->
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
+<%--         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css"> --%>
         
         <!--스크립트 작성 공간-->
         <script>            
@@ -102,15 +97,15 @@
         </script>
     </head>
     <body>
-	    <header>
+	    <header class = "admin_header">
 	    	<h2>InStory</h2>
 	    </header>
-	    <nav>
+	    <nav class = "admin_nav">
 	   		<input type="checkbox" id="hamburger">
             <label for="hamburger">&#8801;</label>
-	    	<a href = "member_list" class = "left">회원 리스트</a>
-	    	<a href = "report_list" class = "left">신고 글 리스트</a>
-	    	<a href = "#" class = "left">통계 확인하기</a>
-	    	<a href = "#" class = "left">내용 검색하기</a>
+	    	<a href = "member_list">회원 리스트</a>
+	    	<a href = "report_list">신고 글 리스트</a>
+	    	<a href = "admin_count">통계 확인하기</a>
+	    	<a href = "#">내용 검색하기</a>
 	    </nav>
-	    <section>
+	    <section class = "admin_section">
