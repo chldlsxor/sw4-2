@@ -51,7 +51,10 @@
                 background-color: white;
                 border: none;
             }
-            
+            .now{
+            	font-weight: bold;
+                border-left: 3px solid black;
+            }
             @media screen and (max-width:768px){
                 aside{
                     display: none;
@@ -93,7 +96,7 @@
                 <table>
                     <tbody>
                         <tr><button id="edit">프로필 편집</button></tr>
-                        <tr><button id="edit_pw">비밀번호 변경</button></tr>
+                        <tr><button id="edit_pw" class="now">비밀번호 변경</button></tr>
                     </tbody>
                 </table>
             </aside>

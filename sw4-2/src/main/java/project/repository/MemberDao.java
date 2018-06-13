@@ -12,7 +12,7 @@ public interface MemberDao {
 	boolean login(MemberDto memberDto);
 	void reset_pw(MemberDto memberDto);
 	MemberDto get(String id);
-	MemberDto get2(String nick);
+	MemberDto get_by_nick(String nick);
 	String getSalt(String id);
 	int getLoop(String id);
 	List<MemberDto> member_list();

@@ -2,6 +2,7 @@ package project.controller;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -133,7 +134,8 @@ public class MemberController {
 	
 	@RequestMapping("/detail")
 	public String detail(FriendDto friendDto, Model model, String nick,HttpSession session) {
-		MemberDto memberDto = memberService.get2(nick);
+		log.info("nick={}",nick);
+		MemberDto memberDto = memberService.get_by_nick(nick);
 		model.addAttribute("memberDto", memberDto);
 		
 		int follow_cnt = friendService.follow_cnt(memberDto.getId());
@@ -151,7 +153,78 @@ public class MemberController {
 	}
 	
 	@PostMapping("follow")
-	public void follow(FriendDto friendDto) {
+	public String follow(FriendDto friendDto, Model model) {
 		friendService.follow(friendDto);
+		MemberDto memberDto = memberService.get(friendDto.getFollow());
+		model.addAttribute("nick",memberDto.getNick());
+		return "redirect:detail";
+	}
+	
+	@PostMapping("unfollow")
+	public String unfollow(FriendDto friendDto, Model model) {
+		friendService.unfollow(friendDto);
+		MemberDto memberDto = memberService.get(friendDto.getFollow());
+		model.addAttribute("nick",memberDto.getNick());
+		return "redirect:detail";
+	}
+	
+	@RequestMapping("/follow_list")
+	public String follow_list(Model model, String name, String nick) {
+		//닉네임을 받아와서 회원정보를 뽑음
+		MemberDto memberDto = memberService.get_by_nick(nick);
+		
+		List<String> follow_list = new ArrayList<>();
+		//그 회원의 팔로우 리스트를 뽑음
+		if(name != null) {
+			//검색어있을 경우
+			follow_list=friendService.follow_list_search(memberDto.getId(), name);
+		}else {
+			follow_list=friendService.follow_list(memberDto.getId());
+		}
+		
+		List<MemberDto> list = new ArrayList<>();
+		
+		for(String id : follow_list) {
+			log.info("id={}",id);
+			list.add(memberService.get(id));
+		}
+		
+		model.addAttribute("nick",nick);
+		model.addAttribute("list",list);
+		model.addAttribute("name",name);
+		int follow_cnt = friendService.follow_cnt(memberDto.getId());
+		model.addAttribute("follow_cnt",follow_cnt);
+		
+		return "member/follow_list";
+	}
+	
+	@RequestMapping("/follower_list")
+	public String follower_list(Model model, String name, String nick) {
+		//닉네임을 받아와서 회원정보를 뽑음
+		MemberDto memberDto = memberService.get_by_nick(nick);
+		
+		List<String> follower_list = new ArrayList<>();
+		//그 회원의 팔로우 리스트를 뽑음
+		if(name != null) {
+			//검색어있을 경우
+			follower_list=friendService.follower_list_search(memberDto.getId(), name);
+		}else {
+			follower_list=friendService.follower_list(memberDto.getId());
+		}
+		
+		List<MemberDto> list = new ArrayList<>();
+		
+		for(String id : follower_list) {
+			log.info("id={}",id);
+			list.add(memberService.get(id));
+		}
+		
+		model.addAttribute("nick",nick);
+		model.addAttribute("list",list);
+		model.addAttribute("name",name);
+		int follower_cnt = friendService.follower_cnt(memberDto.getId());
+		model.addAttribute("follower_cnt",follower_cnt);
+		
+		return "member/follower_list";
 	}
 }

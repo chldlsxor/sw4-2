@@ -11,11 +11,11 @@
 		delete friend where follow=#{follow} and follower=#{follower}
 	</delete>
 	
-	<select id="follow_list" parameterType="String" resultType="friendDto">
+	<select id="follow_list" parameterType="String" resultType="String">
 		select follow from friend where follower=#{follower}
 	</select>
 	
-	<select id="follower_list" parameterType="String" resultType="friendDto">
+	<select id="follower_list" parameterType="String" resultType="String">
 		select follower from friend where follow=#{follow}
 	</select>
 	
@@ -29,5 +29,13 @@
 	
 	<select id="search" parameterType="friendDto" resultType="friendDto">
 		select * from friend where follow=#{follow} and follower=#{follower} 
+	</select>
+	
+	<select id="follow_list_search" parameterType="map" resultType="String">
+		select id from (select * from member inner join friend on (member.id = friend.follow) where name like #{name}||'%') where follower=#{follower}
+	</select>
+	
+	<select id="follower_list_search" parameterType="map" resultType="String">
+		select id from (select * from member inner join friend on (member.id = friend.follower) where name like #{name}||'%') where follow=#{follow}
 	</select>
 </mapper>

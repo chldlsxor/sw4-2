@@ -25,6 +25,7 @@
             .select-container{
                 width: 100%;
                 height: 60px;
+                text-align: center;
             }
             .img-container{
                 width:100%;
@@ -64,10 +65,26 @@
                 width: 100%;
                 border-collapse: collapse;
             }
+            
+             .img-container > table{
+             	height: 100%;
+             }
+            
             td{
             	padding:5px;
             }
             
+            button{
+                padding: 10px;
+                background-color: white;
+                border: none;
+                height: 100%;
+            }
+            
+            .now{
+            	font-weight: bold;
+                border-top: 3px solid black;
+            }
         </style>
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -79,25 +96,20 @@
             $(document).ready(function() {
                 var w = $(".img").width();
                 $(".img").height(w);
-                
-/*                 $("#follow").on("submit",function(event){
-                	event.preventDefault();
-                	
-                	$.ajax({
-                        url:"member/follow",
-                        data:$(this).serialize()
-                    })
-                }); */
-                $("#unfollow").on("click",function(){
-                	alert("bbb");
-                });
             });
         </script>
     </head>
     <body>
         <div class="container-80">
             <div class="main-container">
-                <div class="profile"><img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}"></div>
+                <div class="profile">
+                	<c:if test="${memberDto.profile=='pic.jpg'}">
+						<img class="img-circle" src="${root}/res/img/${memberDto.profile}">
+					</c:if>
+					<c:if test="${memberDto.profile!='pic.jpg'}">
+						<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
+					</c:if>
+                </div>
                 <div class="content">
                 	<div class="empty-row"></div>
                     <table>
@@ -110,12 +122,14 @@
 									</c:if>
 									<c:if test="${userid != memberDto.id}">
 										<c:if test="${follow_check}">
-											<form>
-												<input type="button" value="언팔로우" id="unfollow">
+											<form action="unfollow" method="post">
+												<input type="hidden" name="follower" value="${userid}">
+												<input type="hidden" name="follow" value="${memberDto.id}">
+												<input type="submit" value="언팔로우">
 											</form>
 										</c:if>
 										<c:if test="${!follow_check}">
-											<form action="follow" method="post" id="follow">
+											<form action="follow" method="post">
 												<input type="hidden" name="follower" value="${userid}">
 												<input type="hidden" name="follow" value="${memberDto.id}">
 												<input type="submit" value="팔로우">
@@ -125,12 +139,12 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>${memberDto.id}(이름)</td>
+                                <td>${memberDto.name}(이름)</td>
                                 <td>게시물 0</td>
                             </tr>
                             <tr>
-                                <td>팔로워 ${follower_cnt} (링크)</td>
-                                <td>팔로우 ${follow_cnt} (링크)</td>
+                                <td><a href="follower_list?nick=${memberDto.nick}">팔로워 ${follower_cnt} (링크)</a></td>
+                                <td><a href="follow_list?nick=${memberDto.nick}">팔로우 ${follow_cnt} (링크)</a></td>
                             </tr>
                         </tbody>
                     </table>
@@ -138,7 +152,12 @@
             </div>
             <c:if test="${userid == memberDto.id}">
 	            <div class="select-container">
-	                
+	                <table>
+	                    <tbody>
+	                        <tr><button id="board" class="now">게시물</button></tr>
+	                        <tr><button id="save">저장됨</button></tr>
+	                    </tbody>
+	                </table>
 	            </div>
 			</c:if>
             <div class="img-container">

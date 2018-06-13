@@ -1,6 +1,8 @@
 package project.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +27,12 @@ public class FriendDaoImpl implements FriendDao{
 	}
 
 	@Override
-	public List<FriendDto> follow_list(String id) {
+	public List<String> follow_list(String id) {
 		return sqlSession.selectList("follow_list", id);
 	}
 
 	@Override
-	public List<FriendDto> follower_list(String id) {
+	public List<String> follower_list(String id) {
 		return sqlSession.selectList("follower_list", id);
 	}
 
@@ -48,5 +50,21 @@ public class FriendDaoImpl implements FriendDao{
 	public boolean search(FriendDto friendDto) {
 		return sqlSession.selectOne("search",friendDto)==null?false:true;
 	}
+
+	@Override
+	public List<String> follow_list_search(String follower, String name) {
+//		Object[] args = {follower, name};
+		Map<String, String> map = new HashMap<>();
+		map.put("follower", follower);
+		map.put("name", name);
+		return sqlSession.selectList("follow_list_search", map);
+	}
 	
+	@Override
+	public List<String> follower_list_search(String follow, String name) {
+		Map<String, String> map = new HashMap<>();
+		map.put("follow", follow);
+		map.put("name", name);
+		return sqlSession.selectList("follower_list_search", map);
+	}
 }

@@ -39,7 +39,7 @@
 		select * from member where id = #{id}
 	</select>
 	
-	<select id="member_get2" parameterType="String" resultType="memberDto">
+	<select id="member_get_by_nick" parameterType="String" resultType="memberDto">
 		select * from member where nick = #{nick}
 	</select>
 	
