@@ -25,12 +25,12 @@ public class FriendServiceImpl implements FriendService{
 	}
 
 	@Override
-	public List<FriendDto> follow_list(String id) {
+	public List<String> follow_list(String id) {
 		return friendDao.follow_list(id);
 	}
 
 	@Override
-	public List<FriendDto> follower_list(String id) {
+	public List<String> follower_list(String id) {
 		return friendDao.follower_list(id);
 	}
 
@@ -47,6 +47,16 @@ public class FriendServiceImpl implements FriendService{
 	@Override
 	public boolean search(FriendDto friendDto) {
 		return friendDao.search(friendDto);
+	}
+
+	@Override
+	public List<String> follow_list_search(String follower, String name) {
+		return friendDao.follow_list_search(follower, name);
+	}
+	
+	@Override
+	public List<String> follower_list_search(String follow, String name) {
+		return friendDao.follower_list_search(follow, name);
 	}
 
 }

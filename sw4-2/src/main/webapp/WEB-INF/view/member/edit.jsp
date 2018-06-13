@@ -54,6 +54,11 @@
                 border: none;
             }
             
+            .now{
+            	font-weight: bold;
+                border-left: 3px solid black;
+            }
+            
             @media screen and (max-width:768px){
                 aside{
                     display: none;
@@ -113,7 +118,7 @@
             <aside>
                 <table>
                     <tbody>
-                        <tr><button id="edit">프로필 편집</button></tr>
+                        <tr><button id="edit" class="now">프로필 편집</button></tr>
                         <tr><button id="edit_pw">비밀번호 변경</button></tr>
                     </tbody>
                 </table>
@@ -123,7 +128,14 @@
                     <table>
                         <tbody>
                             <tr height=100>
-                                <th><img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50" height="50" id="profile"></th>
+                                <th>
+                                	<c:if test="${memberDto.profile=='pic.jpg'}">
+										<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="50" height="50" id="profile">
+									</c:if>
+									<c:if test="${memberDto.profile!='pic.jpg'}">
+										<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50" height="50" id="profile">
+									</c:if>
+                                </th>
                                 <td><input type="file" name="f" id="f" onchange="LoadImg(this)"></td>
                             </tr>
                             <tr>

@@ -35,8 +35,8 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
-	public MemberDto get2(String nick) {
-		return sqlSession.selectOne("member_get2", nick);
+	public MemberDto get_by_nick(String nick) {
+		return sqlSession.selectOne("member_get_by_nick", nick);
 	}
 	
 	@Override

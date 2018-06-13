@@ -23,13 +23,17 @@
     </head>
     <body>
     	<div class="container-80">
-    		<form action="list" method="get">
+    		<form action="follow_list" method="get">
 	        	<div class="row">
-	        		<input value="${name}" type="text" name="name" placeholder="친구 찾기(이름 검색)" required>
+	        		<input type="hidden" name="nick" value="${nick}">
+	        		<input value="${name}" type="text" name="name" placeholder="팔로우 검색" required>
 	        		<input type="submit" value="검색">
 	        	</div>
 	        </form>
 			<div class="empty-row"></div>
+			<div>
+				<h1>팔로우 : ${follow_cnt} 명</h1>
+			</div>
 			<div class="row">
 				<table class="table table-stripe">
 					<thead>

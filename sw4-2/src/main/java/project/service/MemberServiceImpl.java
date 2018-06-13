@@ -76,8 +76,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public MemberDto get2(String nick) {
-		return memberDao.get2(nick);
+	public MemberDto get_by_nick(String nick) {
+		return memberDao.get_by_nick(nick);
 	}
 
 	@Override
@@ -95,6 +95,4 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberDto> search_member(String name) {
 		return memberDao.search_member(name);
 	}
-
-
 }
