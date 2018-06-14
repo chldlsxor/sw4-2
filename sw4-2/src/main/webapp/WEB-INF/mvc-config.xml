@@ -30,6 +30,15 @@
 	 		<mvc:mapping path="/**"/>
 	 		<bean class = "project.interceptor.CountInterceptor"></bean>
 	 	</mvc:interceptor>
+	 	<mvc:interceptor>
+	 		<mvc:mapping path="/member/**"/>
+	 		<mvc:mapping path="/board/**"/>
+	 		<bean class = "project.interceptor.LoginInterceptor"></bean>
+	 	</mvc:interceptor>
+	 	<mvc:interceptor>
+	 		<mvc:mapping path="/admin/**"/>
+	 		<bean class = "project.interceptor.AdminInterceptor"></bean>
+	 	</mvc:interceptor>
 	 </mvc:interceptors>
 
     <mvc:annotation-driven />
