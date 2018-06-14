@@ -11,6 +11,10 @@
 		select * from member where id=#{id} and pw=#{pw}
 	</select>
 	
+	<delete id="exit" parameterType="String">
+		delete member where id=#{id}
+	</delete>
+	
 	<update id="reset_pw" parameterType="memberDto">
 		update member set pw=#{pw}, salt=#{salt}, loop=#{loop} where id=#{id}
 	</update>

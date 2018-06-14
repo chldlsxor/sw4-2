@@ -27,11 +27,15 @@ public class MemberServiceImpl implements MemberService{
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Override
-	public void logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public void logout(HttpSession session) {
 		session.invalidate();
 	}
 
+	@Override
+	public void exit(String id) {
+		memberDao.exit(id);
+	}
+	
 	@Override
 	public ModelAndView message(String view) {
 		ModelAndView mv = new ModelAndView();

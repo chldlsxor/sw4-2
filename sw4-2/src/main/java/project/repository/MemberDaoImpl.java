@@ -25,6 +25,11 @@ public class MemberDaoImpl implements MemberDao{
 	}
 
 	@Override
+	public void exit(String id) {
+		sqlSession.delete("exit", id);
+	}
+	
+	@Override
 	public void reset_pw(MemberDto memberDto) {
 		sqlSession.update("reset_pw",memberDto);
 	}
@@ -73,6 +78,8 @@ public class MemberDaoImpl implements MemberDao{
 	public List<MemberDto> search_member(String name) {
 		return sqlSession.selectList("search_member", name);
 	}
+
+	
 
 	
 

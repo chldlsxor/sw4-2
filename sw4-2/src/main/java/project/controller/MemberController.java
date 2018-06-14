@@ -19,11 +19,14 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import project.bean.FriendDto;
+import project.bean.MNDto;
 import project.bean.MemberDto;
+import project.bean.NoticeDto;
 import project.service.FriendService;
 import project.service.HomeService;
 import project.service.MemberService;
 import project.service.MessageService;
+import project.service.NoticeService;
 
 @Controller
 @RequestMapping("/member")
@@ -39,11 +42,21 @@ public class MemberController {
 	
 	@Autowired FriendService friendService;
 	
+	@Autowired
+	private NoticeService noticeService;
+	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/logout")
-	public String logout(HttpServletRequest request) {
-		memberService.logout(request);
+	public String logout(HttpSession session) {
+		memberService.logout(session);
+		return "redirect:/";
+	}
+	
+	@RequestMapping("/exit")
+	public String exit(HttpSession session) {
+		memberService.exit(session.getAttribute("userid").toString());
+		memberService.logout(session);
 		return "redirect:/";
 	}
 	
@@ -133,7 +146,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/detail")
-	public String detail(FriendDto friendDto, Model model, String nick,HttpSession session) {
+	public String detail(FriendDto friendDto, Model model, String nick, HttpSession session) {
 		log.info("nick={}",nick);
 		MemberDto memberDto = memberService.get_by_nick(nick);
 		model.addAttribute("memberDto", memberDto);
@@ -152,11 +165,29 @@ public class MemberController {
 		return "member/detail";
 	}
 	
+	@RequestMapping("/scrap")
+	public String scrap(Model model, HttpSession session) {
+		MemberDto memberDto = memberService.get_by_nick(session.getAttribute("usernick").toString());
+		model.addAttribute("memberDto", memberDto);
+		
+		int follow_cnt = friendService.follow_cnt(memberDto.getId());
+		int follower_cnt = friendService.follower_cnt(memberDto.getId());
+		model.addAttribute("follow_cnt",follow_cnt);
+		model.addAttribute("follower_cnt",follower_cnt);
+
+		return "member/scrap";
+	}
+	
 	@PostMapping("follow")
-	public String follow(FriendDto friendDto, Model model) {
+	public String follow(NoticeDto noticeDto, FriendDto friendDto, Model model) {
 		friendService.follow(friendDto);
 		MemberDto memberDto = memberService.get(friendDto.getFollow());
 		model.addAttribute("nick",memberDto.getNick());
+		
+		noticeDto.setReceiver(friendDto.getFollow());
+		noticeDto.setSender(friendDto.getFollower());
+		noticeDto.setType(0);
+		noticeService.send_notice(noticeDto);
 		return "redirect:detail";
 	}
 	
@@ -226,5 +257,14 @@ public class MemberController {
 		model.addAttribute("follower_cnt",follower_cnt);
 		
 		return "member/follower_list";
+	}
+	
+	@RequestMapping("/notice")
+	public String notice(Model model, HttpSession session) {
+		List<MNDto> list = noticeService.notice_list(session.getAttribute("userid").toString());
+
+		model.addAttribute("list",list);
+		
+		return "member/notice";
 	}
 }

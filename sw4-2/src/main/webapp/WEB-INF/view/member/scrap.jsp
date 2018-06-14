@@ -85,7 +85,7 @@
             	font-weight: bold;
                 border-top: 3px solid black;
             }
-            #scrap{
+            #myboard{
             	color: gray;
             }
         </style>
@@ -120,25 +120,7 @@
                             <tr>
                                 <td>${memberDto.nick}(닉네임)</td>
                                 <td>
-                                	<c:if test="${userid == memberDto.id}">
-                                		<input type="button" value="프로필 편집" onclick="location.href='edit';">
-									</c:if>
-									<c:if test="${userid != memberDto.id}">
-										<c:if test="${follow_check}">
-											<form action="unfollow" method="post">
-												<input type="hidden" name="follower" value="${userid}">
-												<input type="hidden" name="follow" value="${memberDto.id}">
-												<input type="submit" value="언팔로우">
-											</form>
-										</c:if>
-										<c:if test="${!follow_check}">
-											<form action="follow" method="post">
-												<input type="hidden" name="follower" value="${userid}">
-												<input type="hidden" name="follow" value="${memberDto.id}">
-												<input type="submit" value="팔로우">
-											</form>
-										</c:if>
-									</c:if>
+                                	<input type="button" value="프로필 편집" onclick="location.href='edit';">
                                 </td>
                             </tr>
                             <tr>
@@ -153,16 +135,14 @@
                     </table>
                 </div>
             </div>
-            <c:if test="${userid == memberDto.id}">
-	            <div class="select-container">
-	                <table>
-	                    <tbody>
-	                        <tr><button id="myboard" class="now" onclick="location.href='detail?nick=${memberDto.nick}';">게시물</button></tr>
-                        	<tr><button id="scrap" onclick="location.href='scrap';">저장됨</button></tr>
-	                    </tbody>
-	                </table>
-	            </div>
-			</c:if>
+            <div class="select-container">
+                <table>
+                    <tbody>
+                        <tr><button id="myboard" onclick="location.href='detail?nick=${memberDto.nick}';">게시물</button></tr>
+                        <tr><button id="scrap" class="now" onclick="location.href='scrap';">저장됨</button></tr>
+                    </tbody>
+                </table>
+            </div>
             <div class="img-container">
                 <div class="img"><img src="img/bg001.jpg"></div>
                 <div class="img"><img src="img/bg002.jpg"></div>

@@ -4,10 +4,10 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.repository.NoticeDao">
 	<insert id="send_notice" parameterType="noticeDto">
-		insert into notice values(#{id}, #{content}, sysdate)
+		insert into notice(receiver, sender, type, bno) values(#{receiver}, #{sender}, #{type}, #{bno})
 	</insert>
 	
-	<select id = "get_my_notice" parameterType="String" resultType="noticeDto">
-	 	select * from notice where id = #{id} order by reg desc
+	<select id = "notice_list" parameterType="String" resultType="mNDto">
+	 	select id,reg,type,read,bno,nick,profile from (select * from notice inner join member on (notice.sender = member.id) ) where receiver=#{id} order by reg desc
 	</select>
 </mapper>
