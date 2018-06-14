@@ -1,6 +1,7 @@
 package project.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +45,6 @@ public class BoardController {
 	
 	@RequestMapping("/list")
 	public String list(Model model, String key) {
-		
 		ContentDto contentDto = contentService.list(key);
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
@@ -95,6 +95,12 @@ public class BoardController {
 		model.addAttribute("photoList", photoService.getPhoto(no));
 		model.addAttribute("replyList", replyService.replyList(no));
 		return "board/content_view";
+	}
+	
+	@RequestMapping("/search-tag")
+	@ResponseBody
+	public List<String> searchTag(String key){
+		return hashtagService.searchTag(key);
 	}
 	
 }

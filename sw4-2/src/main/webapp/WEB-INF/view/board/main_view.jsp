@@ -81,7 +81,7 @@
 <script>
 	//반응형 flex로 변경해야함
 	var flag = true;
-	var start = 1;
+	var start = 6;
 	var isRun = false;
 	var gno = 0;
 
@@ -153,12 +153,13 @@
 											if (scrollT >= scrollH * 0.5
 													&& flag) { // 스크롤바가 맨 아래에 위치할 때
 												flag = false;
-												start = start + 3;
+												
 												if (isRun == true) {
 													return;
 												}
 												
 												isRun = true;
+											
 												$
 														.ajax({
 															url : "${root}/board/addlist",
@@ -170,6 +171,7 @@
 																	result,
 																	status,
 																	information) {
+																start = start + 3;
 																isRun = false;
 																result = $
 																		.parseHTML(result);
@@ -284,6 +286,7 @@
 						function replyWrite(){
 							var userId = "${userid}";
 							var bno = $(".content-view-bno").val();
+							console.log("bno = ",bno);
 							var content = $(".content-view-content").val();
 							if(content.charAt(0) != "@"){
 								gno = 0;
@@ -363,6 +366,31 @@
 						$(".fa-search").on("click",function(){
 							$("#search").slideToggle();
 						});
+						
+						$(".top-search").on("keyup",function(){
+							var key = $(this).val();
+							if(key != ""){
+								$.ajax({
+									url:"${root}/board/search-tag",
+									data:{"key":key},
+									success : function(result){
+										var text = "";
+										for(var i in result){
+											text += "<button class='search-ret btn btn-info' type='submit'>"+result[i]+"</button>&nbsp;&nbsp;&nbsp;&nbsp;";
+										}
+										$("#search-result").html(text);
+										$(".search-ret").on("click",keyClick);
+									}
+								});
+							}else{
+								$("#search-result").empty();
+							}
+							console.log();
+						});
+						
+						function keyClick(){
+							$(".top-search").val($(this).text());
+						};
 		
 					});
 </script>
@@ -387,8 +415,8 @@
 		<form action="list">
 			<div id="search">
 					<input class="top-search" type="text" name="key" placeholder="검색">
-					<button class="btn-search btn btn-success" type="submit">검색!</button>
 			</div>
+			<div id="search-result"></div>
 		</form>
 	<session>
 	<div id="chaser">
@@ -397,7 +425,7 @@
 				<img class="img-circle" src="http://via.placeholder.com/50x50">
 			</div>
 			<div class="user-profile">
-				<p class="user-name">${userid }</p>
+				<p class="user-name">${usernick }</p>
 			</div>
 			<hr>
 			<div>
@@ -417,7 +445,7 @@
 			<div class="row my-align">
 				<div>
 					<img class="img-circle" src="http://via.placeholder.com/50x50">
-					${boardDto.writer }
+					${boardDto.nick }
 				</div>
 				<div class="main-view-cover">
 				<div class="swiper-container">

@@ -32,4 +32,10 @@ public class HashtagServiceImpl implements HashtagService{
 		return hashtagDao.searchBno(key);
 	}
 
+	@Override
+	public List<String> searchTag(String key) {
+		// TODO Auto-generated method stub
+		return hashtagDao.searchTag(key);
+	}
+
 }

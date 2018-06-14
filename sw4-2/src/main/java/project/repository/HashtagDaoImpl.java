@@ -25,5 +25,13 @@ public class HashtagDaoImpl implements HashtagDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("searchBno", key);
 	}
+
+	@Override
+	public List<String> searchTag(String key) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("searchTag", key);
+	}
+	
+	
 	
 }

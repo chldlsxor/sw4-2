@@ -12,4 +12,8 @@
 		select bno from hashtag where tag like '%'||#{key}||'%'
 	</select>
 	
+	<select id="searchTag" parameterType="String" resultType="String">
+		select distinct tag from hashtag where tag like '%'||#{key}||'%'
+	</select>
+	
 </mapper>

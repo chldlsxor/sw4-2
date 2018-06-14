@@ -2,6 +2,8 @@ package project.service;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +16,14 @@ public class ReplyServiceImpl implements ReplyService{
 	@Autowired
 	private ReplyDao replyDao;
 	
+	private Logger log = LoggerFactory.getLogger(getClass());
+	
 	@Override
 	public ReplyDto replyWrite(ReplyDto replyDto) {
 		// TODO Auto-generated method stub
 		int no = getReplyNo();
 		replyDto.setNo(no);
+		log.info("replyser bno = {}",replyDto.getBno());
 		replyDao.replyWrite(replyDto);
 		int gno = replyDto.getGno();
 		if(gno != 0) {
