@@ -15,8 +15,16 @@
 <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
 <!-- 스크립트 작성 공간-->
 <script>
+	var rgx = /#[\w가-힣]+\s/g;
 	$(document).ready(function() {
-
+		$("textarea").on("blur",function(){
+			var text = $(".textarea").val();
+			console.log(text);
+			var hashTag = text.match(rgx);
+			console.log(hashTag);
+			$(".hashtag").val(hashTag);
+			console.log($(".hashtag").val());
+		});	
 	});
 </script>
 </head>
@@ -45,12 +53,13 @@
                     <h2>글 쓰기</h2>
                 </div>
                 <form action="write" method="post" enctype="multipart/form-data">
-                    <input hidden name="writer" value="${userid }">
+                    <input type="hidden" name="writer" value="${userid }">
                     <div class="row">
                         <input type="file" name="file" multiple="multiple">
                     </div>
                     <div class="row">
 			             <textarea name="content" class="textarea" rows="10" cols="100"></textarea>
+			             <input type="hidden" class="hashtag" name="hashtag" value="">
 		            </div>
                     <div class="row">
                         <button type="submit" class="profile-btn btn btn-info btn-lg">글 쓰기</button>

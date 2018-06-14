@@ -17,6 +17,7 @@ import project.bean.BoardDto;
 import project.bean.ContentDto;
 import project.service.BoardService;
 import project.service.ContentService;
+import project.service.HashtagService;
 import project.service.PhotoService;
 import project.service.ReplyService;
 
@@ -36,10 +37,14 @@ public class BoardController {
 	@Autowired
 	private ReplyService replyService;
 	
+	@Autowired
+	private HashtagService hashtagService;
+	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/list")
 	public String list(Model model, String key) {
+		
 		ContentDto contentDto = contentService.list(key);
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
@@ -65,8 +70,10 @@ public class BoardController {
 	}
 	
 	@PostMapping("/write")
-	public String postWrite(@ModelAttribute BoardDto boardDto, MultipartHttpServletRequest mRequest) throws IllegalStateException, IOException {
+	public String postWrite(@ModelAttribute BoardDto boardDto, MultipartHttpServletRequest mRequest, String hashtag) throws IllegalStateException, IOException {
 		contentService.write(boardDto, mRequest);
+		if(hashtag != null)
+			hashtagService.addHashTag(hashtag, boardDto.getNo());
 		return "redirect:/board/list";
 	}
 	
