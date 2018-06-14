@@ -10,4 +10,5 @@ import project.bean.HashtagDto;
 public interface HashtagDao {
 	public void addHashTag(HashtagDto hashtagDto);
 	public List<Integer> searchBno(String key);
+	public List<String> searchTag(String key);
 }

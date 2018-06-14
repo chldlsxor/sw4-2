@@ -85,6 +85,7 @@ public class BoardDaoImpl implements BoardDao{
 	@Override
 	public List<BoardDto> searchList(String key) {
 		// TODO Auto-generated method stub
+		log.info("boardDao searList key = {}",key);
 		return sqlSession.selectList("searchList", key);
 	}
 

@@ -406,13 +406,25 @@ header {
 /* 검색창 스타일 */
 #search{
 	display: flex;
+	flex-wrap: wrap;
 }
 
 /* 검색창 스타일*/
 .top-search {
 	text-align: center;
-	flex-grow: 0.8;
+	flex-grow: 1;
 	margin-left: 10%;
+	margin-right:10%;
+	order: 1;
+}
+
+/*검색 결과 스타일*/
+#search-result{
+	text-align: center;
+	flex-grow: 1;
+	margin-left: 10%;
+	margin-right:10%;
+	order: 2;
 }
 
 

@@ -31,11 +31,13 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<BoardDto> addList(int start, String key) {
 		// TODO Auto-generated method stub
-		int end = start+2;
-		if(key != null)
+		int end = start+2;		
+		if(!key.equals("")) {
 			return boardDao.addSearchList(start, end, key);
-		else
+		}
+		else {
 			return boardDao.addlist(start, end);
+		}
 	}
 
 	@Override

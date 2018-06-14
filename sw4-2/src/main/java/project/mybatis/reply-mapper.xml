@@ -9,7 +9,7 @@
 	</insert>
 	
 	<select id="replyList" parameterType="int" resultType="ReplyDto">
-		select * from reply where bno = #{bno} and gno = 0 order by reg asc
+		select reply.*, member.nick from reply inner join member on reply.id = member.id where bno = #{bno} and gno = 0 order by reg asc
 	</select>
 	
 	<select id="getReplyNo" resultType="int">
@@ -21,7 +21,7 @@
 	</select>
 	
 	<select id="reReplyView" parameterType="int" resultType="ReplyDto">
-		select * from reply where gno = #{gno} order by reg asc
+		select reply.*, member.nick from reply inner join member on reply.id = member.id where gno = #{gno} order by reg asc
 	</select>
 	
 	<select id="getReplyCnt" parameterType="int" resultType="int">

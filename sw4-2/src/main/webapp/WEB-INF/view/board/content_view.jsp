@@ -25,14 +25,14 @@
 		<div class="content-reply">
 			<c:forEach var="replyDto" items="${replyList}">
 				
-				<p class="reply-text">${replyDto.id} | ${replyDto.content}</p><img class="reply-love" src="${root}/res/image/outLineHeart.png"width="17px" height="17px">
+				<p class="reply-text">${replyDto.nick} | ${replyDto.content}</p><img class="reply-love" src="${root}/res/image/outLineHeart.png"width="17px" height="17px">
 				<br>
 				<p>
 				${replyDto.reg }&nbsp;&nbsp;&nbsp;좋아요<i> 0</i>&nbsp;&nbsp;&nbsp;
 				<c:if test="${replyDto.gno == 0 }">
 					<a class="re-reply">답글 달기</a>
 					<input type="hidden" value="${replyDto.no }">
-					<input type="hidden" value="${replyDto.id }">
+					<input type="hidden" value="${replyDto.nick }">
 					</p>
 					<c:if test="${replyDto.recnt != 0 }">
 						<a class="re-reply-view">답글 보기(${replyDto.recnt})</a>
