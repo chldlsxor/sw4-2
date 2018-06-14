@@ -76,12 +76,6 @@ public class HomeController {
 		return "result";
 	}
 	
-//	@PostMapping("/login")
-//	@ResponseBody
-//	public boolean login(HttpSession session, @ModelAttribute MemberDto memberDto) throws NoSuchAlgorithmException{
-//		return homeService.login(session, memberDto);
-//	}
-	
 	//회원가입
 	@RequestMapping("/register")
 	public String register(String id, Model model) {

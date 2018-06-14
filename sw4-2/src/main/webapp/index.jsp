@@ -16,3 +16,5 @@
 <h1>session-id : ${pageContext.session.id}</h1>
 <h1>applicaion: ${servletContext.applicaion.scMap}</h1>
 <h1><%=application.getAttribute("scMap") %></h1>
+<h1><a href = "/sw4-2/member/exit">회원탈퇴</a></h1>
+<h1><a href = "/sw4-2/member/notice">알림 메세지</a></h1>

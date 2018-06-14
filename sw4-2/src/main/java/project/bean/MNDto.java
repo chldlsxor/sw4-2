@@ -3,7 +3,7 @@ package project.bean;
 import lombok.Data;
 
 @Data
-public class NoticeDto {
-	String receiver,sender,reg;
+public class MNDto {
+	String id,reg,nick,profile;
 	int type,read,bno;
 }

@@ -29,12 +29,6 @@ public class AdminServiceImpl implements AdminService{
 		int no = Integer.parseInt(request.getParameter("no"));
 		String id = request.getParameter("id");
 		
-		//해당 아이디에게 알림 보내기
-		NoticeDto noticeDto = new NoticeDto();
-		noticeDto.setId(id);
-		noticeDto.setContent("신고로 인해 해당 게시물이 삭제되었습니다");
-		noticeDao.send_notice(noticeDto);
-		
 		//게시글 삭제하기
 		boardDao.remove_board(no);
 	}
