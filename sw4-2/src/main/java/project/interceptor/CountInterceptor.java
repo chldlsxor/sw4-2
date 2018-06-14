@@ -28,40 +28,41 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 	
 	//누적 관리하기 위한 저장소
 	private Map<String, Integer> sessionCountMap = new TreeMap<>(Collections.reverseOrder());
-	private Map<String, Integer> requestCountMap = new TreeMap<>(Collections.reverseOrder());
-		
 	
+	//경로
+	private String dir;
+			
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
-		log.info("필터 초기화");
-		//this.dir = filterConfig.getServletContext().getRealPath("");
-		//log.info("현재 경로 :{}", dir);
-		//loadCount(dir);
+		log.info("카운트 인터셉터 초기화");
+		this.dir = request.getServletContext().getRealPath("");
+		loadCount(dir);
+		
+		//application 저장소
+		request.getServletContext().setAttribute("scMap", sessionCountMap);
+		
+		//dir : E:\soyeon\6.spring\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\sw4-2\
 		
 		log.info("preHandle : {}", handler);//필터 비스므리
 		HttpSession session = request.getSession();
-		if(session.isNew()) {
-			//세션 증가 함수
-			increaseSessionCount();
-		}
-		//요청 증가 함수
-		increaseRequestCount();
 		
+		//방문자 확인용
+		log.info("session : {}", session.getAttribute("instory"));
+		if(session.getAttribute("instory")==null) {
+			session.setAttribute("instory", "instory");
+			//세션 증가 함수
+			increaseSessionCount();			
+		}
 		return true;
 	}
 	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		log.info("postHandle = {},{}", handler, modelAndView);
-		
-	}
-	@Override
-	public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex)
-			throws Exception {
-		log.info("afterCompletion = {},{}", handler, ex);
+		log.info("카운트 인터셉터 종료 ");		
+		saveCount(dir);
 	}
 	//세션 증가
 	private void increaseSessionCount(){
@@ -72,26 +73,16 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 		sessionCountMap.put(today, sessionCount);
 		log.info("[{}]신규 세션 발생 : {}", today, sessionCount);
 	}
-	//요청 증가
-	private void increaseRequestCount() {
-		String today = getToday();
-		Integer requestCount = requestCountMap.get(today);
-		if(requestCount == null) requestCount = 0;
-		requestCount++;
-		requestCountMap.put(today, requestCount);
-		log.info("[{}]신규 리퀘스트 발생 : {}", today, requestCount);
-	}
 	//오늘 날짜 반환
 	private String getToday() {
 		Date d = new Date();
-		Format f = new SimpleDateFormat("yyyy-MM-dd");
+		Format f = new SimpleDateFormat("yyyy-MM");
 		return f.format(d);
 	}
 	//파일 저장
 	private void saveCount(String dir) {
 		File target = new File(dir, "count.db");
 		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(target));){
-			out.writeObject(requestCountMap);
 			out.writeObject(sessionCountMap);
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -102,10 +93,8 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 	private void loadCount(String dir) {
 		File target = new File(dir, "count.db");
 		try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(target));){
-			requestCountMap = (Map<String, Integer>) in.readObject();
 			sessionCountMap = (Map<String, Integer>) in.readObject();
 		}catch(Exception e) {
-			requestCountMap = new TreeMap<>(Collections.reverseOrder());
 			sessionCountMap = new TreeMap<>(Collections.reverseOrder());
 		}
 	}
