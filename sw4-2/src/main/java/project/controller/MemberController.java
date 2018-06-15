@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import project.bean.FriendDto;
-import project.bean.MNDto;
 import project.bean.MemberDto;
 import project.bean.NoticeDto;
 import project.service.FriendService;
@@ -261,8 +260,8 @@ public class MemberController {
 	
 	@RequestMapping("/notice")
 	public String notice(Model model, HttpSession session) {
-		List<MNDto> list = noticeService.notice_list(session.getAttribute("userid").toString());
-
+		List<NoticeDto> list = noticeService.notice_list(session.getAttribute("userid").toString());
+		
 		model.addAttribute("list",list);
 		
 		return "member/notice";

@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import project.bean.MNDto;
 import project.bean.NoticeDto;
 import project.repository.NoticeDao;
 
@@ -16,7 +15,7 @@ public class NoticeServiceImpl implements NoticeService{
 	private NoticeDao noticeDao;
 
 	@Override
-	public List<MNDto> notice_list(String id) {
+	public List<NoticeDto> notice_list(String id) {
 		return noticeDao.notice_list(id);
 	}
 

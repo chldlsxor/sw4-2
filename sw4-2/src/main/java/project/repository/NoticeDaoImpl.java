@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import project.bean.MNDto;
 import project.bean.NoticeDto;
 
 @Repository("NoticeDao")
@@ -21,7 +20,7 @@ public class NoticeDaoImpl implements NoticeDao{
 	}
 
 	@Override
-	public List<MNDto> notice_list(String id) {
+	public List<NoticeDto> notice_list(String id) {
 		return sqlSession.selectList("notice_list", id);
 	}
 	
