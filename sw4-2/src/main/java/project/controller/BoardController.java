@@ -3,6 +3,8 @@ package project.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import project.bean.BoardDto;
 import project.bean.ContentDto;
 import project.service.BoardService;
 import project.service.ContentService;
+import project.service.FriendService;
 import project.service.HashtagService;
 import project.service.PhotoService;
 import project.service.ReplyService;
@@ -41,11 +44,15 @@ public class BoardController {
 	@Autowired
 	private HashtagService hashtagService;
 	
+	@Autowired
+	private FriendService friendService;
+	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/list")
-	public String list(Model model, String key) {
-		ContentDto contentDto = contentService.list(key);
+	public String list(Model model, String key, HttpSession session) {
+		String id = (String)session.getAttribute("userid");
+		ContentDto contentDto = contentService.list(key, id);
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
 		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));
@@ -55,8 +62,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/addlist")
-	public String addlist(int start, Model model, String key) {
-		ContentDto contentDto = contentService.addList(start, key);
+	public String addlist(int start, Model model, String key, HttpSession session) {
+		String id = (String)session.getAttribute("userid");
+		ContentDto contentDto = contentService.addList(start, key, id);
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
 		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));
@@ -101,6 +109,18 @@ public class BoardController {
 	@ResponseBody
 	public List<String> searchTag(String key){
 		return hashtagService.searchTag(key);
+	}
+	
+	@RequestMapping("/searchlist")
+	public String searchlist(Model model, String key, HttpSession session) {
+		String id = (String)session.getAttribute("userid");
+		ContentDto contentDto = contentService.list(key, id);
+		model.addAttribute("list", contentDto.getListBoardDto());
+		model.addAttribute("photoList", contentDto.getListPhotoDto());
+		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));
+		model.addAttribute("loveList", contentService.loveList(contentDto.getListBoardDto()));
+		model.addAttribute("listCnt", boardService.listCnt());
+		return "board/search";
 	}
 	
 }

@@ -21,17 +21,20 @@ public class BoardDaoImpl implements BoardDao{
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Override
-	public List<BoardDto> list() {
+	public List<BoardDto> list(String id) {
 		// TODO Auto-generated method stub
-		return sqlSession.selectList("boardList");
+		return sqlSession.selectList("boardList",id);
 	}
 
 	@Override
-	public List<BoardDto> addlist(int start, int end) {
+	public List<BoardDto> addlist(int start, int end, String id) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap();
 		map.put("start", start);
 		map.put("end", end);
+		map.put("id", id);
+		log.info("start = {}",start);
+		log.info("end = {}",end);
 		return sqlSession.selectList("addList", map);
 	}
 
