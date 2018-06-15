@@ -1,5 +1,6 @@
 package project.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,25 +19,31 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private FriendService friendService;
 
 	private Logger log = LoggerFactory.getLogger(getClass());
 
-	public List<BoardDto> list(String key) {
+	public List<BoardDto> list(String key, String id) {
+		List<BoardDto> boardlist = new ArrayList<>();
 		if(key != null)
-			return boardDao.searchList(key);
+			boardlist = boardDao.searchList(key);
 		else
-			return boardDao.list();
+			boardlist = boardDao.list(id);
+		
+		return boardlist;
 	}
 
 	@Override
-	public List<BoardDto> addList(int start, String key) {
+	public List<BoardDto> addList(int start, String key, String id) {
 		// TODO Auto-generated method stub
 		int end = start+2;		
 		if(!key.equals("")) {
 			return boardDao.addSearchList(start, end, key);
 		}
 		else {
-			return boardDao.addlist(start, end);
+			return boardDao.addlist(start, end, id);
 		}
 	}
 

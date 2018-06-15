@@ -6,7 +6,7 @@
 <!-- 	마스크 div -->
 <div class="mask"></div>
 <div class="content-view">
-	<div class="content-header"><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.writer }</div>
+	<div class="content-header"><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.nick }</div>
 	<div class="swiper-container content-photo">
 		<div class="swiper-wrapper">
 			<c:forEach var="photoDto" items="${photoList}">

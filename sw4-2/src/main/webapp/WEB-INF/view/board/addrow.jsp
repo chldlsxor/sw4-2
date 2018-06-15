@@ -4,8 +4,8 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <c:set var="flag" value="${false}"></c:set>
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
-			<div class="row my-align">
-				<div><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.writer }</div>
+				<div class="row my-align">
+				<div><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.nick }</div>
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
 					<input id="boardNo" type="hidden" value="${boardDto.no }">
@@ -36,7 +36,6 @@
 						</c:otherwise>
 					</c:choose>
 					<c:set var="flag" value="${false}"></c:set>
-					<!-- 					<button class="test">클릭</button> -->
 					<a><img class="mark"
 						src="${root}/res/image/outLineBookmark.png" width="30px"
 						height="30px"></a>
@@ -46,9 +45,5 @@
 					<p class="inline loveCnt">${loveCnt[status.index]}</p>
 				</div>
 				<div>${boardDto.content }</div>
-				<%--             		<c:forEach var="replyDto" items="${ }"> --%>
-				<!--             			<div>댓글판</div> -->
-				<%--             		</c:forEach> --%>
-				<button class="btn btn-info reply-write">댓글 쓰기...</button>
 			</div>
 		</c:forEach>

@@ -12,7 +12,7 @@
 }
 /* 이미지 슬라이더 적용 */
 .swiper-container {
-	width : 60%;
+	width : 70%;
 	height : 70%;
 	border: 1px solid black;
 }
@@ -36,6 +36,16 @@
 
 .text-red {
     color: red;
+}
+
+.search-view{
+	display: flex;
+	width: 100%;
+ 	flex-wrap: wrap;  
+}
+
+.search-img{
+	flex-grow: 0.33;
 }
 
 /* 반응형 웹 */
@@ -432,16 +442,11 @@
 		</div>
 	</div>
 	<div id="main-view" class="container-70">
-		<%-- 		<div>session = ${userno }</div> --%>
-		<%-- 		<div>session = ${userid }</div> --%>
+		<div class="search-view">
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
-				<div class="row my-align">
-				<div>
-					<img class="img-circle" src="http://via.placeholder.com/50x50">
-					${boardDto.nick }
-				</div>
+			<div class="row my-align search-img">
 				<div class="main-view-cover">
-				<div class="swiper-container">
+				<div class="swiper-container ">
 					<div class="swiper-wrapper">
 						<input id="boardNo" type="hidden" value="${boardDto.no }">
 						<c:forEach var="photoDto" items="${photoList[status.index]}">
@@ -484,7 +489,9 @@
 				<div>${boardDto.content }</div>
 			</div>
 			</div>
+			
 		</c:forEach>
+		</div>
 	</div>
 	<div id="add-view">
 		<button class="btn btn-info">글 더 보기</button>
