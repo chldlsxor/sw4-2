@@ -76,7 +76,7 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 	//오늘 날짜 반환
 	private String getToday() {
 		Date d = new Date();
-		Format f = new SimpleDateFormat("yyyy-MM");
+		Format f = new SimpleDateFormat("yyyy-MM-dd");
 		return f.format(d);
 	}
 	//파일 저장
