@@ -24,13 +24,9 @@ public class AdminServiceImpl implements AdminService{
 	
 	
 	@Override
-	public void delete_report(HttpServletRequest request) {
-		//신고하는 글의 번호, 아이디가져오기
-		int no = Integer.parseInt(request.getParameter("no"));
-		String id = request.getParameter("id");
-		
+	public void delete_report(int bno) {
 		//게시글 삭제하기
-		boardDao.remove_board(no);
+		boardDao.remove_board(bno);
 	}
 
 
