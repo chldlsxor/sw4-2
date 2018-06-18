@@ -86,7 +86,9 @@
         </style>
         
         <!--Jquery를 사용하기 위해 라이브러리를 불러오도록 설정-->
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <%--         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css"> --%>
         
         <!--스크립트 작성 공간-->

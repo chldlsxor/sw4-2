@@ -27,7 +27,7 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	//누적 관리하기 위한 저장소
-	private Map<String, Integer> sessionCountMap = new TreeMap<>(Collections.reverseOrder());
+	private Map<String, Integer> sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 	
 	//경로
 	private String dir;
@@ -95,7 +95,7 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 		try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(target));){
 			sessionCountMap = (Map<String, Integer>) in.readObject();
 		}catch(Exception e) {
-			sessionCountMap = new TreeMap<>(Collections.reverseOrder());
+			sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 		}
 	}
 }
