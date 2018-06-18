@@ -9,9 +9,6 @@
         <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
-            div{
-                border : 1px dotted black;
-            }
             .container{
                 width: 768px;
                 margin: auto;
@@ -23,6 +20,7 @@
                 margin: 10;
                 display: inline-block;
                 vertical-align: top;
+                text-align: center;
             }
             .swiper-slide > img{
                 width: 100%;
@@ -119,6 +117,7 @@
                 </div>
             </div>
 			<div class="register-container">
+				<div class="empty-row"></div>
                 <div class="register-wrapper">
                 	<div class="row">
                     	<h1>Instory 이메일 인증</h1>

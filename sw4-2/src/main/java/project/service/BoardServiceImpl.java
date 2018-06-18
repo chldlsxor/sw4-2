@@ -133,4 +133,9 @@ public class BoardServiceImpl implements BoardService {
 		boardDao.remove_board(no);
 	}
 
+	@Override
+	public List<BoardDto> my_list(String id) {
+		return boardDao.my_list(id);
+	}
+
 }

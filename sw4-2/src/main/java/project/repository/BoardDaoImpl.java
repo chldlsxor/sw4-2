@@ -101,6 +101,11 @@ public class BoardDaoImpl implements BoardDao{
 		map.put("key", key);
 		return sqlSession.selectList("addSearchList", map);
 	}
+
+	@Override
+	public List<BoardDto> my_list(String id) {
+		return sqlSession.selectList("my_list",id);
+	}
 	
 	
 	

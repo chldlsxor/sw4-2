@@ -18,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
+import project.bean.BoardDto;
+import project.bean.ContentDto;
 import project.bean.FriendDto;
 import project.bean.MemberDto;
 import project.bean.NoticeDto;
+import project.service.BoardService;
+import project.service.ContentService;
 import project.service.FriendService;
 import project.service.HomeService;
 import project.service.MemberService;
@@ -43,6 +47,12 @@ public class MemberController {
 	
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
+	private ContentService contentService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -161,6 +171,15 @@ public class MemberController {
 		log.info(friendDto.getFollow());
 		boolean follow_check = friendService.search(friendDto);
 		model.addAttribute("follow_check",follow_check);
+		
+//		List<BoardDto> my_list = boardService.my_list(memberDto.getId());
+//		model.addAttribute("my_list",my_list);
+		
+		ContentDto contentDto = contentService.my_list(memberDto.getId());
+		model.addAttribute("my_list",contentDto.getListBoardDto());
+		model.addAttribute("photo_list",contentDto.getListPhotoDto());
+		model.addAttribute("board_cnt",contentDto.getListBoardDto().size());
+		
 		return "member/detail";
 	}
 	

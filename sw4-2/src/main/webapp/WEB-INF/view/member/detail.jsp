@@ -49,6 +49,10 @@
                 height: 100%;
             }
             
+            .img:hover{
+            	opacity:0.8;
+            }
+            
             .profile{
                 height: 100%;
                 width: 250;
@@ -143,7 +147,7 @@
                             </tr>
                             <tr>
                                 <td>${memberDto.name}(이름)</td>
-                                <td>게시물 0</td>
+                                <td>게시물 ${board_cnt}</td>
                             </tr>
                             <tr>
                                 <td><a href="follower_list?nick=${memberDto.nick}">팔로워 ${follower_cnt} (링크)</a></td>
@@ -164,7 +168,11 @@
 	            </div>
 			</c:if>
             <div class="img-container">
-                <div class="img"><img src="img/bg001.jpg"></div>
+            	<c:forEach var="boardDto" items="${my_list}" varStatus="status">
+            		<div class="img"><img src="${root}/board/image?name=${photo_list[status.index]}"></div>
+            		<div class="img"><img src="http://via.placeholder.com/50x50"></div>
+            	</c:forEach>
+                <!-- <div class="img"><img src="img/bg001.jpg"></div>
                 <div class="img"><img src="img/bg002.jpg"></div>
                 <div class="img"><img src="img/bg002.jpg"></div>
                 <div class="img"><img src="img/bg004.jpg"></div>
@@ -172,7 +180,7 @@
                 <div class="img"><img src="img/bg003.jpg"></div>
                 <div class="img"><img src="img/bg003.jpg"></div>
                 <div class="img"><img src="img/bg003.jpg"></div>
-                <div class="img"><img src="img/bg003.jpg"></div>
+                <div class="img"><img src="img/bg003.jpg"></div> -->
             </div>
         </div>
     </body>
