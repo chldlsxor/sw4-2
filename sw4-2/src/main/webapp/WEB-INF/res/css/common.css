@@ -111,7 +111,7 @@ section {
 
 .my-align {
 	margin-right: 5%;
-	width:100%;
+	width: 100%;
 }
 
 .empty-row {
@@ -254,7 +254,7 @@ header {
 }
 
 #menu {
-	width:65%;
+	width: 65%;
 	position: fixed;
 	display: flex;
 	padding: 1em;
@@ -288,25 +288,32 @@ header {
 /* 	margin-left: 0em; */
 /* } */
 
-
 /* 삐져나와서 패딩처리 본문 내용 */
 #main-view>div {
-/* 	padding-left: 2em; */
+	/* 	padding-left: 2em; */
+	
 }
 
 /* 오른쪽 유저 상태 표시창 */
 #chaser {
+	display: flex;
 	position: fixed;
-	width: 300px;
-	height: 500px;
+	min-width: 250px;
+	min-height: 300px;
+	width: 18%;
+	height: 60%;
 	z-index: 10;
-	left: 1250px;
-	top: 200px;
+	left: 80%;
+	top: 20%;
 	background-color: pink;
 }
 
+.user-alert {
+	max-height: 44%;
+	overflow: auto;
+}
+
 #chaser>div {
-	padding: 5px;
 	padding-left: 15px;
 }
 
@@ -319,6 +326,12 @@ header {
 
 .user-profile {
 	display: inline-block;
+	flex-grow: 0.5;
+}
+
+.user-alert {
+	max-height: 44%;
+	overflow: auto;
 }
 
 .pleft {
@@ -337,74 +350,77 @@ header {
 }
 
 /* 게시글 상세보기 스타일 */
-.content-view{
-	display : flex;
+.content-view {
+	display: flex;
 	flex-wrap: wrap;
 	width: 1000px;
 	height: 575px;
 }
 
-.content-header{
+.content-header {
 	order: 0;
 	flex-grow: 1;
 	width: 100%;
 }
 
-.content-photo{
-	width : 46%;
-	padding-top : 20px;
+.content-photo {
+	width: 46%;
+	padding-top: 20px;
 	margin-left: 0;
 }
 
-.content-text{
-	padding : 3px;
+.content-text {
+	padding: 3px;
 	width: 46%;
-	height : 500px;
+	height: 500px;
 	background-color: lightgray;
 	margin-right: 35px;
 }
 
-.content-photo .content-text{
-	order : 1;
+.content-photo .content-text {
+	order: 1;
 }
 
-.content-post{
+.content-post {
 	min-height: 50%;
 	margin: 1px;
 }
 
-.content-reply{
+.content-reply {
 	min-height: 43%;
-	max-height:43%;
+	max-height: 43%;
 	margin: 1px;
 	overflow: auto;
 }
 
-.reply-input{
+.reply-input {
 	width: 80%;
 	min-height: 30px;
 	margin: 1px;
 }
 
-.main-view-cover{
+.main-view-cover {
 	max-width: 100%;
 }
-.add-aglin{
-	max-width:100%;
+
+.add-aglin {
+	max-width: 100%;
 	display: flex;
 	flex-wrap: wrap;
 }
-.reply-love{
-	float:right;
+
+.reply-love {
+	float: right;
 }
-.reply-text{
-	font-size : 1.35em;
-	width:100%;
-	float:left;
+
+.reply-text {
+	font-size: 1.35em;
+	width: 100%;
+	float: left;
 }
 
 /* 검색창 스타일 */
-#search{
+#search {
 	display: flex;
 	flex-wrap: wrap;
 }
@@ -414,18 +430,15 @@ header {
 	text-align: center;
 	flex-grow: 1;
 	margin-left: 10%;
-	margin-right:10%;
+	margin-right: 10%;
 	order: 1;
 }
 
 /*검색 결과 스타일*/
-#search-result{
+#search-result {
 	text-align: center;
 	flex-grow: 1;
 	margin-left: 10%;
-	margin-right:10%;
+	margin-right: 10%;
 	order: 2;
 }
-
-
-
