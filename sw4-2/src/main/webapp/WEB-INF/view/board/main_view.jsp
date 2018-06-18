@@ -329,6 +329,18 @@
 							});
 						};
 						
+						
+						//띄어쓰기 하는중 근데 안됨
+						function inputsp(e){
+							console.log("들어옴");
+							var keyCode = e.which ? e.which : e.keyCode;
+							var text = $(".reply-input").val();
+							if(keyCode == 32){
+								console.log("if 들어옴");
+								$(".reply-input").val(text+" ");
+							}
+						}
+						
 						function reReplyHide(){
 							$(this).prev().remove();
 							$(this).prev().show();
@@ -339,7 +351,7 @@
 							console.log("답글 쓰기");
 							gno = $(this).next().val();
 							var id = $(this).next().next().val();
-							$(".reply-input").val("@"+id);
+							$(".reply-input").val("@"+id+" - ");
 							console.log(gno);
 						}
 						
