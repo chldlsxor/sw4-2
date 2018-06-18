@@ -2,26 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<html>
-    <head>
-        <title>Javascript 배우기</title>    
-<!--        디자인 코드 작성 공간-->
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
-        <style>
-        
-        </style>
-<!--        jQuery를 사용하기 위해 라이브러리를 불러오도록 설정-->
-        <script src = "https://code.jquery.com/jquery-latest.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<!--        스크립트 작성 공간-->
-        <script>
-            $(document).ready(function(){
-                
-            });
-        </script>
-    </head>
-    <body>
     	<div class="container-80">
 			<div class="row">
 				<table class="table table-stripe">
@@ -100,5 +80,3 @@
 				</table>
 			</div>
         </div>
-    </body>
-</html>

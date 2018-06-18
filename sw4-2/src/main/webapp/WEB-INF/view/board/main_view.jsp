@@ -396,6 +396,25 @@
 						function keyClick(){
 							$(".top-search").val($(this).text());
 						};
+						
+						//알림창 보기
+
+		                $(".user-alert").hide();
+		               
+		                $(".user-alert-div").on("click",function(){
+		                    console.log("hi");
+		                    $(".user-alert").empty();
+		                    $.ajax({
+		                    	url : "${root}/member/notice",
+		                    	seuccess : function(result){
+		                    		console.log("들어옴");
+									var origin = result;
+									result = $.parseHTML(result);
+		                    		$(".user-alert").append(result);
+		                    	}
+		                    });
+		                    $(".user-alert").slideToggle();
+		                });
 		
 					});
 </script>
@@ -405,13 +424,13 @@
 		<input id="listCnt" type="hidden" value="${listCnt }"> <input
 			id="userNo" type="hidden" value="${userno}">
 		<div id="menu" class="container-70">
-			<a><i class="fa fa-camera">&nbsp;</i></a>
+			<a href="${root }/board/list"><i class="fa fa-camera">&nbsp;</i></a>
 			<p>|</p>
 			<a href="${root }/board/list" class="left"> InStory</a>
 
-			<a class="right"><i class="fa fa-search"></i></a>&nbsp;&nbsp;<a class="inner-right"><i class="fa fa-history"></i></a> &nbsp;
+			<a class="right"><i class="fa fa-search"></i></a>&nbsp;&nbsp;<a href="${root }/member/list" class="inner-right"><i class="fa fa-history"></i></a> &nbsp;
 			&nbsp; <a class="inner-right"><i class="fa fa-heart"></i></a>
-			&nbsp; &nbsp; <a class="inner-right"><i class="fa fa-user"></i></a>
+			&nbsp; &nbsp; <a href="${root }/member/detail?nick=${usernick }" class="inner-right"><i class="fa fa-user"></i></a>
 		</div>
 	</header>
 	<div class="empty-row"></div>
@@ -425,7 +444,7 @@
 		</form>
 	<session>
 	<div id="chaser">
-		<div class="row">
+		<div class="row" style="width: 95%">
 			<div class="user-profile">
 				<img class="img-circle" src="http://via.placeholder.com/50x50">
 			</div>
@@ -433,17 +452,18 @@
 				<p class="user-name">${usernick }</p>
 			</div>
 			<hr>
-			<div>
-				<a class="pleft" href="#">스토리</a> <a class="pright" href="#">모두
-					보기</a>
+			<div class="user-alert-div">
+				<a class="pleft">스토리</a>
 			</div>
+			<div class="user-alert">       
+             </div>
 			<div>
 				<button type="button" class="profile-btn btn btn-info btn-lg"
 					onclick="location='write'">글 쓰기</button>
 			</div>
 		</div>
 	</div>
-	<div id="main-view" class="container-70">
+	<div id="main-view" class="container-60">
 		<%-- 		<div>session = ${userno }</div> --%>
 		<%-- 		<div>session = ${userid }</div> --%>
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
