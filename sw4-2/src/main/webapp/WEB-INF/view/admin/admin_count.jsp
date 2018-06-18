@@ -35,7 +35,7 @@
             	
             	//selectlist로 월을 생성해서 ajax로 받아옴
             	$("#selectMonth").on("change", function(){
-            		var changeMonth = $("#selectMonth option:selected").val();
+            		var changeMonth = $("#selectMonth").val();
             		month = changeMonth;
             		console.log("month : "+month);
             	});
@@ -146,21 +146,7 @@
 				</div>
 			</div>   
 			<div style="margin-top:20px; margin-left:80px">
-                    <select name="selectMonth" id="selectMonth">
- 
-                        <option value="01">JAN</option>
-                        <option value="02">FEB</option>
-                        <option value="03">MAR</option>
-                        <option value="04">APR</option>
-                        <option value="05">MAY</option>
-                        <option value="06">JUN</option>
-                        <option value="07">JUL</option>
-                        <option value="08">AUG</option>
-                        <option value="09">SEP</option>
-                        <option value="10">OCT</option>
-                        <option value="11">NOV</option>
-                        <option value="12">DEC</option>
-                    </select>
+				<input type = "month" name = "selectMonth" id="selectMonth">
                     <button id="btn-chart">월 별 그래프 보기</button>
                 </div>      
             <div class="chart-container" style="position: relative; height:40vh; width:80vw">

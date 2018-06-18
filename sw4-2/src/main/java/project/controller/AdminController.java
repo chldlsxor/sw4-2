@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +21,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import project.bean.FriendDto;
+import project.bean.MemberDto;
 import project.bean.NoticeDto;
 import project.service.AdminService;
 import project.service.BoardService;
+import project.service.FriendService;
 import project.service.MemberService;
 import project.service.NoticeService;
 
@@ -41,6 +45,9 @@ public class AdminController {
 	
 	@Autowired
 	private NoticeService noticeService;
+	
+	@Autowired
+	private FriendService friendService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -77,8 +84,23 @@ public class AdminController {
 	
 	//사용자 상세보기
 	@RequestMapping("/detail_user")
-	public String  detail_user() {
-		return "detail_user";
+	public String  detail_user(FriendDto friendDto, Model model, String nick, HttpSession session) {
+		log.info("nick={}",nick);
+		MemberDto memberDto = memberService.get_by_nick(nick);
+		model.addAttribute("memberDto", memberDto);
+		
+		int follow_cnt = friendService.follow_cnt(memberDto.getId());
+		int follower_cnt = friendService.follower_cnt(memberDto.getId());
+		model.addAttribute("follow_cnt",follow_cnt);
+		model.addAttribute("follower_cnt",follower_cnt);
+		
+		friendDto.setFollower(session.getAttribute("userid").toString());
+		log.info(friendDto.getFollower());
+		friendDto.setFollow(memberDto.getId());
+		log.info(friendDto.getFollow());
+		boolean follow_check = friendService.search(friendDto);
+		model.addAttribute("follow_check",follow_check);
+		return "admin/detail_user";
 	}
 	
 	//사용자 수정하기
@@ -93,7 +115,7 @@ public class AdminController {
 	public String  delete_user(String id) {
 		//가능하면 삭제 확인 메세지 띄우기
 		memberService.exit(id);
-		return "redirect:/";
+		return "redirect:member_list";
 	}
 	
 	@RequestMapping("/admin_count")
@@ -111,8 +133,8 @@ public class AdminController {
         log.info("month : {}",month);
         List<HashMap<String, String>> list = new ArrayList<>();
         for(String day :scmap.keySet()) {
-        	log.info("day.substring(5, 6) : {}" ,day.substring(5, 7));
-        	if(month.equals(day.substring(5, 7))) {
+        	log.info("day.substring(0, 6) : {}" ,day.substring(0, 7));
+        	if(month.equals(day.substring(0, 7))) {
         		
         		HashMap<String,String> map = new HashMap<String,String>();
                 map.put("month", day);

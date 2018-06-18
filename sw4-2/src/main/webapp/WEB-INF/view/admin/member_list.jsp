@@ -24,13 +24,47 @@
 				<td> ${member.power }</td>
 				<td> ${member.open }</td>
 				<td>
-					<button onclick="move:">상세보기</button>
-					<button>수정하기</button>
-					<button>삭제하기</button>
+					<form action = "detail_user" >
+						<input type = "hidden" name = "nick" value="${member.nick}">
+						<input type = "submit" value="상세 보기">
+					</form>
+					<form action = "" >
+						<input type = "submit" value="수정하기">
+					</form>
+					<form action = "delete_user" method="get">
+						<input type = "hidden" name = "id" value="${member.id }">
+						<input type = "submit" value="삭제 하기">
+					</form>
 				</td>
 			</tr>
 		</c:forEach>
 	</tbody>
 </table>
+<div>
+	<ul class = "pagination pagination=lg">
+		<c:if test="첫페이지가 아니면">
+			<li><a href="#">&lt;&lt;</a></li>
+		</c:if>
+		<c:if test="첫 블록이 아니면">
+			<li><a href="#">&lt;</a></li>
+		</c:if>
+		<c:forEach var="i" begin="${p.blockstart}" end="${p.blockfinish}" step="1">
+			<c:choose>
+				<c:when test="${i == p.pageNo}">
+					<li class="active">${i}</li>			
+				</c:when>
+				<c:otherwise>
+					<li><a href="list?page=${i}${p.url}">${i}</a></li>
+				</c:otherwise>
+			</c:choose>
+		</c:forEach>
+		<c:if test="마지막 블록이 아니면">
+			<li><a href="#">&gt;</a></li>
+		</c:if>
+		<c:if test="마지막페이지가 아니면">
+			<li><a href="#">&gt;&gt;</a></li>
+		</c:if>
+	</ul>
+</div>
 <jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>
 
