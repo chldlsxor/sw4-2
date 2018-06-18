@@ -1,22 +1,30 @@
 package project.controller;
 
-import javax.servlet.ServletRequest;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeMap;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 
+import project.bean.NoticeDto;
 import project.service.AdminService;
 import project.service.BoardService;
 import project.service.MemberService;
+import project.service.NoticeService;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,6 +38,9 @@ public class AdminController {
 	
 	@Autowired
 	private BoardService boardService;
+	
+	@Autowired
+	private NoticeService noticeService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -52,10 +63,14 @@ public class AdminController {
 	
 	//신고글 삭제하기 (그전에 알람 보내기)
 	@PostMapping("/report_list")
-	public String  delete_report(HttpServletRequest request) {
+	public String  delete_report(NoticeDto noticeDto, String id, int bno) {
 		//가능하면 삭제확인 메세지 띄우기
-		log.info("삭제 요청 받음 {}", request.getParameter("id") );
-		adminService.delete_report(request);
+		log.info("삭제 요청 받음 {}", id);
+		adminService.delete_report(bno);
+		noticeDto.setReceiver(id);
+		noticeDto.setSender("id");
+		noticeDto.setType(5);
+		noticeService.send_notice(noticeDto);
 		return "redirect:report_list";
 	}
 	
@@ -75,9 +90,9 @@ public class AdminController {
 	
 	//사용자 삭제하기
 	@RequestMapping("/delete_user")
-	public String  delete_user() {
+	public String  delete_user(String id) {
 		//가능하면 삭제 확인 메세지 띄우기
-		adminService.delete_member();
+		memberService.exit(id);
 		return "redirect:/";
 	}
 	
@@ -86,5 +101,28 @@ public class AdminController {
 		return "admin/admin_count";
 	}
 	
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping("/getDailyVisitor")
+	@ResponseBody
+	public  String daily_visiter(HttpServletRequest request, String month) {
+		TreeMap<String,Integer> scmap = (TreeMap<String, Integer>) request.getServletContext().getAttribute("scMap");
+        Gson gson = new Gson();
+        log.info("month : {}",month);
+        List<HashMap<String, String>> list = new ArrayList<>();
+        for(String day :scmap.keySet()) {
+        	log.info("day.substring(5, 6) : {}" ,day.substring(5, 7));
+        	if(month.equals(day.substring(5, 7))) {
+        		
+        		HashMap<String,String> map = new HashMap<String,String>();
+                map.put("month", day);
+                map.put("count", scmap.get(day).toString());
+                list.add(map);
+        	}  	
+        }
+        log.info("gson : {}",gson.toJson(list));
+
+		return gson.toJson(list);
+	}
 	
 }

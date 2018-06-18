@@ -25,7 +25,7 @@
 					<td>
 						<form action="report_list" method="post">
 							<input type = "hidden" name = "id" value = "${board.writer}">
-							<input type = "hidden" name = "no" value = "${board.no }">
+							<input type = "hidden" name = "bno" value = "${board.no }">
 							<input type = "submit" value = "게시물 삭제하기">
 						</form>
 					</td>

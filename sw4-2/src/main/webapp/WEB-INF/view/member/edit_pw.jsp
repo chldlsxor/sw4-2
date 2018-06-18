@@ -19,7 +19,7 @@
                 display: flex;
                 /*다음 줄로 넘어가는 것을 허용하겠다*/
                 flex-wrap: wrap;
-                width:100%;
+                width:900px;
             }
             aside{
                 width: 230px;
@@ -55,6 +55,13 @@
             	font-weight: bold;
                 border-left: 3px solid black;
             }
+            
+            @media screen and (max-width:900px){
+                main{
+                	width:100%;
+                }
+            }
+            
             @media screen and (max-width:768px){
                 aside{
                     display: none;
@@ -102,7 +109,6 @@
             </aside>
             <section>
                 <form action="edit_pw" method="post" id="member_edit">
-                	<input type="hidden" name="id" value="${memberDto.id}">
                     <table>
                         <tbody>
                             <tr>
@@ -122,6 +128,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    <input type="hidden" name="id" value="${memberDto.id}">
                 </form>
             </section>
         </main>

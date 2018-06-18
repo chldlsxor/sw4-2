@@ -20,7 +20,7 @@
                 display: flex;
                 /*다음 줄로 넘어가는 것을 허용하겠다*/
                 flex-wrap: wrap;
-                width:80%;
+                width: 900px;
             }
             aside{
                 width: 230px;
@@ -57,6 +57,27 @@
             .now{
             	font-weight: bold;
                 border-left: 3px solid black;
+            }
+            
+            #f {  
+				opacity: 0;
+				font-size:17px;
+				position: relative;
+                width: 120px;
+			}
+ 			.look {
+				position: absolute;
+				width: 120px;
+				background-color: white;
+				font-size:10px;
+				height: 30px;
+				padding:0px;
+			} 
+			
+			@media screen and (max-width:900px){
+                main{
+                	width:100%;
+                }
             }
             
             @media screen and (max-width:768px){
@@ -136,7 +157,11 @@
 										<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50" height="50" id="profile">
 									</c:if>
                                 </th>
-                                <td><input type="file" name="f" id="f" onchange="LoadImg(this)"></td>
+                                
+                                <td>
+                                	<button class="look">프로필 사진 변경</button>
+                                	<input type="file" name="f" id="f" onchange="LoadImg(this)">
+                                </td>
                             </tr>
                             <tr>
                                 <th>아이디(이메일)</th>

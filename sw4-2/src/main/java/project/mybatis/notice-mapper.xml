@@ -7,7 +7,7 @@
 		insert into notice(receiver, sender, type, bno) values(#{receiver}, #{sender}, #{type}, #{bno})
 	</insert>
 	
-	<select id = "notice_list" parameterType="String" resultType="mNDto">
+	<select id = "notice_list" parameterType="String" resultType="noticeDto">
 	 	select id,reg,type,read,bno,nick,profile from (select * from notice inner join member on (notice.sender = member.id) ) where receiver=#{id} order by reg desc
 	</select>
 </mapper>
