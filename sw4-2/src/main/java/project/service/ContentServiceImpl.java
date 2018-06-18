@@ -35,7 +35,17 @@ public class ContentServiceImpl implements ContentService {
 		
 		return contentDto;
 	}
-
+	
+	@Override
+	public ContentDto my_list(String id) {
+		List<BoardDto> conList = boardService.my_list(id);
+		ContentDto contentDto = new ContentDto();
+		contentDto.setListBoardDto(conList);
+		contentDto.setListPhotoDto(photoService.getPhoto(conList));
+		
+		return contentDto;
+	}
+	
 	@Override
 	public ContentDto addList(int start, String key, String id) {
 		// TODO Auto-generated method stub

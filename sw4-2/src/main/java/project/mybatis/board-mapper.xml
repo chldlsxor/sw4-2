@@ -52,4 +52,8 @@
 		select inlist.* from (select board.*, member.nick, member.open, row_number() over(order by board.reg desc) rnum from (((select * from board order by reg desc) board inner join hashtag on board.no = hashtag.bno) inner join member on board.writer = member.id) where hashtag.tag = #{key} and member.open = '0') inlist where rnum between #{start} and #{end}
 	</select>
 
+	<select id="my_list" parameterType="String" resultType="BoardDto">
+		select * from board where writer=#{writer}
+	</select>
+
 </mapper>

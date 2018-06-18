@@ -22,4 +22,5 @@ public interface BoardDao {
 	public BoardDto getBoardView(int no);
 	public List<BoardDto> getReportList();
 	public void remove_board(int no);
+	public List<BoardDto> my_list(String id);
 }
