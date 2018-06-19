@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>Javascript 배우기</title>    
+        <title>로그인</title>    
 <!--        디자인 코드 작성 공간-->
         <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -28,6 +28,10 @@
             }
             .login-wrapper, .btn-wrapper{
                 margin: 10px;
+                border : 1px solid black;
+            }
+            a:visited, a:link {
+            	color:#00A2E8;
             }
             @media screen and (max-width:768px){
                 .swiper-container{
@@ -111,7 +115,7 @@
                     <a href="email?type=reset_pw">비밀번호를 잊으셨나요?</a>
                 </div>
                 <div class="btn-wrapper">
-                    계정이 없으신가요?<a href="email?type=register">가입하기</a>
+                    계정이 없으신가요? <a href="email?type=register">가입하기</a>
                 </div>
             </div>
         </div>

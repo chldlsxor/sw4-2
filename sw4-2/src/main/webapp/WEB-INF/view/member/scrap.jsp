@@ -7,14 +7,12 @@
         <title>flex 배우기</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
+        <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
             *{
                 box-sizing: border-box;
                 border:1px dotted black;
                 font-size: 18px;
-            }
-            .main-container, .select-container, .img-container, .profile, .content{
-                
             }
             
             .main-container{
@@ -56,7 +54,7 @@
                 padding : 30px;
             }
             .content{
-                width: 350;
+                width: 300;
                 display: inline-block;
                 vertical-align: top;
             }
@@ -65,10 +63,6 @@
                 width: 100%;
                 border-collapse: collapse;
             }
-            
-             .img-container > table{
-             	height: 100%;
-             }
             
             td{
             	padding:5px;
@@ -88,9 +82,40 @@
             #myboard{
             	color: gray;
             }
+            @media screen and (max-width:768px){
+                .main-container{
+                    height: 210px;
+                }
+                .profile{
+                    height: 200px;
+                    width: 200px;
+                    padding: 20px;
+                }
+                td{
+                    display: block;
+                }
+                .content{
+                    width: 150px;
+                }
+                .empty-row{
+                	display:none;
+                }
+            }
+            @media screen and (max-width:460px){
+                .profile{
+                    height: 70px;
+                    width: 70px;
+                    padding:0px;
+                    margin-top:50px;
+                }
+                table{
+                	font-size:14px;
+                }
+            }
         </style>
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src = "${root}/res/js/swiper.min.js"></script>
         <script>
             $(window).resize(function(){
                 var w = $(".img").width();
@@ -99,6 +124,25 @@
             $(document).ready(function() {
                 var w = $(".img").width();
                 $(".img").height(w);
+                
+                var swiper = new Swiper(".swiper-container",{
+                    spaceBetween:10,
+                    effect:'slide',
+                    pagination:{
+                        el:".swiper-pagination",    //버튼 영역
+                        
+                        //모양
+                        type:"bullets",     //동그라미
+                    },
+                    
+                    //스크롤바 등록
+                    scrollbar:{
+                        el:".swiper-scrollbar",
+                        
+                        //스크롤바 드래그 설정
+                        draggable:true,
+                    },
+                });
             });
         </script>
     </head>
@@ -118,18 +162,18 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td>${memberDto.nick}(닉네임)</td>
+                                <td>${memberDto.nick}</td>
                                 <td>
                                 	<input type="button" value="프로필 편집" onclick="location.href='edit';">
                                 </td>
                             </tr>
                             <tr>
-                                <td>${memberDto.name}(이름)</td>
+                                <td>${memberDto.name}</td>
                                 <td>게시물 0</td>
                             </tr>
                             <tr>
-                                <td><a href="follower_list?nick=${memberDto.nick}">팔로워 ${follower_cnt} (링크)</a></td>
-                                <td><a href="follow_list?nick=${memberDto.nick}">팔로우 ${follow_cnt} (링크)</a></td>
+                                <td><a href="follower_list?nick=${memberDto.nick}">팔로워 ${follower_cnt}</a></td>
+                                <td><a href="follow_list?nick=${memberDto.nick}">팔로우 ${follow_cnt}</a></td>
                             </tr>
                         </tbody>
                     </table>

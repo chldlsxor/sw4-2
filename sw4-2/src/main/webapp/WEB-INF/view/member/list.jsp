@@ -4,12 +4,22 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>Javascript 배우기</title>    
+        <title>친구 찾기</title>    
 <!--        디자인 코드 작성 공간-->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
-        
+        	th{
+        		width:100px;
+        	}
+        	img{
+        		margin:10px;
+        	}
+        	.nick{
+        	}
+        	.name{
+        		color:gray;
+        	}
         </style>
 <!--        jQuery를 사용하기 위해 라이브러리를 불러오도록 설정-->
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
@@ -22,35 +32,29 @@
         </script>
     </head>
     <body>
+    	<div class="empty-row"></div>
     	<div class="container-80">
     		<form action="list" method="get">
 	        	<div class="row">
-	        		<input value="${name}" type="text" name="name" placeholder="친구 찾기(이름 검색)" required>
-	        		<input type="submit" value="검색">
+	        		<input value="${name}" class="form-input" type="text" name="name" placeholder="친구 찾기(이름 검색)" required>
+	        		<input type="submit" class="form-btn" value="검색">
 	        	</div>
 	        </form>
 			<div class="empty-row"></div>
 			<div class="row">
-				<table class="table table-stripe">
-					<thead>
-						<tr>
-							<th>프사</th>
-							<th>닉네임</th>
-							<th>이름</th>
-						</tr>
-					</thead>
+				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
 						<tr>
-							<td>
+							<th rowspan="2">
 								<c:if test="${memberDto.profile=='pic.jpg'}">
-									<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="50" height="50">
+									<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70">
 								</c:if>
 								<c:if test="${memberDto.profile!='pic.jpg'}">
-									<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50" height="50">
+									<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70">
 								</c:if>
-							</td>
-							<td align="left">
+							</th>
+							<td align="left" class="nick">
 								
 								<!-- 제목 : 누르면 detail 페이지로 이동 -->
 								<a href="detail?nick=${memberDto.nick}">
@@ -58,8 +62,10 @@
 								</a>
 
 							</td>
-							<td>${memberDto.name}</td>
 						</tr> 
+						<tr>
+							<td class="name">${memberDto.name}</td>
+						</tr>
 						</c:forEach>
 					</tbody>
 				</table>

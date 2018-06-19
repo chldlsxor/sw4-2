@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>flex 배우기</title>
+        <title>회원정보 변경</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
@@ -13,8 +13,8 @@
                 font-size: 18px;
             }
             main, aside, section{
-                border:1px dotted black;
-                min-height: 800px;
+                border:1px solid black;
+                min-height: 600px;
             }
             main{
                 display: flex;
@@ -45,7 +45,9 @@
             .form-input{
             	margin : 10px;
             }
-            
+            .form-btn {
+            	width:200px;
+            }
             button{
                 width: 100%;
                 text-align: left;
@@ -72,6 +74,7 @@
 				font-size:10px;
 				height: 30px;
 				padding:0px;
+				color:#00A2E8;
 			} 
 			
 			@media screen and (max-width:900px){
@@ -135,6 +138,7 @@
         </script>
     </head>
     <body>
+       	<div class="empty-row"></div>
         <main>
             <aside>
                 <table>
@@ -151,10 +155,10 @@
                             <tr height=100>
                                 <th>
                                 	<c:if test="${memberDto.profile=='pic.jpg'}">
-										<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="50" height="50" id="profile">
+										<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70" id="profile">
 									</c:if>
 									<c:if test="${memberDto.profile!='pic.jpg'}">
-										<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50" height="50" id="profile">
+										<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70" id="profile">
 									</c:if>
                                 </th>
                                 
@@ -186,7 +190,7 @@
                             	</td>
                             </tr>
                             <tr>
-                            	<td colspan="2"><input class="form-btn" type="submit" value="수정"></td>
+                            	<td colspan="2" class="center"><input class="form-btn" type="submit" value="수정"></td>
                             </tr>
                         </tbody>
                     </table>
