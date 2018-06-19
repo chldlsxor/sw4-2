@@ -65,4 +65,10 @@ public class ReplyServiceImpl implements ReplyService{
 		replyDao.setReCnt(replyDto);
 	}
 
+	@Override
+	public void replyGood(ReplyDto replyDto) {
+		// TODO Auto-generated method stub
+		replyDao.replyGood(replyDto);
+	}
+
 }

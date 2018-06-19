@@ -55,5 +55,11 @@ public class ReplyDaoImpl implements ReplyDao{
 		// TODO Auto-generated method stub
 		sqlSession.update("setReCnt", replyDto);
 	}
+
+	@Override
+	public void replyGood(ReplyDto replyDto) {
+		// TODO Auto-generated method stub
+		sqlSession.update("replyGood", replyDto);
+	}
 	
 }
