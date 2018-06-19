@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>Javascript 배우기</title>    
+        <title>팔로우 리스트</title>    
 <!--        디자인 코드 작성 공간-->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -22,6 +22,7 @@
         </script>
     </head>
     <body>
+    	<div class="empty-row"></div>
     	<div class="container-80">
     		<form action="follow_list" method="get">
 	        	<div class="row">

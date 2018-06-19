@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>Javascript 배우기</title>    
+        <title>이메일 인증</title>    
 <!--        디자인 코드 작성 공간-->
         <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -28,8 +28,11 @@
             }
             .register-wrapper, .btn-wrapper{
                 margin: 10px;
+                border : 1px solid black;
             }
-
+            a:visited, a:link {
+            	color:#00A2E8;
+            }
             @media screen and (max-width:768px){
                 .swiper-container{
                     display: none;
@@ -102,7 +105,6 @@
         </script>
     </head>
     <body>
-    	
         <div class="empty-row"></div>
         <div class="container">
             <!-- 이미지 슬라이더 전체 공간 -->
@@ -120,7 +122,7 @@
 				<div class="empty-row"></div>
                 <div class="register-wrapper">
                 	<div class="row">
-                    	<h1>Instory 이메일 인증</h1>
+                    	<h1>Instory</h1>
                     </div>
                     <form action="email_check" method="post" id="check">
                     	<input type="hidden" name="type" value="${type}">
@@ -128,17 +130,17 @@
                     		<input type="text" name="id" value="${id}" class="form-input" required readonly>
                     	</div>
                     	<div class="row">
-                        	<input type='text' placeholder='인증번호' name="num" required>
+                        	<input type='text' class="form-input" placeholder='인증번호' name="num" required>
                         </div>
                         <div class="row">
-                        	<input type="submit" value="인증번호 확인">
+                        	<input type="submit" class="form-btn" value="인증번호 확인">
                         </div>
                     </form>
                     <span id="min"></span>
                     <span id="sec"></span>
 
                     <hr>
-                    Instory 이메일 인증창입니다~~
+					인증번호를 입력하세요
                 </div>
                 <div class="btn-wrapper">
                     <a href="login">로그인</a>

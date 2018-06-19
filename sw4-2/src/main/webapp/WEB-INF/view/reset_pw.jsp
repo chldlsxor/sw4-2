@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>Javascript 배우기</title>    
+        <title>비밀번호 재설정</title>    
 <!--        디자인 코드 작성 공간-->
         <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -30,6 +30,10 @@
             }
             .register-wrapper, .btn-wrapper{
                 margin: 10px;
+            	border : 1px solid black;
+            }
+            a:visited, a:link {
+            	color:#00A2E8;
             }
             @media screen and (max-width:768px){
                 .swiper-container{
@@ -105,9 +109,10 @@
                 </div>
             </div>
 			<div class="register-container">
+				<div class="empty-row"></div>
                 <div class="register-wrapper">
                 	<div class="row">
-                    	<h1>Instory 비밀번호 재설정</h1>
+                    	<h1>Instory</h1>
                     </div>
                     <form action="reset_pw" method="post" id="reset">
                     	<div class="row">
@@ -121,10 +126,10 @@
                         </div>
                     </form>
                     <hr>
-                    재설정할 비밀번호를 입력하세용
+                    재설정할 비밀번호를 입력하세요
                 </div>
                 <div class="btn-wrapper">
-                    비밀번호가 기억나셨나요?<a href="login">로그인</a>
+                    비밀번호가 기억나셨나요? <a href="login">로그인</a>
                 </div>
             </div>
         </div>

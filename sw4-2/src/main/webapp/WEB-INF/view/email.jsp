@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>Javascript 배우기</title>    
+        <title>이메일 인증</title>    
 <!--        디자인 코드 작성 공간-->
         <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -28,6 +28,10 @@
             }
             .register-wrapper, .btn-wrapper{
                 margin: 10px;
+                border : 1px solid black;
+            }
+            a:visited, a:link {
+            	color:#00A2E8;
             }
             #msg{
             	color: red;
@@ -100,7 +104,7 @@
 				<div class="empty-row"></div>
                 <div class="register-wrapper">
                 	<div class="row">
-                    	<h1>Instory 이메일 인증</h1>
+                    	<h1>Instory</h1>
                     </div>
                     <form action="email" method="post" id="email">
                     	<input type="hidden" name="type" value="${type}">
@@ -108,12 +112,12 @@
                     		<input class="form-input" type="email" name="id" placeholder="이메일" required>
                     	</div>
                     	<div class="row">
-                    		<input type="submit" value="이메일 인증" class="form-btn">
+                    		<input type="submit" value="인증번호 발송" class="form-btn">
                     	</div>
                     </form>
                     <span id="msg"></span>
                     <hr>
-                    Instory 이메일 인증창입니다~~
+					이메일을 입력하세요
                 </div>
                 <div class="btn-wrapper">
                     <a href="login">로그인</a>

@@ -28,7 +28,12 @@
             }
             .register-wrapper, .btn-wrapper{
                 margin: 10px;
+                border : 1px solid black;
             }
+            a:visited, a:link {
+            	color:#00A2E8;
+            }
+            
             @media screen and (max-width:768px){
                 .swiper-container{
                     display: none;
@@ -112,7 +117,7 @@
 			<div class="register-container">
                 <div class="register-wrapper">
                 	<div class="row">
-                    	<h1>Instory 회원가입</h1>
+                    	<h1>Instory</h1>
                     </div>
                     <form action="register" method="post" id="register">
                     	<div class="row">
@@ -132,10 +137,10 @@
                         </div>
                     </form>
                     <hr>
-                    가입하면 Instargram의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.
+                    가입하면 Instory의 약관, 데이터 정책 및 쿠키 정책에 동의하게 됩니다.
                 </div>
                 <div class="btn-wrapper">
-                    계정이 있으신가요?<a href="login">로그인</a>
+                    계정이 있으신가요? <a href="login">로그인</a>
                 </div>
             </div>
         </div>

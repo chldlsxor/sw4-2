@@ -4,7 +4,8 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>flex 배우기</title>
+        <title>비밀번호 변경</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
             *{
@@ -12,8 +13,8 @@
                 font-size: 18px;
             }
             main, aside, section{
-                border:1px dotted black;
-                min-height: 800px;
+                border:1px solid black;
+                min-height: 600px;
             }
             main{
                 display: flex;
@@ -44,6 +45,9 @@
             .form-input{
             	margin : 10px;
             }
+            .form-btn {
+            	width:200px;
+            }
             button{
                 width: 100%;
                 text-align: left;
@@ -70,6 +74,7 @@
 
         </style>
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script>
             $(document).ready(function(){
                 $("#edit").on("click",function(){
@@ -98,6 +103,7 @@
         </script>
     </head>
     <body>
+    	<div class="empty-row"></div>
         <main>
             <aside>
                 <table>
@@ -111,6 +117,18 @@
                 <form action="edit_pw" method="post" id="member_edit">
                     <table>
                         <tbody>
+                        	<tr height=100>
+                                <th>
+                                	<c:if test="${memberDto.profile=='pic.jpg'}">
+										<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70" id="profile">
+									</c:if>
+									<c:if test="${memberDto.profile!='pic.jpg'}">
+										<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70" id="profile">
+									</c:if>
+                                </th>
+                                
+                                <td>${memberDto.nick}</td>
+                            </tr>
                             <tr>
                                 <th>이전 비밀번호</th>
                                 <td><input class="form-input" type="password" name="pw" id="pw" required></td>
@@ -124,7 +142,7 @@
                                 <td><input class="form-input" type="password" id="new_pw_check"required></td>
                             </tr>
                             <tr>
-                            	<td colspan="2"><input class="form-btn" type="submit" value="비밀번호 변경"></td>
+                            	<td colspan="2" class="center"><input class="form-btn" type="submit" value="비밀번호 변경"></td>
                             </tr>
                         </tbody>
                     </table>
