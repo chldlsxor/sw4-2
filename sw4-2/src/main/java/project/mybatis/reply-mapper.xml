@@ -31,5 +31,9 @@
 	<update id="setReCnt" parameterType="ReplyDto">
 		update reply set recnt = #{recnt} where no = #{no}
 	</update>
+	
+	<update id="replyGood" parameterType="ReplyDto">
+		update reply set good = #{good} where no = #{no}
+	</update>
 
 </mapper>

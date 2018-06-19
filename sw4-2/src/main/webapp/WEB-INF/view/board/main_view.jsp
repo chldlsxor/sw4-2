@@ -30,7 +30,6 @@
 .content-view {
 	display: none;
 	background-color: #ffffff;
-	height: 200px;
 	z-index: 99999;
 }
 
@@ -39,6 +38,26 @@
 }
 
 /* 반응형 웹 */
+@MEDIA SCREEN AND (MIN-WIDTH:1113PX) {
+		.content-photo{
+			flex-grow: 0.4;
+			order:1;
+		}
+	.content-text{
+		flex-grow: 0.4;
+		order:1;
+	}
+}
+@MEDIA SCREEN AND (MAX-WIDTH:1112PX) {
+		.content-photo{
+			flex-grow: 1;
+			oder:1;
+		}
+		.content-text{
+			flex-grow: 1;
+			order:2;
+		}
+}
 @MEDIA SCREEN AND (MIN-WIDTH:891PX) {
 	#menu > i{
 		font-size: 2em;
@@ -126,16 +145,77 @@
 	$(window).resize(function(){
 		var w = $(".swiper-container").width();
 		$(".swiper-container").height(w);
+		
+		var contentViewWidth = $('.content-view').width();
+		
+		if($(document).width() > 1112){
+			var contentviewHeight = contentViewWidth*0.4;
+			$(".fa-bars").hide();
+			$("#chaser").show();
+			$("#top-chaser").hide();
+		}else {
+			var contentviewHeight = contentViewWidth*0.8;
+			$(".fa-bars").show();
+			$("#chaser").hide();
+			
+		}
+		
+		// 화면의 높이와 너비를 변수로 만듭니다.
+		var maskHeight = $(document).height();
+		var maskWidth = $(window).width();
+		
+		
+		
+		var contentText = $(".content-text").width();
+		$(".content-text").height(contentText);
+		
+		//게시글 상세보기 크기 변경
+		$(".content-view").height(contentviewHeight);
+
+		// 마스크의 높이와 너비를 화면의 높이와 너비 변수로 설정합니다.
+		$('.mask').css({
+			'width' : maskWidth,
+			'height' : maskHeight
+		});
+
+		// fade 애니메이션 : 1초 동안 검게 됐다가 80%의 불투명으로 변합니다.
+		$('.mask').fadeIn(500);
+		$('.mask').fadeTo("slow", 0.8);
+
+		// 레이어 팝업을 가운데로 띄우기 위해 화면의 높이와 너비의 가운데 값과 스크롤 값을 더하여 변수로 만듭니다.
+		var left = ($(window).scrollLeft() + ($(window).width() - $('.content-view').width()) / 2);
+		var top = ($(window).scrollTop() + 50);
+
+		// css 스타일을 변경합니다.
+		$('.content-view').css({
+			'left' : left,
+			'top' : top,
+			'position' : 'absolute'
+		});
+		
 	});
 	
 	//해쉬태그 색칠
 
 	
 	$(document).ready(function() {
+		if($(document).width() > 1250){
+			$(".fa-bars").hide();
+			$("#chaser").show();
+			$("#top-chaser").hide();
+		}else {
+			$(".fa-bars").show();
+			$("#chaser").hide();
+			$("#top-chaser").hide();
+		}
+		$(".fa-bars").on("click",function(){
+			$("#top-chaser").slideToggle();
+		});
 		console.log("key = ${param.key}");
 		var w = $(".swiper-container").width();
 		$(".swiper-container").height(w);
 		$("#search").hide();
+		$("#search-result").hide();
 						var userNo = $("#userNo").val();
 						var listCnt = $("#listCnt").val();
 						console.log("userNo = ", userNo);
@@ -172,6 +252,8 @@
 																$("#main-view").append(div);
 																listCnt--;
 																listCnt--;
+																var w = $(".swiper-container").width();
+																$(".swiper-container").height(w);
 																if (listCnt > 0) {
 																	flag = true;
 																}
@@ -237,6 +319,7 @@
 						}
 						;
 
+						//글 상세보기
 						function contentView() {
 							var now = $(this);
 							var boardNo = $(this).prev().val();
@@ -248,6 +331,7 @@
 										},
 										contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 										success : function(result) {
+											
 											result = $.parseHTML(result);
 											var div = $("<div/>").html(result);
 											$("body").before(div);
@@ -256,6 +340,25 @@
 											$(".re-reply-view").on("click",reReplyView);
 											$(".re-reply").on("click",reReply);
 											$(".re-reply-hide").on("click",reReplyHide);
+											$(".reply-input").on("keyup",function(e){
+												var keyCode = e.which ? e.which : e.keyCode;
+												var text = $(".reply-input").val();
+												if(keyCode == 32){
+													$(".reply-input").val(text+" ");
+												}
+											});
+											
+											//사진크기
+											var w = $(".swiper-container").width();
+											$(".swiper-container").height(w);
+											
+											//자세히보기 사이즈
+											var contentViewWidth = $('.content-view').width();
+											var contentviewHeight = contentViewWidth*0.4;
+											
+											//글 내용 사이즈
+											var contentText = $(".content-text").width();
+											$(".content-text").height(contentText);
 											
 											// imgs를 클릭시 작동하며 검은 마스크 배경과 레이어 팝업을 띄웁니다.
 											wrapWindowByMask();
@@ -275,7 +378,7 @@
 									});
 						};
 
-						
+						//댓글 등록
 						function replyWrite(){
 							var userId = "${userid}";
 							var bno = $(".content-view-bno").val();
@@ -311,6 +414,7 @@
 							});
 						};
 						
+						//대댓보기
 						function reReplyView(){
 							console.log("답글 보기")
 							var now = $(this);
@@ -329,24 +433,20 @@
 							});
 						};
 						
-						
-						//띄어쓰기 하는중 근데 안됨
-						function inputsp(e){
-							console.log("들어옴");
-							var keyCode = e.which ? e.which : e.keyCode;
-							var text = $(".reply-input").val();
-							if(keyCode == 32){
-								console.log("if 들어옴");
-								$(".reply-input").val(text+" ");
-							}
-						}
-						
+						//대댓 닫기
 						function reReplyHide(){
 							$(this).prev().remove();
 							$(this).prev().show();
 							$(this).hide();
 						}
 						
+						//띄어쓰기 하는중 근데 안됨
+						function inputsp(e){
+							
+						}
+						
+						
+						//대댓 쓰기
 						function reReply(){
 							console.log("답글 쓰기");
 							gno = $(this).next().val();
@@ -370,8 +470,9 @@
 						//검색 기능 
 						$(".fa-search").on("click",function(){
 							$("#search").slideToggle();
+							$("#search-result").slideToggle();
 						});
-						
+
 						$(".top-search").on("keyup",function(){
 							var key = $(this).val();
 							if(key != ""){
@@ -383,7 +484,7 @@
 										for(var i in result){
 											text += "<button class='search-ret btn btn-info' type='submit'>"+result[i]+"</button>&nbsp;&nbsp;&nbsp;&nbsp;";
 										}
-										$("#search-result").html(text);
+										$("#search-result").html(text);					
 										$(".search-ret").on("click",keyClick);
 									}
 								});
@@ -400,48 +501,80 @@
 						//알림창 보기
 
 		                $(".user-alert").hide();
-		               
+		                $(".top-user-alert").hide();
+		               //우측 알림창
 		                $(".user-alert-div").on("click",function(){
-		                    console.log("hi");
 		                    $(".user-alert").empty();
 		                    $.ajax({
 		                    	url : "${root}/member/notice",
-		                    	seuccess : function(result){
-		                    		console.log("들어옴");
+		                    	success : function(result){
 									var origin = result;
 									result = $.parseHTML(result);
 		                    		$(".user-alert").append(result);
+		                    		$(".user-alert").slideToggle();
 		                    	}
 		                    });
-		                    $(".user-alert").slideToggle();
 		                });
+		                
+		               //상단 알림창
+		                $(".top-user-alert-div").on("click",function(){
+		                    $(".top-user-alert").empty();
+		                    $.ajax({
+		                    	url : "${root}/member/notice",
+		                    	success : function(result){
+									var origin = result;
+									result = $.parseHTML(result);
+		                    		$(".top-user-alert").append(result);
+		                    		$(".top-user-alert").slideToggle();
+		                    	}
+		                    });
+		                    
+		                });
+		               
+		               //댓글 좋아요
+		               function ReplyLove(){
+		            	   $.ajax({
+		            		   
+		            	   });
+		               };
 		
 					});
 </script>
 </head>
 <body>
 	<header>
-		<input id="listCnt" type="hidden" value="${listCnt }"> <input
-			id="userNo" type="hidden" value="${userno}">
-		<div id="menu" class="container-70">
-			<a href="${root }/board/list"><i class="fa fa-camera">&nbsp;</i></a>
-			<p>|</p>
-			<a href="${root }/board/list" class="left"> InStory</a>
-
-			<a class="right"><i class="fa fa-search"></i></a>&nbsp;&nbsp;<a href="${root }/member/list" class="inner-right"><i class="fa fa-history"></i></a> &nbsp;
-			&nbsp; <a class="inner-right"><i class="fa fa-heart"></i></a>
-			&nbsp; &nbsp; <a href="${root }/member/detail?nick=${usernick }" class="inner-right"><i class="fa fa-user"></i></a>
-		</div>
+		<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
+		<br><br><br>
+		<div class="row">
+			<div id="top-chaser">
+				<div class="user-profile">
+					<img class="img-circle" src="http://via.placeholder.com/50x50">
+					<p class="user-name">${usernick }</p>
+				</div>
+				<div class="top-user-alert-div">
+					<a class="pleft">스토리</a>
+				</div>
+				<div>
+					<button type="button" class="profile-btn btn btn-info btn-lg"
+						onclick="location='write'">글 쓰기</button>
+				</div>
+			</div>
+				<div class="top-user-alert">       
+	            </div>
+			<form action="searchlist">
+				<div id="search">
+						<input class="top-search" type="text" name="key" placeholder="검색">
+				</div>
+				<div id="search-result"></div>
+			</form>
+	</div>
 	</header>
 	<div class="empty-row"></div>
 	<div class="empty-row"></div>
 	<div class="empty-row"></div>
-		<form action="searchlist">
-			<div id="search">
-					<input class="top-search" type="text" name="key" placeholder="검색">
-			</div>
-			<div id="search-result"></div>
-		</form>
+	<div class="empty-row"></div>
+	<div class="empty-row"></div>
+
 	<session>
 	<div id="chaser">
 		<div class="row" style="width: 95%">

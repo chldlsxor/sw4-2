@@ -8,7 +8,7 @@
 <div class="content-view">
 	<div class="content-header"><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.nick }</div>
 	<div class="swiper-container content-photo">
-		<div class="swiper-wrapper">
+		<div class="swiper-wrapper view-swiper">
 			<c:forEach var="photoDto" items="${photoList}">
 				<img class="viewPhoto swiper-slide"
 					src="${root }/board/image?name=${photoDto.name}">

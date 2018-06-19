@@ -15,4 +15,5 @@ public interface ReplyDao {
 	public List<ReplyDto> reReplyList(int gno);
 	public int getReplyCnt(int no);
 	public void setReCnt(ReplyDto replyDto);
+	public void replyGood(ReplyDto replyDto);
 }
