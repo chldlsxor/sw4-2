@@ -21,6 +21,7 @@
 		<typeAlias type="project.bean.PhotoDto" alias="PhotoDto"/>
 		<typeAlias type="project.bean.ReplyDto" alias="ReplyDto"/>
 		<typeAlias type="project.bean.EmailDto" alias="EmailDto"/>
+		<typeAlias type="project.bean.PageDto" alias ="PageDto"/>
 	</typeAliases>
 	
 </configuration>

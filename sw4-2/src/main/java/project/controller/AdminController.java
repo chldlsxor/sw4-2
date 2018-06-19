@@ -24,6 +24,8 @@ import com.google.gson.Gson;
 import project.bean.FriendDto;
 import project.bean.MemberDto;
 import project.bean.NoticeDto;
+import project.bean.PageDto;
+import project.repository.MemberDao;
 import project.service.AdminService;
 import project.service.BoardService;
 import project.service.FriendService;
@@ -41,6 +43,9 @@ public class AdminController {
 	private MemberService memberService;
 	
 	@Autowired
+	private MemberDao memberDao;
+	
+	@Autowired
 	private BoardService boardService;
 	
 	@Autowired
@@ -56,9 +61,14 @@ public class AdminController {
 		return "admin/admin_page";
 	}
 	
-	@RequestMapping("/member_list")
+	/*@GetMapping("/member_list")
 	public ModelAndView member_list() {
-		return memberService.message("admin/member_list");
+		return memberService.member_list("admin/member_list");
+	}*/
+	
+	@RequestMapping("/member_list")
+	public ModelAndView member_list(PageDto pageDto, HttpServletRequest request) {
+		return memberService.member_page_list(pageDto, request);
 	}
 	
 	//신고글 확인하기

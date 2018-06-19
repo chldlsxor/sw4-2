@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import project.bean.MemberDto;
+import project.bean.PageDto;
 
 @Repository
 public interface MemberDao {
@@ -21,4 +22,9 @@ public interface MemberDao {
 	void edit(MemberDto memberDto);
 	boolean select_nick(String nick);
 	List<MemberDto> search_member(String name);
+	List<MemberDto> member_page_list(PageDto pageDto);
+	List<MemberDto> member_page_search(PageDto pageDto);
+	int member_get_count();
+	int member_get_count_by_search(PageDto pageDto);
+	
 }

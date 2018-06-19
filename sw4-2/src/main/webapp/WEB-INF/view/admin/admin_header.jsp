@@ -18,7 +18,7 @@
                 width: 100%;
             }            
             .admin_header{
-                background-color : lightpink;
+                background-color : #D9ECFF;
                 color: white;
                 padding-left: 25px;
             }
