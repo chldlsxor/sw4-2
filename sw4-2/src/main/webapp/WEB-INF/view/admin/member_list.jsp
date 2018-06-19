@@ -3,6 +3,51 @@
 
 <jsp:include page="/WEB-INF/view/admin/admin_header.jsp"></jsp:include>
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
+
+	<div class="row f3">
+		type : ${p.keyword_type}, keyword : ${p.keyword} , searchMode : ${p.searchMode }
+	</div>
+	<div class="row f3">
+		boardcount = ${p.list_num}, pageStr = ${p.pageStr}, pageNo = ${p.pageNo}
+	</div>
+	<div class="row f3">
+		boardstart = ${p.boardstart}, boardfinish = ${p.boardfinish}
+	</div>
+	<div class="row f3">
+		blocksize = ${p.blocksize}, blockstart = ${p.blockstart} 
+		blockfinish = ${p.blockfinish}, blockmax = ${p.blockmax}
+	</div>
+<form action = "member_list" method="get">
+	<select name ="keyword_type">
+		<option value = "id||name||nick">전체</option>
+		<option value = "id">아이디</option>
+		<option value = "name">이름</option>
+		<option value = "nick">닉네임</option>
+	</select>
+	<input type = "text" name = "keyword" placeholder="검색할 내용 입력">
+	<select name ="order_type">		
+		<option value = "id">아이디</option>
+		<option value = "name">이름</option>
+		<option value = "nick">닉네임</option>
+		<option value = "reg">등록일</option>
+	</select>
+	<select name ="order">
+		<option value = "asc">오름차순</option>
+		<option value = "desc">내림차순</option>
+	</select>
+	<select name ="list_num">
+		<option value = "5">5개</option>
+		<option value = "10" selected="selected">10개</option>
+		<option value = "15">15개</option>
+		<option value = "20">20개</option>
+	</select>
+	<select name ="power">
+		<option value = "power">전체</option>
+		<option value = "회원">회원</option>
+		<option value = "관리자">관리자</option>
+	</select>
+	<input type ="submit" value = "검색">
+</form>
 <table>
 	<thead>
 		<tr>
@@ -42,27 +87,27 @@
 </table>
 <div>
 	<ul class = "pagination pagination=lg">
-		<c:if test="첫페이지가 아니면">
-			<li><a href="#">&lt;&lt;</a></li>
+		<c:if test="${p.isNotFirst()}">
+			<li><a href="member_list?page=1${p.url}">&lt;&lt;</a></li>
 		</c:if>
-		<c:if test="첫 블록이 아니면">
-			<li><a href="#">&lt;</a></li>
+		<c:if test="${p.isNotFirstBlock()}">
+			<li><a href="member_list?page=${p.blockstart-1}${p.url}">&lt;</a></li>
 		</c:if>
 		<c:forEach var="i" begin="${p.blockstart}" end="${p.blockfinish}" step="1">
 			<c:choose>
 				<c:when test="${i == p.pageNo}">
-					<li class="active">${i}</li>			
+					<li class="active"><a>${i}</a></li>			
 				</c:when>
 				<c:otherwise>
-					<li><a href="list?page=${i}${p.url}">${i}</a></li>
+					<li><a href="member_list?page=${i}${p.url}">${i}</a></li>
 				</c:otherwise>
 			</c:choose>
 		</c:forEach>
-		<c:if test="마지막 블록이 아니면">
-			<li><a href="#">&gt;</a></li>
+		<c:if test="${p.isNotLastBlock()}">
+			<li><a href="member_list?page=${p.blockfinish+1}${p.url}">&gt;</a></li>
 		</c:if>
-		<c:if test="마지막페이지가 아니면">
-			<li><a href="#">&gt;&gt;</a></li>
+		<c:if test="${p.isNotLast()}">
+			<li><a href="member_list?page=${p.blockmax}${p.url}">&gt;&gt;</a></li>
 		</c:if>
 	</ul>
 </div>

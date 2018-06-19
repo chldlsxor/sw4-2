@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import project.bean.MemberDto;
+import project.bean.PageDto;
 
 @Repository("MemberDao")
 public class MemberDaoImpl implements MemberDao{
@@ -78,6 +79,28 @@ public class MemberDaoImpl implements MemberDao{
 	public List<MemberDto> search_member(String name) {
 		return sqlSession.selectList("search_member", name);
 	}
+
+	@Override
+	public List<MemberDto> member_page_list(PageDto pageDto) {
+		return sqlSession.selectList("member_page_list", pageDto);
+	}
+
+	@Override
+	public List<MemberDto> member_page_search(PageDto pageDto) {
+		return sqlSession.selectList("member_page_search", pageDto);
+	}
+	
+	@Override
+	public int member_get_count() {
+		return sqlSession.selectOne("member_get_count");
+	}
+
+	@Override
+	public int member_get_count_by_search(PageDto pageDto) {
+		return sqlSession.selectOne("member_get_count_by_search", pageDto);
+	}
+
+	
 
 	
 

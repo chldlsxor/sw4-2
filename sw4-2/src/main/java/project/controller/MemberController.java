@@ -71,7 +71,7 @@ public class MemberController {
 	
 	@RequestMapping("/message")
 	public ModelAndView message(HttpServletRequest request) {
-		return memberService.message("message");
+		return memberService.member_list("message");
 	}
 	
 	@RequestMapping("/send_message")

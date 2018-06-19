@@ -31,6 +31,22 @@
 		select * from member order by no asc
 	</select>
 	
+	<select id="member_page_list"  parameterType = "PageDto" resultType="memberDto">
+		select * from (select rownum rn,  A.* from (select * from member order by id asc)A) where rn between #{boardstart} and #{boardfinish} 
+	</select>
+	
+	<select id="member_page_search"  parameterType = "PageDto" resultType="memberDto">
+		select * from (select rownum rn, A.* from (select * from member where #{keyword_type} like '%'||#{keyword}||'%' and power = #{power} order by #{order_type} #{order})A ) where rn between #{boardstart} and #{boardfinish} order by no asc
+	</select>
+	
+	<select id="member_get_count"  resultType="int">
+		select count(*) from member
+	</select>
+	
+	<select id="member_get_count_by_search" parameterType = "PageDto" resultType="int">
+		select count(*) from member where #{keyword_type } like '%'||#{keyword}||'%' and power = #{power}
+	</select>
+	
 	<select id="select_id" parameterType="String" resultType="String">
 		select id from member where id=#{id}
 	</select>

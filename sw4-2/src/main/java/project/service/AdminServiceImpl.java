@@ -13,8 +13,8 @@ import project.repository.NoticeDao;
 @Service("adminService")
 public class AdminServiceImpl implements AdminService{
 	
-	@Autowired
-	private MemberDao memberDao;
+	//@Autowired
+	//private MemberDao memberDao;
 	
 	@Autowired
 	private BoardDao boardDao;

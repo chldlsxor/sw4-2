@@ -14,7 +14,7 @@ private Logger log = LoggerFactory.getLogger(getClass());
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		log.info("관리자 인터셉터 실행");
+		log.info("관리자 인터셉터 실행{}",request.getSession().getAttribute("userpwr"));
 		if(request.getSession().getAttribute("userpwr").equals("회원")) {
 			response.sendRedirect(request.getContextPath()+"/");
 			return false;

@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import project.bean.MemberDto;
+import project.bean.PageDto;
 import project.repository.MemberDao;
 
 @Service("memberService")
@@ -37,7 +38,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public ModelAndView message(String view) {
+	public ModelAndView member_list(String view) {
 		ModelAndView mv = new ModelAndView();
 		//나중에 memberList가 아니라 친구 리스트로 바꿔야 됨!!!!★☆
 		mv.addObject("memberList",memberDao.member_list());
@@ -98,5 +99,61 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<MemberDto> search_member(String name) {
 		return memberDao.search_member(name);
+	}
+
+	@Override
+	public ModelAndView member_page_list(PageDto pageDto, HttpServletRequest request) {
+		// TODO Auto-generated method stub
+		log.info("keywordtype : {}, keyword : {}, order_type : {}, order : {}, list_num : {}",
+				pageDto.getKeyword_type(),
+				pageDto.getKeyword(),
+				pageDto.getOrder_type(),
+				pageDto.getOrder(),
+				pageDto.getList_num());
+		
+		boolean searchMode = pageDto.getKeyword_type()!=null &&pageDto.getKeyword() !=null;
+		if(searchMode)
+			pageDto.setBoardcount(memberDao.member_get_count_by_search(pageDto));
+		else
+			pageDto.setBoardcount(memberDao.member_get_count());
+		if(pageDto.getList_num()==0)
+			pageDto.setList_num(10);
+		pageDto.setPageStr(request.getParameter("page"));
+		log.info("page :{}", pageDto.getPageStr());
+		log.info("getBoardcount :{}", pageDto.getBoardcount());
+		//페이지 계산
+		
+		try {
+			pageDto.setPageNo(Integer.parseInt(pageDto.getPageStr()));
+			if(pageDto.getPageNo() < 0 ) throw new Exception();
+		}catch(Exception e) {
+			pageDto.setPageNo(1);
+		}
+		
+		log.info("getPageNo :{}", pageDto.getPageNo());
+		
+		pageDto.setBoardfinish(pageDto.getPageNo()*pageDto.getList_num());
+		pageDto.setBoardstart(pageDto.getBoardfinish()-(pageDto.getList_num()-1));
+		
+		pageDto.setBlockstart((pageDto.getPageNo()-1)/pageDto.getBlocksize()*pageDto.getBlocksize()+1);
+		pageDto.setBlockfinish(pageDto.getBlockstart()+pageDto.getBlocksize()-1);
+		
+		pageDto.setBlockmax((pageDto.getBoardcount()+pageDto.getList_num()-1)/pageDto.getList_num());
+		if(pageDto.getBlockmax()<pageDto.getBlockfinish()) pageDto.setBlockfinish(pageDto.getBlockmax());
+		
+		if(searchMode)
+			pageDto.setUrl("&keyword_type="+pageDto.getKeyword_type()+"&keyword="+pageDto.getKeyword());
+		else
+			pageDto.setUrl("");
+		
+		log.info("getUrl :{}", pageDto.getUrl());
+		ModelAndView mv = new ModelAndView();
+		if(searchMode)
+			mv.addObject("memberList", memberDao.member_page_search(pageDto));
+		else
+			mv.addObject("memberList", memberDao.member_page_list(pageDto));
+		mv.addObject("p",pageDto);
+		mv.setViewName("admin/member_list");
+		return mv;
 	}
 }

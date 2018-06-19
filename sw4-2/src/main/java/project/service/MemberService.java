@@ -11,12 +11,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import project.bean.MemberDto;
+import project.bean.PageDto;
 
 @Service
 public interface MemberService {
 	void logout(HttpSession session);
 	void exit(String id);
-	ModelAndView message(String view);
+	ModelAndView member_list(String view);
 	MemberDto get(String id);
 	MemberDto get_by_nick(String nick);
 	void edit(MemberDto memberDto);
@@ -26,4 +27,5 @@ public interface MemberService {
 	void notice();
 	String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException;
 	List<MemberDto> search_member(String name);
+	ModelAndView member_page_list(PageDto pageDto, HttpServletRequest request);
 }
