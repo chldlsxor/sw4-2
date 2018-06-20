@@ -74,4 +74,12 @@
 	<select id="nick_search" parameterType="String" resultType="memberDto">
 		select * from member where nick like #{nick}||'%'
 	</select> 
+	
+	<select id="scrapLoad" parameterType="int" resultType="String">
+		select scrap from member where no = #{no}
+	</select>
+	
+	<update id="scrapUpdate" parameterType="map">
+		update member set scrap = #{scrap} where no = #{no}
+	</update>
 </mapper>

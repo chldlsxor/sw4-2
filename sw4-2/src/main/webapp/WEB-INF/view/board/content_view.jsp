@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
-<c:set var="flag" value="${false}"></c:set>
+<c:set var="replyflag" value="${false}"></c:set>
 <!-- 	마스크 div -->
 <div class="mask"></div>
 <div class="content-view">
@@ -24,14 +24,28 @@
 		</div>
 		<div class="content-reply">
 			<c:forEach var="replyDto" items="${replyList}">
-				
-				<p class="reply-text">${replyDto.nick} | ${replyDto.content}</p><img class="reply-love" src="${root}/res/image/outLineHeart.png"width="17px" height="17px">
+				<p class="reply-text">${replyDto.nick} | ${replyDto.content}</p>
+				<c:forEach var="loveList" items="${replyDto.loveList }">
+					<c:if test="${userno == loveList }">
+						<c:set var="replyflag" value="${true}"></c:set>
+					</c:if>
+				</c:forEach>
+				<c:choose>
+					<c:when test="${replyflag }">
+						<input type="hidden" value="${replyDto.no }">
+						<img class="reply-love" src="${root}/res/image/innerHeart.png"width="17px" height="17px">
+					</c:when>
+					<c:otherwise>
+						<input type="hidden" value="${replyDto.no }">
+						<img class="reply-love" src="${root}/res/image/outLineHeart.png"width="17px" height="17px">
+					</c:otherwise>
+				</c:choose>
 				<br>
 				<p>
-				${replyDto.reg }&nbsp;&nbsp;&nbsp;좋아요<i> 0</i>&nbsp;&nbsp;&nbsp;
+				${replyDto.reg }&nbsp;&nbsp;&nbsp;좋아요<i> ${replyDto.loveSize }</i>&nbsp;&nbsp;&nbsp;
 				<c:if test="${replyDto.gno == 0 }">
 					<a class="re-reply">답글 달기</a>
-					<input type="hidden" value="${replyDto.no }">
+					<input class = "reply-no" type="hidden" value="${replyDto.no }">
 					<input type="hidden" value="${replyDto.nick }">
 					</p>
 					<c:if test="${replyDto.recnt != 0 }">
@@ -40,6 +54,7 @@
 					<a class="re-reply-hide" style="display: none">답글 접기</a>
 				</c:if>
 				<br><br>
+				<c:set var="replyflag" value="${false}"></c:set>
 			</c:forEach>
 		</div>
 		<div>

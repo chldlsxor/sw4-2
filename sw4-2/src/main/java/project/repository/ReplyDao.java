@@ -1,6 +1,7 @@
 package project.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +16,5 @@ public interface ReplyDao {
 	public List<ReplyDto> reReplyList(int gno);
 	public int getReplyCnt(int no);
 	public void setReCnt(ReplyDto replyDto);
-	public void replyGood(ReplyDto replyDto);
+	public void replyGood(String good, int no);
 }

@@ -16,7 +16,7 @@
 		 select reply_seq.nextval from dual
 	</select>
 	
-	<select id="getReply" resultType="ReplyDto">
+	<select id="getReply" parameterType="int" resultType="ReplyDto">
 		select * from reply where no = #{no}
 	</select>
 	
@@ -32,7 +32,7 @@
 		update reply set recnt = #{recnt} where no = #{no}
 	</update>
 	
-	<update id="replyGood" parameterType="ReplyDto">
+	<update id="replyGood" parameterType="map">
 		update reply set good = #{good} where no = #{no}
 	</update>
 

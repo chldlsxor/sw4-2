@@ -2,6 +2,8 @@ package project.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +17,8 @@ import project.service.ReplyService;
 @RequestMapping("/reply")
 public class ReplyController {
 
+	private Logger log = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	private ReplyService replyService;
 	
@@ -25,9 +29,9 @@ public class ReplyController {
 	}
 	
 	@RequestMapping("/write")
-	@ResponseBody
-	public ReplyDto replyWrite(ReplyDto replyDto) {
-		return replyService.replyWrite(replyDto);
+	public String replyWrite(ReplyDto replyDto, Model model) {
+		model.addAttribute("replyList", replyService.replyWrite(replyDto));
+		return "board/addreply";
 	}
 	
 	@RequestMapping("/getreply")
@@ -39,6 +43,12 @@ public class ReplyController {
 	@RequestMapping("/re-reply-view")
 	public String reReplyView(int gno, Model model) { 
 		model.addAttribute("replyList", replyService.reReplyView(gno));
+		return "board/addreply";
+	}
+	
+	@RequestMapping("/replylove")
+	public String replyLove(int no, Model model, String userno) {
+		model.addAttribute("replyList", replyService.replyGood(no, userno));
 		return "board/addreply";
 	}
 	
