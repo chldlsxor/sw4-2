@@ -26,6 +26,7 @@ public interface MemberService {
 	void friend();
 	void notice();
 	String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException;
-	List<MemberDto> search_member(String name);
+	List<MemberDto> name_search(String name);
+	List<MemberDto> nick_search(String nick);
 	ModelAndView member_page_list(PageDto pageDto, HttpServletRequest request);
 }

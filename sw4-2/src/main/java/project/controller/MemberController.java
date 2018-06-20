@@ -140,18 +140,32 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping("/list")
-	public String list(Model model, String name) {
+	@RequestMapping("/name_search")
+	public String name_search(Model model, String name) {
 		List<MemberDto> list = null;
 		
 		if(name != null) {
-			list = memberService.search_member(name);
+			list = memberService.name_search(name);
 		}
 		
 		model.addAttribute("list",list);
 		model.addAttribute("name",name);
 		
-		return "member/list";
+		return "member/name_search";
+	}
+	
+	@RequestMapping("/nick_search")
+	public String nick_search(Model model, String nick) {
+		List<MemberDto> list = null;
+		
+		if(nick != null) {
+			list = memberService.nick_search(nick);
+		}
+		
+		model.addAttribute("list",list);
+		model.addAttribute("nick",nick);
+		
+		return "member/nick_search";
 	}
 	
 	@RequestMapping("/detail")
@@ -218,15 +232,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/follow_list")
-	public String follow_list(Model model, String name, String nick) {
+	public String follow_list(Model model, String type, String keyword, String nick) {
 		//닉네임을 받아와서 회원정보를 뽑음
 		MemberDto memberDto = memberService.get_by_nick(nick);
 		
 		List<String> follow_list = new ArrayList<>();
 		//그 회원의 팔로우 리스트를 뽑음
-		if(name != null) {
+		if(keyword != null) {
 			//검색어있을 경우
-			follow_list=friendService.follow_list_search(memberDto.getId(), name);
+			follow_list=friendService.follow_list_search(memberDto.getId(), type, keyword);
 		}else {
 			follow_list=friendService.follow_list(memberDto.getId());
 		}
@@ -240,7 +254,8 @@ public class MemberController {
 		
 		model.addAttribute("nick",nick);
 		model.addAttribute("list",list);
-		model.addAttribute("name",name);
+		model.addAttribute("type",type);
+		model.addAttribute("keyword",keyword);
 		int follow_cnt = friendService.follow_cnt(memberDto.getId());
 		model.addAttribute("follow_cnt",follow_cnt);
 		
@@ -248,15 +263,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/follower_list")
-	public String follower_list(Model model, String name, String nick) {
+	public String follower_list(Model model, String type, String keyword, String nick) {
 		//닉네임을 받아와서 회원정보를 뽑음
 		MemberDto memberDto = memberService.get_by_nick(nick);
 		
 		List<String> follower_list = new ArrayList<>();
 		//그 회원의 팔로우 리스트를 뽑음
-		if(name != null) {
+		if(keyword != null) {
 			//검색어있을 경우
-			follower_list=friendService.follower_list_search(memberDto.getId(), name);
+			follower_list=friendService.follower_list_search(memberDto.getId(), type, keyword);
 		}else {
 			follower_list=friendService.follower_list(memberDto.getId());
 		}
@@ -270,7 +285,8 @@ public class MemberController {
 		
 		model.addAttribute("nick",nick);
 		model.addAttribute("list",list);
-		model.addAttribute("name",name);
+		model.addAttribute("type",type);
+		model.addAttribute("keyword",keyword);
 		int follower_cnt = friendService.follower_cnt(memberDto.getId());
 		model.addAttribute("follower_cnt",follower_cnt);
 		
