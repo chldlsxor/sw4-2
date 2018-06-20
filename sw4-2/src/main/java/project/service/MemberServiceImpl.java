@@ -97,10 +97,15 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public List<MemberDto> search_member(String name) {
-		return memberDao.search_member(name);
+	public List<MemberDto> name_search(String name) {
+		return memberDao.name_search(name);
 	}
 
+	@Override
+	public List<MemberDto> nick_search(String nick) {
+		return memberDao.nick_search(nick);
+	}
+	
 	@Override
 	public ModelAndView member_page_list(PageDto pageDto, HttpServletRequest request) {
 		// TODO Auto-generated method stub

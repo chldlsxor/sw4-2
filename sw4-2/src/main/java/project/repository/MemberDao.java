@@ -21,7 +21,8 @@ public interface MemberDao {
 	boolean select_id(String id);
 	void edit(MemberDto memberDto);
 	boolean select_nick(String nick);
-	List<MemberDto> search_member(String name);
+	List<MemberDto> name_search(String name);
+	List<MemberDto> nick_search(String nick);
 	List<MemberDto> member_page_list(PageDto pageDto);
 	List<MemberDto> member_page_search(PageDto pageDto);
 	int member_get_count();
