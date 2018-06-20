@@ -51,6 +51,7 @@
     </head>
     <body>
     	<div class="empty-row"></div>
+    	<div class="empty-row"></div>
     	<div class="container">
     		<form action="follow_list" method="get">
 	        	<div class="row">

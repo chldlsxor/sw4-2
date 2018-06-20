@@ -29,6 +29,7 @@
             .register-wrapper, .btn-wrapper{
                 margin: 10px;
                 border : 1px solid black;
+                padding:10px;
             }
             a:visited, a:link {
             	color:#00A2E8;
@@ -105,6 +106,7 @@
         </script>
     </head>
     <body>
+    	<div class="empty-row"></div>
         <div class="empty-row"></div>
         <div class="container">
             <!-- 이미지 슬라이더 전체 공간 -->

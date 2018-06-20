@@ -36,17 +36,20 @@
             th{
                 text-align: right;
                 padding: 10px;
-                width: 200px;
+                width: 160px;
                 margin : 10px;
             }
             td{
                 flex-grow: 1;
             }
-            .form-input{
+            .form-control{
             	margin : 10px;
             }
             .form-btn {
             	width:200px;
+            }
+            input[type=submit]{
+            	margin-top:20px;
             }
             button{
                 width: 100%;
@@ -100,6 +103,9 @@
                 $("#edit_pw").on("click",function(){
                     location.href="edit_pw";
                 });
+                $("#exit").on("click",function(){
+                    location.href="exit";
+                });
                 
                 $("#f").on("change", function(){
                     readURL(this);
@@ -138,6 +144,7 @@
         </script>
     </head>
     <body>
+    	<div class="empty-row"></div>
        	<div class="empty-row"></div>
         <main>
             <aside>
@@ -145,6 +152,7 @@
                     <tbody>
                         <tr><button id="edit" class="now">프로필 편집</button></tr>
                         <tr><button id="edit_pw">비밀번호 변경</button></tr>
+                        <tr><button id="exit">회원 탈퇴</button></tr>
                     </tbody>
                 </table>
             </aside>
@@ -169,20 +177,20 @@
                             </tr>
                             <tr>
                                 <th>아이디(이메일)</th>
-                                <td><input class="form-input" type="text" name="id" required value="${memberDto.id}" readonly></td>
+                                <td><input class="form-control" type="text" name="id" required value="${memberDto.id}" readonly></td>
                             </tr>
                             <tr>
                                 <th>이름</th>
-                                <td><input class="form-input" type="text" name="name" id="name" required value="${memberDto.name}"></td>
+                                <td><input class="form-control" type="text" name="name" id="name" required value="${memberDto.name}"></td>
                             </tr>
                             <tr>
                                 <th>닉네임</th>
-                                <td><input class="form-input" type="text" name="nick" id="nick" required value="${memberDto.nick}"></td>
+                                <td><input class="form-control" type="text" name="nick" id="nick" required value="${memberDto.nick}"></td>
                             </tr>
                             <tr>
                             	<th>공개범위</th>
                             	<td>
-                            		<select name="open" class="form-input">
+                            		<select name="open" class="form-control">
                             			<option <c:if test="${memberDto.open == 0}">selected</c:if> value="0">전체공개</option>
                             			<option <c:if test="${memberDto.open == 1}">selected</c:if> value="1">팔로워만 공개</option>
                             			<option <c:if test="${memberDto.open == 2}">selected</c:if> value="2">비공개</option>
