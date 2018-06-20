@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -58,13 +59,6 @@ public class MemberController {
 	
 	@RequestMapping("/logout")
 	public String logout(HttpSession session) {
-		memberService.logout(session);
-		return "redirect:/";
-	}
-	
-	@RequestMapping("/exit")
-	public String exit(HttpSession session) {
-		memberService.exit(session.getAttribute("userid").toString());
 		memberService.logout(session);
 		return "redirect:/";
 	}
@@ -134,8 +128,30 @@ public class MemberController {
 			model.addAttribute("go", "member/edit_pw");
 			return "redirect:/result";
 		}else {
-			model.addAttribute("msg", "이전 비밀번호가 다릅니다.");
+			model.addAttribute("msg", "이전 비밀번호가 틀렸습니다.");
 			model.addAttribute("go", "member/edit_pw");
+			return "redirect:/result";
+		}
+	}
+
+	@RequestMapping("/exit")
+	public String exit(Model model, HttpSession session) {
+		MemberDto memberDto = memberService.get(session.getAttribute("userid").toString());
+		model.addAttribute("memberDto", memberDto);
+		return "member/exit";
+	}
+	
+	@PostMapping("/exit")
+	public String exit(Model model, MemberDto memberDto, HttpSession session) throws NoSuchAlgorithmException {
+		if(homeService.pw_check(memberDto)) {
+			memberService.exit(memberDto.getId());
+			memberService.logout(session);
+			model.addAttribute("msg", "탈퇴되었습니다.");
+			model.addAttribute("go", "login");
+			return "redirect:/result";
+		}else {
+			model.addAttribute("msg", "비밀번호가 틀렸습니다.");
+			model.addAttribute("go", "member/exit");
 			return "redirect:/result";
 		}
 	}
@@ -301,4 +317,12 @@ public class MemberController {
 		
 		return "member/notice";
 	}
+	
+	@RequestMapping("scrapUp")
+	@ResponseBody
+	public String scrapUp(HttpSession session, int bno) {
+		int no = (int)session.getAttribute("userno");
+		return memberService.scrapUpdate(no,bno);
+	}
+	
 }

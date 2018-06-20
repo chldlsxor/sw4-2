@@ -162,6 +162,8 @@
         </script>
     </head>
     <body>
+    	<div class="empty-row"></div>
+    	<div class="empty-row"></div>
         <div class="container">
             <div class="main-container">
                 <div class="profile">

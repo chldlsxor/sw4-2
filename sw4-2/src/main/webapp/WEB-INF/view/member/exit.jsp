@@ -89,22 +89,6 @@
                 $("#exit").on("click",function(){
                     location.href="exit";
                 });
-                
-				$("#member_edit").on("submit",function(event){
-                	event.preventDefault();
-                	
-					var regex = /^[a-zA-Z0-9]{6,15}$/;
-                	
-                	if(!regex.test($("#new_pw").val())){
-                		alert("비밀번호는 영문숫자 6~15자리 입니다.");
-                		return;
-                	}else if($("#new_pw").val()!=$("#new_pw_check").val()){
-                		alert("비밀번호와 비밀번호확인이 다릅니다.");
-                		return;
-                	}else{
-                		document.querySelector("#member_edit").submit();
-                	}
-                });
             });
         </script>
     </head>
@@ -116,13 +100,13 @@
                 <table>
                     <tbody>
                         <tr><button id="edit">프로필 편집</button></tr>
-                        <tr><button id="edit_pw" class="now">비밀번호 변경</button></tr>
-                        <tr><button id="exit">회원 탈퇴</button></tr>
+                        <tr><button id="edit_pw">비밀번호 변경</button></tr>
+                        <tr><button id="exit" class="now">회원 탈퇴</button></tr>
                     </tbody>
                 </table>
             </aside>
             <section>
-                <form action="edit_pw" method="post" id="member_edit">
+                <form action="exit" method="post">
                     <table>
                         <tbody>
                         	<tr height=100>
@@ -138,19 +122,11 @@
                                 <td>${memberDto.nick}</td>
                             </tr>
                             <tr>
-                                <th>이전 비밀번호</th>
+                                <th>비밀번호</th>
                                 <td><input class="form-control" type="password" name="pw" id="pw" required></td>
                             </tr>
                             <tr>
-                                <th>새 비밀번호</th>
-                                <td><input class="form-control" type="password" name="new_pw" id="new_pw" required></td>
-                            </tr>
-                            <tr>
-                                <th>새 비밀번호 확인</th>
-                                <td><input class="form-control" type="password" id="new_pw_check"required></td>
-                            </tr>
-                            <tr>
-                            	<td colspan="2" class="center"><input class="form-btn" type="submit" value="비밀번호 변경"></td>
+                            	<td colspan="2" class="center"><input class="form-btn" type="submit" value="탈퇴하기"></td>
                             </tr>
                         </tbody>
                     </table>
