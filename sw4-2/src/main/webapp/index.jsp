@@ -7,7 +7,7 @@
 <h1><a href = "/sw4-2/email?type=register">회원가입</a></h1>
 <h1><a href = "/sw4-2/email?type=reset_pw">비밀번호 재설정</a></h1>
 <h1><a href = "/sw4-2/member/edit">회원정보 수정</a></h1>
-<h1><a href = "/sw4-2/member/list">사용자 검색</a></h1>
+<h1><a href = "/sw4-2/member/name_search">사용자 검색</a></h1>
 <c:if test="${userpwr=='관리자'}">
 	<h1><a href = "/sw4-2/admin/">admin_page</a></h1>
 </c:if>

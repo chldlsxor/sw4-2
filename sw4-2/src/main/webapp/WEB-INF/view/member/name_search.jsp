@@ -4,7 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>팔로우 리스트</title>    
+        <title>친구 찾기</title>    
 <!--        디자인 코드 작성 공간-->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -27,6 +27,24 @@
         		color:gray;
         	}
         	
+        	.select-container{
+                width: 100%;
+                height: 60px;
+                text-align: center;
+            }
+            
+        	button{
+                padding: 10px;
+                background-color: white;
+                border: none;
+                height: 100%;
+                color: gray;
+            }
+            .now{
+            	font-weight: bold;
+                border-top: 3px solid black;
+                color: black;
+            }
         	@media screen and (max-width:900px){
                 .container{
                     width:100%;
@@ -38,6 +56,7 @@
                     display: block;
                 }
             }
+        	
         </style>
 <!--        jQuery를 사용하기 위해 라이브러리를 불러오도록 설정-->
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
@@ -52,21 +71,21 @@
     <body>
     	<div class="empty-row"></div>
     	<div class="container">
-    		<form action="follow_list" method="get">
-	        	<div class="row">
-	        		<input type="hidden" name="nick" value="${nick}">
-	        		<select name="type" class="form-input inline">
-						<option value="name">이름</option>
-						<option value="nick" <c:if test="${type == 'nick'}">selected</c:if>>닉네임</option>
-					</select>
-	        		<input class="form-input inline" value="${keyword}" type="text" name="keyword" placeholder="팔로우 검색" required>
-	        		<input class="form-btn inline" type="submit" value="검색">
+    		<div class="select-container">
+                <table>
+                    <tbody>
+                        <tr><button class="now" onclick="location.href='name_search';">이름으로 검색</button></tr>
+                       	<tr><button onclick="location.href='nick_search';">닉네임 검색</button></tr>
+                    </tbody>
+                </table>
+            </div>
+    	
+    		<form action="name_search" method="get">
+	        	<div class="row center">
+	        		<input value="${name}" class="form-input inline" type="text" name="name" placeholder="친구 찾기(이름 검색)" required>
+	        		<input type="submit" class="form-btn inline" value="검색">
 	        	</div>
 	        </form>
-			<div class="empty-row"></div>
-			<div>
-				<h3>팔로우 : ${follow_cnt} 명</h3>
-			</div>
 			<div class="row">
 				<table>
 					<tbody>

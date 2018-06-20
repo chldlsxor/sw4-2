@@ -9,6 +9,9 @@
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
+        	.container{
+        		width:900px;
+        	}
             *{
                 box-sizing: border-box;
                 border:1px dotted black;
@@ -75,6 +78,11 @@
                 height: 100%;
             }
             
+            input[type=submit], input[type=button]{
+            	background-color: #00A2E8;
+				color:white;
+            }
+            
             .now{
             	font-weight: bold;
                 border-top: 3px solid black;
@@ -82,6 +90,13 @@
             #myboard{
             	color: gray;
             }
+            
+            @media screen and (max-width:900px){
+                .container{
+                    width:100%;
+                }
+            }
+            
             @media screen and (max-width:768px){
                 .main-container{
                     height: 210px;
@@ -147,7 +162,7 @@
         </script>
     </head>
     <body>
-        <div class="container-80">
+        <div class="container">
             <div class="main-container">
                 <div class="profile">
                 	<c:if test="${memberDto.profile=='pic.jpg'}">

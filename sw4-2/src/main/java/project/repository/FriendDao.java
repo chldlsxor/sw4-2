@@ -16,6 +16,7 @@ public interface FriendDao {
 	int follow_cnt(String id);
 	int follower_cnt(String id);
 	boolean search(FriendDto friendDto);
-	List<String> follow_list_search(String follower,String name);
-	List<String> follower_list_search(String follow,String name);
+	List<String> follow_list_search(String follower,String type, String keyword);
+	List<String> follower_list_search(String follow,String type, String keyword);
+	
 }

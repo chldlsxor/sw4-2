@@ -77,6 +77,10 @@
         </script>
     </head>
     <body>
+    	<header>
+	    	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
+    	</header>
+    
         <div class="empty-row"></div>
         <div class="container">
             <!-- 이미지 슬라이더 전체 공간 -->

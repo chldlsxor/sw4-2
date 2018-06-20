@@ -52,19 +52,25 @@ public class FriendDaoImpl implements FriendDao{
 	}
 
 	@Override
-	public List<String> follow_list_search(String follower, String name) {
+	public List<String> follow_list_search(String follower, String type, String keyword) {
 //		Object[] args = {follower, name};
 		Map<String, String> map = new HashMap<>();
 		map.put("follower", follower);
-		map.put("name", name);
-		return sqlSession.selectList("follow_list_search", map);
+		map.put("keyword", keyword);
+		if(type.equals("name"))
+			return sqlSession.selectList("follow_list_search_name", map);
+		else
+			return sqlSession.selectList("follow_list_search_nick", map);
 	}
 	
 	@Override
-	public List<String> follower_list_search(String follow, String name) {
+	public List<String> follower_list_search(String follow, String type, String keyword) {
 		Map<String, String> map = new HashMap<>();
 		map.put("follow", follow);
-		map.put("name", name);
-		return sqlSession.selectList("follower_list_search", map);
+		map.put("keyword", keyword);
+		if(type.equals("name"))
+			return sqlSession.selectList("follower_list_search_name", map);
+		else
+			return sqlSession.selectList("follower_list_search_nick", map);
 	}
 }

@@ -9,17 +9,55 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
+        	.container{
+        		width:900px;
+        	}
         	th{
         		width:100px;
         	}
         	img{
         		margin:10px;
         	}
-        	.nick{
+        	.nick, .name{
+        		padding:5px 20px;
+        		display: inline-block;
+        		border:none;
         	}
         	.name{
         		color:gray;
         	}
+        	
+        	.select-container{
+                width: 100%;
+                height: 60px;
+                text-align: center;
+            }
+            
+        	button{
+                padding: 10px;
+                background-color: white;
+                border: none;
+                height: 100%;
+                color: gray;
+            }
+            .now{
+            	font-weight: bold;
+                border-top: 3px solid black;
+                color: black;
+            }
+            
+        	@media screen and (max-width:900px){
+                .container{
+                    width:100%;
+                }
+            }
+        	
+        	@media screen and (max-width:600px){
+                .nick, .name{
+                    display: block;
+                }
+            }
+        	
         </style>
 <!--        jQuery를 사용하기 위해 라이브러리를 불러오도록 설정-->
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
@@ -33,20 +71,28 @@
     </head>
     <body>
     	<div class="empty-row"></div>
-    	<div class="container-80">
-    		<form action="list" method="get">
-	        	<div class="row">
-	        		<input value="${name}" class="form-input" type="text" name="name" placeholder="친구 찾기(이름 검색)" required>
-	        		<input type="submit" class="form-btn" value="검색">
+    	<div class="container">
+    		<div class="select-container">
+                <table>
+                    <tbody>
+                        <tr><button onclick="location.href='name_search';">이름으로 검색</button></tr>
+                       	<tr><button class="now" onclick="location.href='nick_search';">닉네임 검색</button></tr>
+                    </tbody>
+                </table>
+            </div>
+    	
+    		<form action=nick_search method="get">
+	        	<div class="row center">
+	        		<input value="${nick}" class="form-input inline" type="text" name="nick" placeholder="친구 찾기(닉네임 검색)" required>
+	        		<input type="submit" class="form-btn inline" value="검색">
 	        	</div>
 	        </form>
-			<div class="empty-row"></div>
 			<div class="row">
 				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
 						<tr>
-							<th rowspan="2">
+							<th>
 								<c:if test="${memberDto.profile=='pic.jpg'}">
 									<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70">
 								</c:if>
@@ -54,18 +100,18 @@
 									<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70">
 								</c:if>
 							</th>
-							<td align="left" class="nick">
-								
+							<td align="left">
+								<div class="nick">
 								<!-- 제목 : 누르면 detail 페이지로 이동 -->
 								<a href="detail?nick=${memberDto.nick}">
 									${memberDto.nick}
 								</a>
-
+								</div>
+								<div class="name">
+									${memberDto.name}
+								</div>
 							</td>
 						</tr> 
-						<tr>
-							<td class="name">${memberDto.name}</td>
-						</tr>
 						</c:forEach>
 					</tbody>
 				</table>

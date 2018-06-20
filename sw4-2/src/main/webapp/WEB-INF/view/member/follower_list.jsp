@@ -9,7 +9,35 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
-        
+        	.container{
+        		width:900px;
+        	}
+        	th{
+        		width:100px;
+        	}
+        	img{
+        		margin:10px;
+        	}
+        	.nick, .name{
+        		padding:5px 20px;
+        		display: inline-block;
+        		border:none;
+        	}
+        	.name{
+        		color:gray;
+        	}
+        	
+        	@media screen and (max-width:900px){
+                .container{
+                    width:100%;
+                }
+            }
+            
+        	@media screen and (max-width:600px){
+                .nick, .name{
+                    display: block;
+                }
+            }
         </style>
 <!--        jQuery를 사용하기 위해 라이브러리를 불러오도록 설정-->
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
@@ -23,47 +51,46 @@
     </head>
     <body>
     	<div class="empty-row"></div>
-    	<div class="container-80">
+    	<div class="container">
     		<form action="follower_list" method="get">
 	        	<div class="row">
 	        		<input type="hidden" name="nick" value="${nick}">
-	        		<input value="${name}" type="text" name="name" placeholder="팔로워 검색" required>
-	        		<input type="submit" value="검색">
+	        		<select name="type" class="form-input inline">
+						<option value="name">이름</option>
+						<option value="nick" <c:if test="${type == 'nick'}">selected</c:if>>닉네임</option>
+					</select>
+	        		<input class="form-input inline" value="${keyword}" type="text" name="keyword" placeholder="팔로워 검색" required>
+	        		<input class="form-btn inline" type="submit" value="검색">
 	        	</div>
 	        </form>
 			<div class="empty-row"></div>
 			<div>
-				<h1>팔로워 : ${follower_cnt} 명</h1>
+				<h3>팔로워 : ${follower_cnt} 명</h3>
 			</div>
 			<div class="row">
-				<table class="table table-stripe">
-					<thead>
-						<tr>
-							<th>프사</th>
-							<th>닉네임</th>
-							<th>이름</th>
-						</tr>
-					</thead>
+				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
 						<tr>
-							<td>
+							<th>
 								<c:if test="${memberDto.profile=='pic.jpg'}">
-									<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="50" height="50">
+									<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70">
 								</c:if>
 								<c:if test="${memberDto.profile!='pic.jpg'}">
-									<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50" height="50">
+									<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70">
 								</c:if>
-							</td>
+							</th>
 							<td align="left">
-								
+								<div class="nick">
 								<!-- 제목 : 누르면 detail 페이지로 이동 -->
 								<a href="detail?nick=${memberDto.nick}">
 									${memberDto.nick}
 								</a>
-
+								</div>
+								<div class="name">
+									${memberDto.name}
+								</div>
 							</td>
-							<td>${memberDto.name}</td>
 						</tr> 
 						</c:forEach>
 					</tbody>
