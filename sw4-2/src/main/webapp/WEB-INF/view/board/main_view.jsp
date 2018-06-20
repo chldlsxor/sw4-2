@@ -17,6 +17,11 @@
 	border: 1px solid black;
 }
 
+.imgs{
+	width: 100%;
+	height: 100%;
+}
+
 /* 	레이어 프레임 적용 */
 .mask {
 	position: absolute;
@@ -78,17 +83,10 @@
 </style>
 <title>InStory</title>
 <script src="https://code.jquery.com/jquery-latest.js"></script>
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
 <link rel="stylesheet" type="text/css"
 	href="${root}/res/css/swiper.min.css">
 <script src="${root}/res/js/swiper.min.js"></script>
-
+<jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
 <script>
 	//반응형 flex로 변경해야함
 	var flag = true;
@@ -97,7 +95,6 @@
 	var gno = 0;
 
 	function wrapWindowByMask() {
-
 		$(document).on("mousewheel.disableScroll DOMMouseScroll.disableScroll touchmove.disableScroll",function(e) {
 							e.preventDefault();
 							return;
@@ -208,14 +205,10 @@
 			$("#chaser").hide();
 			$("#top-chaser").hide();
 		}
-		$(".fa-bars").on("click",function(){
-			$("#top-chaser").slideToggle();
-		});
+		
 		console.log("key = ${param.key}");
 		var w = $(".swiper-container").width();
 		$(".swiper-container").height(w);
-		$("#search").hide();
-		$("#search-result").hide();
 						var userNo = $("#userNo").val();
 						var listCnt = $("#listCnt").val();
 						console.log("userNo = ", userNo);
@@ -318,6 +311,8 @@
 							$(document).off(".disableScroll");
 						}
 						;
+						
+
 
 						//글 상세보기
 						function contentView() {
@@ -340,6 +335,7 @@
 											$(".re-reply-view").on("click",reReplyView);
 											$(".re-reply").on("click",reReply);
 											$(".re-reply-hide").on("click",reReplyHide);
+											$(".reply-love").on("click",ReplyLove);
 											$(".reply-input").on("keyup",function(e){
 												var keyCode = e.which ? e.which : e.keyCode;
 												var text = $(".reply-input").val();
@@ -393,11 +389,6 @@
 									"bno":bno, "content":content, "gno":gno, "id":userId
 									},
 								success:function(result){
-									var bno = result.bno;
-									$.ajax({
-										url:"${root}/reply/getreply",
-										data:{"bno":bno},
-										success:function(result){
 											$(".content-reply").empty();
 											var replyList = result;
 											result = $.parseHTML(result);
@@ -407,9 +398,9 @@
 											$(".re-reply-view").on("click",reReplyView);
 											$(".re-reply").on("click",reReply);
 											$(".re-reply-hide").on("click",reReplyHide);
+											$(".reply-love").on("click",ReplyLove);
 											gno = 0;
-										}
-									});
+										
 								}
 							});
 						};
@@ -439,13 +430,7 @@
 							$(this).prev().show();
 							$(this).hide();
 						}
-						
-						//띄어쓰기 하는중 근데 안됨
-						function inputsp(e){
-							
-						}
-						
-						
+		
 						//대댓 쓰기
 						function reReply(){
 							console.log("답글 쓰기");
@@ -467,41 +452,10 @@
 							}
 						});
 						
-						//검색 기능 
-						$(".fa-search").on("click",function(){
-							$("#search").slideToggle();
-							$("#search-result").slideToggle();
-						});
-
-						$(".top-search").on("keyup",function(){
-							var key = $(this).val();
-							if(key != ""){
-								$.ajax({
-									url:"${root}/board/search-tag",
-									data:{"key":key},
-									success : function(result){
-										var text = "";
-										for(var i in result){
-											text += "<button class='search-ret btn btn-info' type='submit'>"+result[i]+"</button>&nbsp;&nbsp;&nbsp;&nbsp;";
-										}
-										$("#search-result").html(text);					
-										$(".search-ret").on("click",keyClick);
-									}
-								});
-							}else{
-								$("#search-result").empty();
-							}
-							console.log();
-						});
 						
-						function keyClick(){
-							$(".top-search").val($(this).text());
-						};
 						
 						//알림창 보기
 
-		                $(".user-alert").hide();
-		                $(".top-user-alert").hide();
 		               //우측 알림창
 		                $(".user-alert-div").on("click",function(){
 		                    $(".user-alert").empty();
@@ -514,66 +468,56 @@
 		                    		$(".user-alert").slideToggle();
 		                    	}
 		                    });
-		                });
-		                
-		               //상단 알림창
-		                $(".top-user-alert-div").on("click",function(){
-		                    $(".top-user-alert").empty();
-		                    $.ajax({
-		                    	url : "${root}/member/notice",
-		                    	success : function(result){
-									var origin = result;
-									result = $.parseHTML(result);
-		                    		$(".top-user-alert").append(result);
-		                    		$(".top-user-alert").slideToggle();
-		                    	}
-		                    });
-		                    
-		                });
+		                });           
 		               
 		               //댓글 좋아요
 		               function ReplyLove(){
+		            	   var reno = $(this).nextAll().next().find(".reply-no").val();
+		            	   var reuserno = "${userno}";
+		            	   console.log("no = "+reno);
+		            	   console.log("buserno = "+reuserno);
 		            	   $.ajax({
-		            		   
+		            		   url : "${root}/reply/replylove",
+		            		   data : {"no" : reno,
+		            			   "userno" : reuserno
+		            			   },
+		            		   success : function(result){
+		            			   var bno = result.bno;
+											$(".content-reply").empty();
+											var replyList = result;
+											result = $.parseHTML(result);
+											var addP = $("<p/>").html(result);
+											$(".content-reply").append(addP);
+											$(".content-view-content").val("");
+											$(".re-reply-view").on("click",reReplyView);
+											$(".re-reply").on("click",reReply);
+											$(".re-reply-hide").on("click",reReplyHide);
+											$(".reply-love").on("click",ReplyLove);
+											gno = 0;
+										
+		            		   }
+		            	   });
+		               };
+		               
+		               $("body").on("click", "img.mark", scrap);
+		               function scrap(){
+		            	   var bno = $(this).parent().prevAll()[1].value;
+		            	   $.ajax({
+		            		   url : "${root}/member/scrapUp",
+		            		   data : {"bno":bno},
+		            		   success: function(result){
+		            			   console.log(result);
+		            		   }
 		            	   });
 		               };
 		
 					});
 </script>
+
 </head>
 <body>
-	<header>
-		<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
-		<br><br><br>
-		<div class="row">
-			<div id="top-chaser">
-				<div class="user-profile">
-					<img class="img-circle" src="http://via.placeholder.com/50x50">
-					<p class="user-name">${usernick }</p>
-				</div>
-				<div class="top-user-alert-div">
-					<a class="pleft">스토리</a>
-				</div>
-				<div>
-					<button type="button" class="profile-btn btn btn-info btn-lg"
-						onclick="location='write'">글 쓰기</button>
-				</div>
-			</div>
-				<div class="top-user-alert">       
-	            </div>
-			<form action="searchlist">
-				<div id="search">
-						<input class="top-search" type="text" name="key" placeholder="검색">
-				</div>
-				<div id="search-result"></div>
-			</form>
-	</div>
-	</header>
-	<div class="empty-row"></div>
-	<div class="empty-row"></div>
-	<div class="empty-row"></div>
-	<div class="empty-row"></div>
-	<div class="empty-row"></div>
+	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
+
 
 	<session>
 	<div id="chaser">
@@ -608,7 +552,7 @@
 				<div class="main-view-cover">
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
-						<input id="boardNo" type="hidden" value="${boardDto.no }">
+						<input class="boardNo" type="hidden" value="${boardDto.no }">
 						<c:forEach var="photoDto" items="${photoList[status.index]}">
 							<img class="imgs swiper-slide"
 								src="${root }/board/image?name=${photoDto.name}" width="10px"
@@ -638,9 +582,25 @@
 						</c:otherwise>
 					</c:choose>
 					<c:set var="flag" value="${false}"></c:set>
-					<a><img class="mark"
-						src="${root}/res/image/outLineBookmark.png" width="30px"
-						height="30px"></a>
+					<c:set var="markflag" value="${false}"></c:set>
+					<c:forEach var ="s" items="${scrapList }">
+						<c:if test="${userno == s }">
+							<c:set var="markflag" value="${true}"></c:set>
+						</c:if>
+					</c:forEach>
+					<c:choose>
+						<c:when test="${markflag }">
+							<a><img class="mark"
+							src="${root}/res/image/innerBookmark.png" width="30px"
+							height="30px"></a>
+						</c:when>
+						<c:otherwise>
+							<a><img class="mark"
+							src="${root}/res/image/outLineBookmark.png" width="30px"
+							height="30px"></a>
+						</c:otherwise>
+					</c:choose>
+					<c:set var="markflag" value="${false}"></c:set>
 				</div>
 				<div>
 					<p class="inline">좋아요&nbsp;&nbsp;</p>

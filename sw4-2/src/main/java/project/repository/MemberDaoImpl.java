@@ -1,6 +1,8 @@
 package project.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,6 +105,21 @@ public class MemberDaoImpl implements MemberDao{
 	@Override
 	public int member_get_count_by_search(PageDto pageDto) {
 		return sqlSession.selectOne("member_get_count_by_search", pageDto);
+	}
+
+	@Override
+	public String scrapLoad(int no) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("scrapLoad", no);
+	}
+
+	@Override
+	public void scrapUpdate(int no, String scrap) {
+		// TODO Auto-generated method stub
+		Map<String,Object> map = new HashMap<>();
+		map.put("no", no);
+		map.put("scrap", scrap);
+		sqlSession.update("scrapUpdate", map);
 	}
 
 	

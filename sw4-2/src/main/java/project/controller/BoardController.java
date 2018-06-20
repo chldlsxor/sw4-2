@@ -22,6 +22,7 @@ import project.service.BoardService;
 import project.service.ContentService;
 import project.service.FriendService;
 import project.service.HashtagService;
+import project.service.MemberService;
 import project.service.PhotoService;
 import project.service.ReplyService;
 
@@ -47,17 +48,22 @@ public class BoardController {
 	@Autowired
 	private FriendService friendService;
 	
+	@Autowired
+	private MemberService memberService;
+	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/list")
 	public String list(Model model, String key, HttpSession session) {
 		String id = (String)session.getAttribute("userid");
+		int no = (int)session.getAttribute("userno");
 		ContentDto contentDto = contentService.list(key, id);
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
 		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));
 		model.addAttribute("loveList", contentService.loveList(contentDto.getListBoardDto()));
 		model.addAttribute("listCnt", boardService.listCnt());
+		model.addAttribute("scrapList", memberService.scrapLoad(no));
 		return "board/main_view";
 	}
 	

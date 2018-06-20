@@ -1,6 +1,8 @@
 package project.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,9 +59,12 @@ public class ReplyDaoImpl implements ReplyDao{
 	}
 
 	@Override
-	public void replyGood(ReplyDto replyDto) {
+	public void replyGood(String good, int no) {
 		// TODO Auto-generated method stub
-		sqlSession.update("replyGood", replyDto);
+		Map<String, Object> map = new HashMap<>();
+		map.put("good", good);
+		map.put("no", no);
+		sqlSession.update("replyGood", map);
 	}
 	
 }

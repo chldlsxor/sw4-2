@@ -29,4 +29,6 @@ public interface MemberService {
 	List<MemberDto> name_search(String name);
 	List<MemberDto> nick_search(String nick);
 	ModelAndView member_page_list(PageDto pageDto, HttpServletRequest request);
+	String scrapLoad(int no);
+	String scrapUpdate(int no, int bno);
 }

@@ -27,5 +27,6 @@ public interface MemberDao {
 	List<MemberDto> member_page_search(PageDto pageDto);
 	int member_get_count();
 	int member_get_count_by_search(PageDto pageDto);
-	
+	String scrapLoad(int no);
+	void scrapUpdate(int no, String scrap);
 }

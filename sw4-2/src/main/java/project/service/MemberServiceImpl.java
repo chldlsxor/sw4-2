@@ -166,4 +166,36 @@ public class MemberServiceImpl implements MemberService{
 		mv.setViewName("admin/member_list");
 		return mv;
 	}
+
+	@Override
+	public String scrapLoad(int no) {
+		// TODO Auto-generated method stub
+		return memberDao.scrapLoad(no);
+	}
+
+	@Override
+	public String scrapUpdate(int no, int bno) {
+		// TODO Auto-generated method stub
+		String list = scrapLoad(no);
+		String back = "";
+		String[] scrap = null;
+		boolean flag = true;
+		if(list != null) {
+			scrap = list.split(",");
+			for(String s : scrap) {
+				if(!s.equals(bno)) {
+					back += s + ",";
+				}else {
+					flag = false;
+				}
+			}
+		}
+		
+		if(flag) {
+			back += bno+",";
+		}
+		memberDao.scrapUpdate(no, back);
+		
+		return scrapLoad(no);
+	}
 }
