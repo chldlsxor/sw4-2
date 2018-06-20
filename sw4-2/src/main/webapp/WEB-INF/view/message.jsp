@@ -7,7 +7,7 @@ $(document).ready(function(){
     $(".messenger_btn").on("click", function(){
         window.open("send_message?messageto="+$(this).text(),
         		$(this).text(),//팝업창 이름
-        		'toolbar=no, menubar=no, location=no, directories=no, status=no, resizable=yes, scrollbars=no, width=350,height=700,left=0,top=0' );
+        		'toolbar=no, menubar=no, location=no, directories=no, status=no, resizable=yes, scrollbars=yes, width=350,height=700,left=0,top=0' );
     });
  });
 </script>
