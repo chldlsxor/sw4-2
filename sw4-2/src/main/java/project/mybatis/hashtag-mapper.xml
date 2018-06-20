@@ -3,6 +3,10 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="project.repository.HashtagDao">
+	<!-- <resultMap type="hashmap" id="HashtagCount">
+		<result javaType="String" column="tag" property="tag"/>
+		<result javaType="int" column="count" property="count"/>
+	</resultMap> -->
 	
 	<insert id="addHashTag" parameterType="HashtagDto">
 		insert into hashtag values(#{tag},#{bno})
@@ -14,6 +18,10 @@
 	
 	<select id="searchTag" parameterType="String" resultType="String">
 		select distinct tag from hashtag where tag like '%'||#{key}||'%'
+	</select>
+	
+	<select id = "countTag" resultType="hashmap" >
+		select tag , count(*) count from hashtag group by tag order by count desc
 	</select>
 	
 </mapper>

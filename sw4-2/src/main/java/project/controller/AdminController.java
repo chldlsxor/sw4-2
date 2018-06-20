@@ -3,6 +3,7 @@ package project.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import project.bean.FriendDto;
 import project.bean.MemberDto;
 import project.bean.NoticeDto;
 import project.bean.PageDto;
+import project.repository.HashtagDao;
 import project.repository.MemberDao;
 import project.service.AdminService;
 import project.service.BoardService;
@@ -54,11 +56,22 @@ public class AdminController {
 	@Autowired
 	private FriendService friendService;
 	
+	@Autowired
+	private HashtagDao hashtagDao;
+	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/")
-	public String admin() {
-		return "admin/admin_page";
+	public ModelAndView admin() {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("hashtag_list", hashtagDao.countTag());
+		for(Map<String, Integer> hash: hashtagDao.countTag()) {
+			log.info("여기여기여기{}",hash.get("TAG"));
+			log.info("여기여기여기{}",hash.get("COUNT"));
+		}
+		mv.setViewName("admin/admin_page");
+		
+		return mv;
 	}
 	
 	/*@GetMapping("/member_list")

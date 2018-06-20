@@ -1,6 +1,7 @@
 package project.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,11 @@ public class HashtagDaoImpl implements HashtagDao{
 	public List<String> searchTag(String key) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("searchTag", key);
+	}
+
+	@Override
+	public List<Map<String, Integer>> countTag() {
+		return sqlSession.selectList("countTag");
 	}
 	
 	
