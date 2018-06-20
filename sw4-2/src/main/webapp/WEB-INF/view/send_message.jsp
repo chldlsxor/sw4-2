@@ -120,7 +120,7 @@
         					$("#result").append("<div align= 'right' class = 'message not-read'><span class = 'my-message'>"+e.data+"</span></div>")
         				}
         				else{
-        					$("#result").append("<div align= 'left' class = 'message not-read'><span class = 'my-message'>"+e.data+"</span></div>")
+        					$("#result").append("<div align= 'left' class = 'message not-read'><span class = 'your-message'>"+e.data+"</span></div>")
         				}
         				console.log($("#result"));
         				console.log($("#result")[0]);
@@ -129,7 +129,7 @@
         				
         			}
         			
-        			
+        			$("body").scrollTop($("body")[0].scrollHeight);
         			
         		};
         		

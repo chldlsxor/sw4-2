@@ -50,13 +50,13 @@ public class FriendServiceImpl implements FriendService{
 	}
 
 	@Override
-	public List<String> follow_list_search(String follower, String name) {
-		return friendDao.follow_list_search(follower, name);
+	public List<String> follow_list_search(String follower, String type, String keyword) {
+		return friendDao.follow_list_search(follower, type, keyword);
 	}
 	
 	@Override
-	public List<String> follower_list_search(String follow, String name) {
-		return friendDao.follower_list_search(follow, name);
+	public List<String> follower_list_search(String follow, String type, String keyword) {
+		return friendDao.follower_list_search(follow, type, keyword);
 	}
 
 }

@@ -9,6 +9,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
+        	.container{
+        		width:900px;
+        	}
             *{
                 box-sizing: border-box;
                 border:1px dotted black;
@@ -75,6 +78,11 @@
                 height: 100%;
             }
             
+            input[type=submit], input[type=button]{
+            	background-color: #00A2E8;
+				color:white;
+            }
+            
             .now{
             	font-weight: bold;
                 border-top: 3px solid black;
@@ -82,6 +90,13 @@
             #scrap{
             	color: gray;
             }
+            
+            @media screen and (max-width:900px){
+                .container{
+                    width:100%;
+                }
+            }
+            
             @media screen and (max-width:768px){
                 .main-container{
                     height: 210px;
@@ -117,52 +132,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src = "${root}/res/js/swiper.min.js"></script>
         <script>
-        function wrapWindowByMask() {
-
-    		$(document).on("mousewheel.disableScroll DOMMouseScroll.disableScroll touchmove.disableScroll",function(e) {
-    							e.preventDefault();
-    							return;
-    						});
-    		$(document).on("keydown.disableScroll", function(e) {
-    			var eventKeyArray = [ 32, 33, 34, 35, 36, 37, 38, 39, 40 ];
-    			for (var i = 0; i < eventKeyArray.length; i++) {
-    				if (e.keyCode === eventKeyArray[i]) {
-    					e.preventDefault();
-    					return;
-    				}
-    			}
-    		});
-
-    		// 화면의 높이와 너비를 변수로 만듭니다.
-    		var maskHeight = $(document).height();
-    		var maskWidth = $(window).width();
-
-    		// 마스크의 높이와 너비를 화면의 높이와 너비 변수로 설정합니다.
-    		$('.mask').css({
-    			'width' : maskWidth,
-    			'height' : maskHeight
-    		});
-
-    		// fade 애니메이션 : 1초 동안 검게 됐다가 80%의 불투명으로 변합니다.
-    		$('.mask').fadeIn(500);
-    		$('.mask').fadeTo("slow", 0.8);
-
-    		// 레이어 팝업을 가운데로 띄우기 위해 화면의 높이와 너비의 가운데 값과 스크롤 값을 더하여 변수로 만듭니다.
-    		var left = ($(window).scrollLeft() + ($(window).width() - $(
-    				'.content-view').width()) / 2);
-    		var top = ($(window).scrollTop() + 50);
-
-    		// css 스타일을 변경합니다.
-    		$('.content-view').css({
-    			'left' : left,
-    			'top' : top,
-    			'position' : 'absolute'
-    		});
-
-    		// 레이어 팝업을 띄웁니다.
-    		$('.content-view').show();
-    	}
-        
             $(window).resize(function(){
                 var w = $(".img").width();
                 $(".img").height(w);
@@ -189,57 +158,11 @@
                         draggable:true,
                     },
                 });
-                
-                $("body").on("click", ".img", contentView);
-                function contentView() {
-					var now = $(this);
-					var boardNo = $(this).prev().val();
-					$.ajax({
-						url : "${root}/board/content_view",
-						data : {
-							"no" : boardNo
-						},
-						contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-						success : function(result) {
-							result = $.parseHTML(result);
-							var div = $("<div/>").html(result);
-							$("body").before(div);
-							//댓글 버튼 이벤트 바인딩
-/* 							$(".reply-btn").on("click",replyWrite);
-							$(".re-reply-view").on("click",reReplyView);
-							$(".re-reply").on("click",reReply);
-							$(".re-reply-hide").on("click",reReplyHide);
-							 */
-							// imgs를 클릭시 작동하며 검은 마스크 배경과 레이어 팝업을 띄웁니다.
-							wrapWindowByMask();
-							$(".mask").on("click", maskOff);
-							new Swiper(".swiper-container", {
-								mode : 'horizontal',
-								loop : false,
-								//스크롤바 등록
-								scrollbar : {
-									el : ".swiper-scrollbar",//대상
-
-									//스크롤바 드래그 설정
-									draggable : true,
-								}
-							});
-						}
-					});
-				};
-				$("body").on("click", ".mask", maskOff);
-				function maskOff() {
-					console.log("mask");
-					$(".mask").remove();
-					$('.content-view').remove();
-					$(document).off(".disableScroll");
-				}
-				;
             });
         </script>
     </head>
     <body>
-        <div class="container-80">
+        <div class="container">
             <div class="main-container">
                 <div class="profile">
                 	<c:if test="${memberDto.profile=='pic.jpg'}">
@@ -303,7 +226,7 @@
             	<c:forEach var="boardDto" items="${my_list}" varStatus="status">
             		<div class="swiper-container img">
 						<div class="swiper-wrapper">
-		            		<c:forEach var="photoDto" items="${photoList[status.index]}">
+		            		<c:forEach var="photoDto" items="${photo_list[status.index]}">
 								<img class="swiper-slide" src="${root}/board/image?name=${photoDto.name}">
 		            		</c:forEach>
 	            		</div>

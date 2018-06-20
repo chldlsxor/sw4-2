@@ -31,11 +31,19 @@
 		select * from friend where follow=#{follow} and follower=#{follower} 
 	</select>
 	
-	<select id="follow_list_search" parameterType="map" resultType="String">
-		select id from (select * from member inner join friend on (member.id = friend.follow) where name like #{name}||'%') where follower=#{follower}
+	<select id="follow_list_search_name" parameterType="map" resultType="String">
+		select id from (select * from member inner join friend on (member.id = friend.follow) where name like #{keyword}||'%') where follower=#{follower}
 	</select>
 	
-	<select id="follower_list_search" parameterType="map" resultType="String">
-		select id from (select * from member inner join friend on (member.id = friend.follower) where name like #{name}||'%') where follow=#{follow}
+	<select id="follower_list_search_name" parameterType="map" resultType="String">
+		select id from (select * from member inner join friend on (member.id = friend.follower) where name like #{keyword}||'%') where follow=#{follow}
+	</select>
+	
+	<select id="follow_list_search_nick" parameterType="map" resultType="String">
+		select id from (select * from member inner join friend on (member.id = friend.follow) where nick like #{keyword}||'%') where follower=#{follower}
+	</select>
+	
+	<select id="follower_list_search_nick" parameterType="map" resultType="String">
+		select id from (select * from member inner join friend on (member.id = friend.follower) where nick like #{keyword}||'%') where follow=#{follow}
 	</select>
 </mapper>
