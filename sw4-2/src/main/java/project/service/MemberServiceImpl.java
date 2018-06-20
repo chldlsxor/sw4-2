@@ -104,19 +104,21 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public ModelAndView member_page_list(PageDto pageDto, HttpServletRequest request) {
 		// TODO Auto-generated method stub
-		log.info("keywordtype : {}, keyword : {}, order_type : {}, order : {}, list_num : {}",
+		log.info("keywordtype : {}, keyword : {}, order_type : {}, order : {}, list_num : {}, power {}",
 				pageDto.getKeyword_type(),
 				pageDto.getKeyword(),
 				pageDto.getOrder_type(),
 				pageDto.getOrder(),
-				pageDto.getList_num());
-		
-		boolean searchMode = pageDto.getKeyword_type()!=null &&pageDto.getKeyword() !=null;
-		if(searchMode)
+				pageDto.getList_num(),
+				pageDto.getPower());
+		//페이지, pageDto받아오기
+		pageDto.setSearchMode(pageDto.getKeyword_type()!=null &&pageDto.getKeyword() !=null);
+		if(pageDto.isSearchMode())
 			pageDto.setBoardcount(memberDao.member_get_count_by_search(pageDto));
 		else
 			pageDto.setBoardcount(memberDao.member_get_count());
-		if(pageDto.getList_num()==0)
+		
+		if(pageDto.getList_num()==0) 
 			pageDto.setList_num(10);
 		pageDto.setPageStr(request.getParameter("page"));
 		log.info("page :{}", pageDto.getPageStr());
@@ -141,14 +143,17 @@ public class MemberServiceImpl implements MemberService{
 		pageDto.setBlockmax((pageDto.getBoardcount()+pageDto.getList_num()-1)/pageDto.getList_num());
 		if(pageDto.getBlockmax()<pageDto.getBlockfinish()) pageDto.setBlockfinish(pageDto.getBlockmax());
 		
-		if(searchMode)
-			pageDto.setUrl("&keyword_type="+pageDto.getKeyword_type()+"&keyword="+pageDto.getKeyword());
+		if(pageDto.isSearchMode())
+			pageDto.setUrl("&keyword_type="+pageDto.getKeyword_type()+"&keyword="+pageDto.getKeyword()
+			+"&order_type="+pageDto.getOrder_type()+"&order="+pageDto.getOrder()
+			+"&list_num="+pageDto.getList_num()
+			+"&power="+pageDto.getPower());
 		else
 			pageDto.setUrl("");
 		
 		log.info("getUrl :{}", pageDto.getUrl());
 		ModelAndView mv = new ModelAndView();
-		if(searchMode)
+		if(pageDto.isSearchMode())
 			mv.addObject("memberList", memberDao.member_page_search(pageDto));
 		else
 			mv.addObject("memberList", memberDao.member_page_list(pageDto));
