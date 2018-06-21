@@ -63,13 +63,18 @@
 			order:2;
 		}
 }
-@MEDIA SCREEN AND (MIN-WIDTH:891PX) {
+@MEDIA SCREEN AND (MIN-WIDTH:751PX) {
 	#menu > i{
 		font-size: 2em;
 	}
 }
 
-@MEDIA SCREEN AND (MAX-WIDTH:890PX) {
+@MEDIA SCREEN AND (MAX-WIDTH:750PX) {
+	
+	.content-view{
+		font-size: 0.7em;
+	}
+	
 		#menu > i{
 		font-size: 1.5em;
 	}
