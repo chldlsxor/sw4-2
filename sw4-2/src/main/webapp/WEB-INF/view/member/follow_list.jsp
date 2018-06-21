@@ -26,6 +26,12 @@
         	.name{
         		color:gray;
         	}
+        	h7{
+        		display:none;
+        	}
+        	.messenger_btn{
+        		margin-left: 20px;
+        	}
         	
         	@media screen and (max-width:900px){
                 .container{
@@ -45,7 +51,11 @@
 <!--        스크립트 작성 공간-->
         <script>
             $(document).ready(function(){
-                
+            	$(".messenger_btn").on("click", function(){
+    		        window.open("send_message?messageTo="+$(this).find("h7").text(),
+    		        		$(this).text(),//팝업창 이름
+    		        		'toolbar=no, menubar=no, location=no, directories=no, status=no, resizable=yes, scrollbars=yes, width=350,height=700,left=0,top=0' );
+    		    });
             });
         </script>
         <jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
@@ -92,6 +102,11 @@
 									${memberDto.name}
 								</div>
 							</td>
+							<c:if test="${usernick == nick}">
+								<td>
+									<button class = "messenger_btn form-btn inline"><h7>${memberDto.id}</h7><i class="fa fa-envelope"></i></button>
+								</td>
+							</c:if>
 						</tr> 
 						</c:forEach>
 					</tbody>

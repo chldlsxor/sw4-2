@@ -36,15 +36,6 @@ public class MemberServiceImpl implements MemberService{
 	public void exit(String id) {
 		memberDao.exit(id);
 	}
-	
-	@Override
-	public ModelAndView member_list(String view) {
-		ModelAndView mv = new ModelAndView();
-		//나중에 memberList가 아니라 친구 리스트로 바꿔야 됨!!!!★☆
-		mv.addObject("memberList",memberDao.member_list());
-		mv.setViewName(view);
-		return mv;
-	}
 
 	@Override
 	public void edit(MemberDto memberDto) {
