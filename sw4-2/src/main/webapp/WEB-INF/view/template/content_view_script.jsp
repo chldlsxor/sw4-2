@@ -171,13 +171,6 @@ $(document).ready(function() {
 																	{
 																		mode : 'horizontal',
 																		loop : false,
-																		//스크롤바 등록
-																		scrollbar : {
-																			el : ".swiper-scrollbar",//대상
-
-																			//스크롤바 드래그 설정
-																			draggable : true,
-																		}
 																	});
 
 														}

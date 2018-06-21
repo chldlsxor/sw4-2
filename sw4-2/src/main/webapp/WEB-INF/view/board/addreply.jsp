@@ -23,7 +23,10 @@
 				</c:if>
 				<br>
 				<p>
-				<c:if test="${replyDto.gno != 0 }">&nbsp;&nbsp;&nbsp;&nbsp;</c:if>${replyDto.reg }&nbsp;&nbsp;&nbsp;좋아요<i> ${replyDto.loveSize }</i>&nbsp;&nbsp;&nbsp;
+				<c:if test="${replyDto.gno != 0 }">&nbsp;&nbsp;&nbsp;&nbsp;</c:if>${replyDto.reg }&nbsp;&nbsp;&nbsp;
+				<c:if test="${replyDto.gno == 0 }">
+				좋아요<i> ${replyDto.loveSize }</i>&nbsp;&nbsp;&nbsp;
+				</c:if>
 				<c:if test="${replyDto.gno == 0 }">
 					<a class="re-reply">답글 달기</a>
 					<input class="reply-no" type="hidden" value="${replyDto.no }">

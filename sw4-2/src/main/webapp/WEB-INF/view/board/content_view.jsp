@@ -18,7 +18,7 @@
 		<!-- 스크롤바 -->
 		<div class="swiper-scrollbar"></div>
 	</div>
-	<div class="content-text">
+	<div class="content-text left">
 		<div class="content-post">
 			${boardDto.content}
 		</div>
