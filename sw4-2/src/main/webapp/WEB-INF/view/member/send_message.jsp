@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
-
     <head>
         <title>메신져</title>
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -53,9 +52,6 @@
         
         <script src="http://code.jquery.com/jquery-latest.js"></script>
    	    <script>
-         	
-        	
-        	
         	$(document).ready(function(){
         		connect();               	
         		
@@ -68,7 +64,6 @@
        				websocket.send(text);
         			 $("#chat").val(""); 
         		});
-        		
         	});
         	
         	$(document).on("unload", function(){
@@ -125,14 +120,9 @@
         				console.log($("#result"));
         				console.log($("#result")[0]);
         				$("#result").scrollTop($("#result")[0].scrollHeight);
-
-        				
         			}
-        			
         			$("body").scrollTop($("body")[0].scrollHeight);
-        			
         		};
-        		
         	}
         	function disconnect(){
         		if(!websocket) return;
@@ -142,59 +132,64 @@
         	}
         </script>
     </head>
-    <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
-    <body class = "message-container">
-    	<input type="hidden" id  = "userid" value = "${userid }">
-    	<div class="container-fluid">
-    		<header class = "message-header">
-    			<div class = "container-100">  
-    				<div class = "userimg-container">
-    					<img class = "img-circle" alt="profile" src="http://via.placeholder.com/100x100">
-    				</div>
-    				<div class = "userinfo-container">	
-    					<div>ID : ${receive_info.id }</div>
-			   			<div>name : ${receive_info.name }</div>
-			   			<div>nick : ${receive_info.nick }</div>
-    				</div>
-    				
-    			</div>
-    			
-    		</header>
-    		<div class="empty-row"></div>	
-    		<div class="empty-row"></div>
-    		<div class="empty-row"></div>
-    		<section class = "">
-    		<div class="row" >
-    			<div id="result" class="col-md-offset-1 col-md-10">
-    				<!-- DB리스트에 있는 메세지 리스트는 이 창이 열린 순간 다 읽음 처리 되므로 read 표시 안함 -->
-    				<c:forEach var = "message" items="${message_list}">
-    					<!-- 내가 보낸 메세지 리스트 -->
-    					<c:if test="${userid == message.send }">
-    						<c:if test="${message.read==0 }">
-    							<div align= "right" class = "message not-read"><span class = "my-message">${message.content }</span></div>
-    						</c:if>
-    						<c:if test="${message.read==1 }">
-    							<div align="right" class = "message"> <span class = "right my-message">${message.content }</span></div>
-    						</c:if>					
-						</c:if>
-						<!-- 내가 받은 메세지 리스트 (창여는 순간 무조건 읽음 처리)-->
-						<c:if test="${messageto == message.send }">
-							<div  align= "left" class= "message"><span class = "your-message">${message.content }</span></div>
-						</c:if>
-					</c:forEach>
-    			</div>
-    		</div>
-    		<div class="empty-row"></div>
-    		<div class="empty-row"></div>
-    		</section>
-	    		<div class="row input-message">
-	    			<div class="col-md-offset-1 col-md-8">		
-	    				<input id="chat" type="text" placeholder="입력.." class="form-control">
+    
+    <body>
+    	<div class = "message-container">
+	    	<input type="hidden" id  = "userid" value = "${userid }">
+	    	<div class="container-fluid">
+	    		<header class = "message-header">
+	    			<div class = "container-100">  
+	    				<div class = "userimg-container">
+	    					<c:if test="${receive_info.profile=='pic.jpg'}">
+								<img class="img-circle" src="${root}/res/img/${receive_info.profile}"  width="70" height="70">
+							</c:if>
+							<c:if test="${receive_info.profile!='pic.jpg'}">
+								<img class="img-circle" src="${root}/res/img/${receive_info.id}_${receive_info.profile}"  width="70" height="70">
+							</c:if>
+	    				</div>
+	    				<div class = "userinfo-container">	
+	    					<div>ID : ${receive_info.id }</div>
+				   			<div>name : ${receive_info.name }</div>
+				   			<div>nick : ${receive_info.nick }</div>
+	    				</div>
 	    			</div>
-	    			<div class="col-md-2">
-	    				<input id="send" type="button" value="전송" class="btn btn-default btn-block">
+	    		</header>
+	    		<div class="empty-row"></div>	
+	    		<div class="empty-row"></div>
+	    		<div class="empty-row"></div>
+	    		<section class = "">
+	    		<div class="row" >
+	    			<div id="result" class="col-md-offset-1 col-md-10">
+	    				<!-- DB리스트에 있는 메세지 리스트는 이 창이 열린 순간 다 읽음 처리 되므로 read 표시 안함 -->
+	    				<c:forEach var = "message" items="${message_list}">
+	    					<!-- 내가 보낸 메세지 리스트 -->
+	    					<c:if test="${userid == message.send }">
+	    						<c:if test="${message.read==0 }">
+	    							<div align= "right" class = "message not-read"><span class = "my-message">${message.content }</span></div>
+	    						</c:if>
+	    						<c:if test="${message.read==1 }">
+	    							<div align="right" class = "message"> <span class = "right my-message">${message.content }</span></div>
+	    						</c:if>					
+							</c:if>
+							<!-- 내가 받은 메세지 리스트 (창여는 순간 무조건 읽음 처리)-->
+							<c:if test="${messageto == message.send }">
+								<div  align= "left" class= "message"><span class = "your-message">${message.content }</span></div>
+							</c:if>
+						</c:forEach>
 	    			</div>
 	    		</div>
+	    		<div class="empty-row"></div>
+	    		<div class="empty-row"></div>
+	    		</section>
+		    		<div class="row input-message">
+		    			<div class="col-md-offset-1 col-md-8">		
+		    				<input id="chat" type="text" placeholder="입력.." class="form-control">
+		    			</div>
+		    			<div class="col-md-2">
+		    				<input id="send" type="button" value="전송" class="btn btn-default btn-block">
+		    			</div>
+		    		</div>
+	    	</div>
     	</div>
     </body>
 </html>

@@ -17,7 +17,6 @@ import project.bean.PageDto;
 public interface MemberService {
 	void logout(HttpSession session);
 	void exit(String id);
-	ModelAndView member_list(String view);
 	MemberDto get(String id);
 	MemberDto get_by_nick(String nick);
 	void edit(MemberDto memberDto);

@@ -63,14 +63,16 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	@RequestMapping("/message")
-	public ModelAndView message(HttpServletRequest request) {
-		return memberService.member_list("message");
-	}
-	
 	@RequestMapping("/send_message")
-	public ModelAndView send_message(HttpServletRequest request,HttpSession session) {
-		return messageService.getMessage(request, session);
+	public String send_message(String messageTo, HttpSession session) {
+		
+		//세션에 받는 사람 추가(연결 끊기면 삭제)
+		session.setAttribute("messageTo", messageTo);
+		
+		session.setAttribute("message_list", messageService.getMessage(messageTo, session.getAttribute("userid").toString()));
+		session.setAttribute("receive_info", memberService.get(messageTo));
+		
+		return "member/send_message";
 	}
 	
 	@RequestMapping("/edit")
