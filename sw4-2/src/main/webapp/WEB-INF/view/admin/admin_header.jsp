@@ -100,7 +100,7 @@
     </head>
     <body>
 	    <header class = "admin_header">
-	    	<h2>InStory</h2>
+	    	<h2><a href = "admin">InStory</a></h2>
 	    </header>
 	    <nav class = "admin_nav">
 	   		<input type="checkbox" id="hamburger">

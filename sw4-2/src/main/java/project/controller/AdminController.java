@@ -61,17 +61,10 @@ public class AdminController {
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
-	@RequestMapping("/")
-	public ModelAndView admin() {
-		ModelAndView mv = new ModelAndView();
-		mv.addObject("hashtag_list", hashtagDao.countTag());
-		for(Map<String, Integer> hash: hashtagDao.countTag()) {
-			log.info("여기여기여기{}",hash.get("TAG"));
-			log.info("여기여기여기{}",hash.get("COUNT"));
-		}
-		mv.setViewName("admin/admin_page");
+	@RequestMapping("/admin")
+	public String admin() {
 		
-		return mv;
+		return "admin/admin_page";
 	}
 	
 	/*@GetMapping("/member_list")
@@ -167,6 +160,14 @@ public class AdminController {
         }
         log.info("gson : {}",gson.toJson(list));
 
+		return gson.toJson(list);
+	}
+	
+	@RequestMapping(value = "/getHashtagCount", produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public  String hashtag_count(HttpServletRequest request) {
+        Gson gson = new Gson();
+        List<Map<String, Integer>> list = hashtagDao.countTag();
 		return gson.toJson(list);
 	}
 	

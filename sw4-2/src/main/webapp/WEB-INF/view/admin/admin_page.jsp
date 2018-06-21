@@ -6,48 +6,99 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         
         <!--스크립트 작성 공간-->
-<script>            
-      $(document).ready(function(){
- 		
-    	  var ctx = document.getElementById("myChart").getContext("2d");
-    	  var myPieChart = new Chart(ctx,{
-    		    type: 'pie',
-    		    data:{
-    			    datasets: [{
-    			        data: [10, 20, 30]
-    			    }],
-
-    			    // These labels appear in the legend and in the tooltips when hovering different arcs
-    			    labels: [
-    			        'Red',
-    			        'Yellow',
-    			        'Blue'
-    			    ]
-    			},
-    		    options: options
-    		});
-    	  
+        <style>
+        	.hashtag-chart{
+        		display : inline-block;
+        	}
+        </style>
+<script> 
+	$(document).ready(function(){
+		var chartLabels = [];
+		var chartData = [];
+		var chartLabels5 = [];
+		var chartData5 = [];
+		var etcData = 0;
+		
+		var ctx = document.getElementById("hashTagChart");
+		var ctx2 = document.getElementById("5hashTagChart");  
+    	  //데이터 받아오기
+          $.getJSON("./getHashtagCount", function(data){
+        	  $.each(data, function(key, value){
+        		  //받아온 데이터 저장
+        		  var tag = value.TAG;
+        		  var count = value.COUNT;
+        		  if(key<5){
+        			  chartLabels.push(tag);
+        			  chartData.push(count);
+       			  }
+        		  else{
+        			  etcData +=count;
+       			  }
+       		  });
+        	  
+        	  chartLabels.push('기타');
+        	  chartData.push(etcData);
+        	  
+        	  chartLabels5 = chartLabels.slice(0,5);
+        	  chartData5 = chartData.slice(0,5);
+        	    
+        	//데이터 받아오면 그래프 그리기
+        	  var PieChart = new Chart(ctx,{
+        		  type: 'pie',
+        		  data:{
+        			  datasets: [{
+        			    	label:'해시태그',
+        			        data: chartData,
+        			        backgroundColor:[
+        			        	'rgba(255, 99, 132, 0.2)',
+        			        	'rgba(54, 162, 235, 0.2)',
+        			        	'rgba(255, 206, 86, 0.2)',
+        			        	'rgba(75, 192, 192, 0.2)',
+        			        	'rgba(153, 102, 255, 0.2)',
+        			        	'rgba(255, 159, 64, 0.2)'
+        			        ],
+                            borderWidth: 1
+        			    }],
+        			    // These labels appear in the legend and in the tooltips when hovering different arcs
+        			    labels: chartLabels
+        			}
+        		});
+        	
+        	  var myPieChart = new Chart(ctx2,{
+        		  type: 'pie',
+        		  data:{
+        			  datasets: [{
+        			    	label:'해시태그',
+        			        data: chartData5,
+        			        backgroundColor:[
+        			        	'rgba(255, 99, 132, 0.2)',
+        			        	'rgba(54, 162, 235, 0.2)',
+        			        	'rgba(255, 206, 86, 0.2)',
+        			        	'rgba(75, 192, 192, 0.2)',
+        			        	'rgba(153, 102, 255, 0.2)',
+        			        ],
+                            borderWidth: 1
+        			    }],
+        			    // These labels appear in the legend and in the tooltips when hovering different arcs
+        			    labels: chartLabels5
+        			}
+        		});
+        	  
+ 
+        	  
           });
+
+	});
       
          
   </script>
+ <div class = "hashtag-chart" style="width: 40%;">
+ 	전체 해시태그
+ 	<canvas id = "hashTagChart" height = "350" width = "400"></canvas>
+</div>
+<div class = "hashtag-chart" style="width: 40%;">
+ 	인기 해시태그
+ 	<canvas id = "5hashTagChart" height = "350" width = "400"></canvas>
+</div>
 
-<h1>관리자 페이지 입니다</h1>
-<table>
-	<thead>
-		<tr>
-			<th>해시태그</th>
-			<th>사용수</th>
-		</tr>	
-	</thead>
-	<tbody>
-		<c:forEach var = "hashtag" items="${hashtag_list }">
-			<tr>
-				<td> ${hashtag.get("TAG")}</td>
-				<td> ${hashtag.get("COUNT")}</td>
-			</tr>
-		</c:forEach>
-	</tbody>
-</table>
-<canvas id="myChart" width="400" height="400"></canvas>
 <jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>
