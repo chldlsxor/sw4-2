@@ -46,7 +46,7 @@
                     chartData=[];
                     
                     //getJson으로 데이터 
-                    $.getJSON("./getDailyVisitor", {
+                    $.getJSON("./getDailyVisitor", {//보내는 데이터
                         cooContractNo : cooContractNo,
                         month : month
                     }, function(data) {

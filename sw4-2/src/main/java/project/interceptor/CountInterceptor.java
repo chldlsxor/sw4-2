@@ -42,7 +42,7 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 		
 		//application 저장소
 		request.getServletContext().setAttribute("scMap", sessionCountMap);
-		
+		log.info("scMap", sessionCountMap);
 		//dir : E:\soyeon\6.spring\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\sw4-2\
 		
 		log.info("preHandle : {}", handler);//필터 비스므리
