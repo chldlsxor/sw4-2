@@ -67,10 +67,10 @@
                 
             });
         </script>
+        <jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
     </head>
     <body>
-    	<div class="empty-row"></div>
-    	<div class="empty-row"></div>
+    	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
     	<div class="container">
     		<div class="select-container">
                 <table>

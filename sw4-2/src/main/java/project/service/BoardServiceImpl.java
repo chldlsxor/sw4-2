@@ -138,4 +138,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.my_list(id);
 	}
 
+	@Override
+	public BoardDto scrap_list(int no) {
+		return boardDao.scrap_list(no);
+	}
+
 }

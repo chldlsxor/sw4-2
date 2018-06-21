@@ -223,6 +223,11 @@ public class MemberController {
 		model.addAttribute("follow_cnt",follow_cnt);
 		model.addAttribute("follower_cnt",follower_cnt);
 
+		ContentDto contentDto = contentService.scrap_list(memberDto.getScrap());
+		model.addAttribute("scrap_list",contentDto.getListBoardDto());
+		model.addAttribute("photo_list",contentDto.getListPhotoDto());
+		model.addAttribute("scrap_cnt",contentDto.getListBoardDto().size());
+		
 		return "member/scrap";
 	}
 	

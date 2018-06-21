@@ -46,6 +46,23 @@ public class ContentServiceImpl implements ContentService {
 		return contentDto;
 	}
 	
+	public ContentDto scrap_list(String scrap) {
+		String[] scrap_list = new String[] {};
+		if(scrap!=null)
+			scrap_list = scrap.split(",");
+		List<BoardDto> conList = new ArrayList<>();
+		
+		for(String no : scrap_list) {
+			conList.add(boardService.scrap_list(Integer.parseInt(no)));
+		}
+		
+		ContentDto contentDto = new ContentDto();
+		contentDto.setListBoardDto(conList);
+		contentDto.setListPhotoDto(photoService.getPhoto(conList));
+		
+		return contentDto;
+	}
+	
 	@Override
 	public ContentDto addList(int start, String key, String id) {
 		// TODO Auto-generated method stub

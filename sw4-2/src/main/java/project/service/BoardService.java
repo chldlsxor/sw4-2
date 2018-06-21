@@ -21,4 +21,5 @@ public interface BoardService {
 	public ModelAndView get_report_list();
 	public void remove_board(int no);
 	public List<BoardDto> my_list(String id);
+	public BoardDto scrap_list(int no);
 }

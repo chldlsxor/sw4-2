@@ -106,7 +106,10 @@ public class BoardDaoImpl implements BoardDao{
 	public List<BoardDto> my_list(String id) {
 		return sqlSession.selectList("my_list",id);
 	}
-	
-	
+
+	@Override
+	public BoardDto scrap_list(int no) {
+		return sqlSession.selectOne("scrap_list",no);
+	}
 	
 }

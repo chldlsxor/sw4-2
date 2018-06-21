@@ -18,4 +18,5 @@ public interface ContentService {
 	public List<Integer> loveCnt(List<BoardDto> boardDto);
 	public List<String[]> loveList(List<BoardDto> boardDto);
 	public ContentDto my_list(String id);
+	public ContentDto scrap_list(String scrap);
 }
