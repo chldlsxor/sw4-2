@@ -110,8 +110,14 @@ section {
 }
 
 .my-align {
+	border: 1px solid lightgray;
 	text-align:left;
 	width: 100%;
+}
+
+.main-view-cover{
+	border-top: 1px solid lightgray;
+	border-bottom: 1px solid lightgray;
 }
 
 .empty-row {
@@ -395,7 +401,7 @@ header {
 
 /* 게시글 상세보기 스타일 */
 .content-view {
-	border : 1px solid lightgray;
+	border: 1px solid lightgray;
 	display: flex;
 	flex-wrap: wrap;
 	width: 80%;
@@ -404,6 +410,7 @@ header {
 }
 
 .content-header {
+	border-bottom: 1px solid lightgray;
 	order: 0;
 	flex-grow: 1;
 	width: 100%;
@@ -411,6 +418,7 @@ header {
 }
 
 .content-photo {
+	border: 1px solid lightgray;
 	flex-grow : 0.4;
 	width: 46%;
 	max-height:88%;
@@ -431,7 +439,7 @@ header {
 }
 
 .content-post {
-	min-height:45%;
+	min-height:35%;
 	max-height: 100%;
 	margin: 1px;
 }
@@ -543,7 +551,7 @@ header {
 		font-size: 0.2em;
 	}
 	#menu{
-		margin-left: 0;
+		margin-left:10%;
 	}
 	#menu>a, #menu>p {
 		font-size: 150%;

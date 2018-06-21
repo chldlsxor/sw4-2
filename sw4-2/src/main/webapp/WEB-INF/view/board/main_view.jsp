@@ -14,7 +14,6 @@
 .swiper-container {
 	width: 60%;
 	height: 70%;
-	border: 1px solid black;
 }
 
 .imgs {
@@ -583,7 +582,12 @@ section {
 	<div id="chaser" class="left">
 		<div class="row" style="width: 95%">
 			<div class="user-profile">
-				<img class="img-circle" src="http://via.placeholder.com/50x50">
+				<c:if test="${memberDto.profile=='pic.jpg'}">
+						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.profile}" width="50px" height="50px">
+					</c:if>
+					<c:if test="${memberDto.profile!='pic.jpg'}">
+						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50px" height="50px">
+					</c:if>
 			</div>
 			<div class="user-profile">
 				<p class="user-name">${usernick }</p>
@@ -605,7 +609,12 @@ section {
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
 			<div class="row my-align left">
 				<div>
-					<img class="img-circle" src="http://via.placeholder.com/50x50">
+					<c:if test="${boardDto.profile=='pic.jpg'}">
+						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.profile}" width="50px" height="50px">
+					</c:if>
+					<c:if test="${boardDto.profile!='pic.jpg'}">
+						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
+					</c:if>
 					${boardDto.nick }
 				</div>
 				<div class="main-view-cover">
@@ -622,6 +631,7 @@ section {
 						<!-- 스크롤바 -->
 						<div class="swiper-scrollbar"></div>
 					</div>
+				</div>
 					<div></div>
 					<div>
 						<input class="loveList" type="hidden" value="${boardDto.good}">
@@ -667,7 +677,6 @@ section {
 						<p class="inline loveCnt">${loveCnt[status.index]}</p>
 					</div>
 					<div>${boardDto.content }</div>
-				</div>
 			</div>
 		</c:forEach>
 	</div>

@@ -45,6 +45,7 @@
 			             <textarea name="content" class="textarea" rows="10" cols="83"></textarea>
 			             <input type="hidden" class="hashtag" name="hashtag" value="">
 		            </div>
+		            <div class="alert alert-info" role="alert"><strong>알림!</strong>해시태그는 <strong>#내용</strong> 으로 사용이 가능합니다.<br>내용 뒤에 <strong>띄어쓰기</strong>를 써야 적용됩니다.</div>
                     <div class="row">
                         <button type="submit" class="profile-btn btn btn-info btn-lg">글 쓰기</button>
                     </div>

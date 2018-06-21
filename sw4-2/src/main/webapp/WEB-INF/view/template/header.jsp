@@ -21,7 +21,12 @@
 		<div class="row">
 			<div id="top-chaser">
 				<div class="user-profile">
-					<img class="img-circle" src="http://via.placeholder.com/50x50">
+					<c:if test="${memberDto.profile=='pic.jpg'}">
+						<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="50px" height="50px">
+					</c:if>
+					<c:if test="${memberDto.profile!='pic.jpg'}">
+						<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50px" height="50px">
+					</c:if>
 					<p class="user-name">${usernick }</p>
 				</div>
 				<div class="top-user-alert-div">

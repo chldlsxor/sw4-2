@@ -5,7 +5,15 @@
 <c:set var="flag" value="${false}"></c:set>
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
 				<div class="row my-align">
-				<div><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.nick }</div>
+				<div>
+				<c:if test="${boardDto.profile=='pic.jpg'}">
+						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.profile}" width="50px" height="50px">
+					</c:if>
+					<c:if test="${boardDto.profile!='pic.jpg'}">
+						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
+					</c:if> 
+					${boardDto.nick }
+					</div>
 				<div class="swiper-container">
 					<div class="swiper-wrapper">
 					<input id="boardNo" type="hidden" value="${boardDto.no }">

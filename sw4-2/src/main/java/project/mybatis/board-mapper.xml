@@ -5,11 +5,11 @@
 <mapper namespace="project.repository.BoardDao">
 
 	<select id="boardList" resultType="BoardDto" parameterType="String">
-		select board.*, member.nick, member.open from (((select * from board order by reg desc) board inner join member on board.writer = member.id) inner join friend on board.writer = friend.follow) where follower = #{id} and  rownum between 1 and 5
+		select board.*, member.nick, member.open, member.id, member.profile from (((select * from board order by reg desc) board inner join member on board.writer = member.id) inner join friend on board.writer = friend.follow) where follower = #{id} and  rownum between 1 and 5
 	</select>
 	
 	<select id="addList" resultType="BoardDto" parameterType="map">
-		select inlist.* from (select board.*, member.nick, member.open, row_number() over(order by board.reg desc) rnum from (((select * from board order by reg desc) board inner join member on board.writer = member.id) inner join friend on board.writer = friend.follow) where follower = #{id}) inlist where rnum between #{start} and #{end}
+		select inlist.* from (select board.*, member.nick, member.open,member.id, member.profile, row_number() over(order by board.reg desc) rnum from (((select * from board order by reg desc) board inner join member on board.writer = member.id) inner join friend on board.writer = friend.follow) where follower = #{id}) inlist where rnum between #{start} and #{end}
 	</select>
 	
 	<select id="getNo" resultType="int">
@@ -25,7 +25,7 @@
 	</update>
 	
 	<select id="getBoardView" parameterType="int" resultType="BoardDto">
-		select board.*, member.nick from (board inner join member on board.writer = member.id) where board.no = #{no}
+		select board.*, member.nick,member.id, member.profile from (board inner join member on board.writer = member.id) where board.no = #{no}
 	</select>
 	
 	<select id="goodList" parameterType="int" resultType="String">
@@ -45,11 +45,11 @@
 	</delete>
 	
 	<select id="searchList" resultType="BoardDto" parameterType="String">
-		select board.*, member.nick, member.open from (((select * from board order by reg desc)board inner join hashtag on board.no = hashtag.bno) inner join member on board.writer = member.id) where hashtag.tag = #{key} and member.open = '0' and rownum between 1 and 5
+		select board.*, member.nick, member.open,member.id, member.profile from (((select * from board order by reg desc)board inner join hashtag on board.no = hashtag.bno) inner join member on board.writer = member.id) where hashtag.tag = #{key} and member.open = '0' and rownum between 1 and 5
 	</select>
 	
 	<select id="addSearchList" resultType="BoardDto" parameterType="map">
-		select inlist.* from (select board.*, member.nick, member.open, row_number() over(order by board.reg desc) rnum from (((select * from board order by reg desc) board inner join hashtag on board.no = hashtag.bno) inner join member on board.writer = member.id) where hashtag.tag = #{key} and member.open = '0') inlist where rnum between #{start} and #{end}
+		select inlist.* from (select board.*, member.nick, member.open,member.id, member.profile, row_number() over(order by board.reg desc) rnum from (((select * from board order by reg desc) board inner join hashtag on board.no = hashtag.bno) inner join member on board.writer = member.id) where hashtag.tag = #{key} and member.open = '0') inlist where rnum between #{start} and #{end}
 	</select>
 
 	<select id="my_list" parameterType="String" resultType="BoardDto">
