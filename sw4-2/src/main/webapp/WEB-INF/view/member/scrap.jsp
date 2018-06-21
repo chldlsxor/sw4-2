@@ -9,13 +9,30 @@
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
+       /* 	레이어 프레임 적용 */
+		.mask {
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 9999;
+			background-color: #000;
+			display: none;
+		}
+		
+		
+		.content-view {
+			display: none;
+			background-color: #ffffff;
+			z-index: 99999;
+		}
         	.container{
         		width:900px;
+        		font-size: 18px;
         	}
             *{
                 box-sizing: border-box;
                 border:1px dotted black;
-                font-size: 18px;
+                
             }
             
             .main-container{
@@ -39,13 +56,18 @@
                 clear: both;
             }
             
+            .imgs{
+            	width: 100%;
+            	height: 100%;
+            }
+            
             .img{
                 float:left;
                 width: 33.333333%;
                 padding: 5px;
             }
             
-            img{
+            .img-profile{
                 width:100%;
                 height: 100%;
             }
@@ -65,13 +87,14 @@
             table{
                 width: 100%;
                 border-collapse: collapse;
+                font-size: 18px;
             }
             
             td{
             	padding:5px;
             }
             
-            button{
+            #myboard, #scrap{
                 padding: 10px;
                 background-color: white;
                 border: none;
@@ -87,7 +110,7 @@
             	font-weight: bold;
                 border-top: 3px solid black;
             }
-            #myboard{
+            #scrap{
             	color: gray;
             }
             
@@ -112,7 +135,7 @@
                 .content{
                     width: 150px;
                 }
-                .empty-row{
+                .content > .empty-row{
                 	display:none;
                 }
             }
@@ -150,17 +173,11 @@
                         type:"bullets",     //동그라미
                     },
                     
-                    //스크롤바 등록
-                    scrollbar:{
-                        el:".swiper-scrollbar",
-                        
-                        //스크롤바 드래그 설정
-                        draggable:true,
-                    },
                 });
             });
         </script>
         <jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
+        <jsp:include page="/WEB-INF/view/template/content_view_script.jsp"></jsp:include>
     </head>
     <body>
     	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
@@ -168,10 +185,10 @@
             <div class="main-container">
                 <div class="profile">
                 	<c:if test="${memberDto.profile=='pic.jpg'}">
-						<img class="img-circle" src="${root}/res/img/${memberDto.profile}">
+						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.profile}">
 					</c:if>
 					<c:if test="${memberDto.profile!='pic.jpg'}">
-						<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
+						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
 					</c:if>
                 </div>
                 <div class="content">
@@ -208,16 +225,15 @@
             	<c:forEach var="boardDto" items="${scrap_list}" varStatus="status">
             		<div class="swiper-container img">
 						<div class="swiper-wrapper">
+						<input class="boardNo" type="hidden" value="${boardDto.no }">
 		            		<c:forEach var="photoDto" items="${photo_list[status.index]}">
-								<img class="swiper-slide" src="${root}/board/image?name=${photoDto.name}">
+								<img class="swiper-slide imgs" src="${root}/board/image?name=${photoDto.name}">
 		            		</c:forEach>
 	            		</div>
 	            		
 	            		<!-- 페이징 버튼 -->
 	                    <div class="swiper-pagination"></div>
 	
-	                    <!-- 스크롤바 -->
-	                    <div class="swiper-scrollbar"></div>
 	            	</div>
             	</c:forEach>
             </div>

@@ -111,7 +111,7 @@ section {
 }
 
 .my-align {
-	margin-right: 5%;
+	text-align:left;
 	width: 100%;
 }
 
@@ -407,6 +407,7 @@ header {
 	order: 0;
 	flex-grow: 1;
 	width: 100%;
+	max-height: 10%;
 }
 
 .content-photo {
@@ -423,7 +424,6 @@ header {
 	height: 87%;
 	max-height:88%;
 	background-color: lightgray;
-	margin-right: 35px;
 }
 
 .content-photo, .content-text {
@@ -505,3 +505,48 @@ header {
 	margin-right: 10%;
 	order: 2;
 }
+
+/*상세보기 사이즈 변경 스타일*/
+@MEDIA SCREEN AND (MIN-WIDTH:751PX) {
+	#menu>a, #menu>p {
+		font-size: 200%;
+	}
+}
+
+@MEDIA SCREEN AND (MAX-WIDTH:750PX) {
+	#menu>a.right {
+		margin-left: 30%;
+	}
+	.content-photo, .content-text {
+		width: 100%;
+		flex-grow: 1;
+	}
+	.content-view {
+		overflow:auto;
+		font-size: 1em;
+	}
+	#menu>a, #menu>p {
+		font-size: 150%;
+	}
+}
+@MEDIA SCREEN AND (MAX-WIDTH:565PX) {
+	#menu>a.right {
+		margin-left: 10%;
+	}
+	#top-chaser {
+		padding-left: 0px;
+	}
+	.reply-input{
+		width: 75%;
+	}
+	.content-view {
+		font-size: 0.2em;
+	}
+	#menu{
+		margin-left: 0;
+	}
+	#menu>a, #menu>p {
+		font-size: 150%;
+	}
+}
+

@@ -14,6 +14,7 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
 <!-- 스크립트 작성 공간-->
+<jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
 <script>
 	var rgx = /#[\w가-힣]+\s/g;
 	$(document).ready(function() {
@@ -29,24 +30,7 @@
 </script>
 </head>
 <body>
-	<header>
-		<div id="menu" class="container-60">
-			<a><i class="fa fa-camera">&nbsp;</i></a>
-			<p>|</p>
-			<a href="${root }/board/list" class="left"> InStory</a>
-
-			<form action="#">
-				<input class="top-search" type="text" placeholder="검색">
-			</form>
-
-			<a href="#" class="right"><i class="fa fa-history"></i></a> &nbsp;
-			&nbsp; <a href="#" class="inner-right"><i class="fa fa-heart"></i></a>
-			&nbsp; &nbsp; <a href="#" class="inner-right"><i class="fa fa-user"></i></a>
-		</div>
-	</header>
-	<div class="empty-row"></div>
-	<div class="empty-row"></div>
-	<div class="empty-row"></div>
+	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
 	<main>
 	<div id="main-view" class="container-70">
                 <div class="row">
