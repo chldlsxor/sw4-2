@@ -183,7 +183,7 @@ public class MemberServiceImpl implements MemberService{
 		if(list != null) {
 			scrap = list.split(",");
 			for(String s : scrap) {
-				if(!s.equals(bno)) {
+				if(!s.equals(Integer.toString(bno))) {
 					back += s + ",";
 				}else {
 					flag = false;
