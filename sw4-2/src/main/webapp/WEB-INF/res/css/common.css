@@ -16,8 +16,8 @@ header, footer {
 	/* 		height:100px; */
 	/* 		overflow: hidden;  */
 	/* 		가변적으로 높이를 적용하는 경우  */
-	min-height: 100px;
-	padding: 20px;
+	min-height: 10px;
+	padding: 0px;
 	text-align: center;
 }
 
@@ -253,7 +253,7 @@ header {
 	right: 0;
 	top: 0;
 	background-color: lightpink;
-	padding: 1em;
+	padding: 0.2em;
 	z-index: 1000;
 }
 

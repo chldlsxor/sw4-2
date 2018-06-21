@@ -501,12 +501,24 @@
 		               
 		               $("body").on("click", "img.mark", scrap);
 		               function scrap(){
+		            	   var markflag = false;
+		            	   var now = $(this);
 		            	   var bno = $(this).parent().prevAll()[1].value;
 		            	   $.ajax({
 		            		   url : "${root}/member/scrapUp",
 		            		   data : {"bno":bno},
 		            		   success: function(result){
-		            			   console.log(result);
+		            			   result = result.split(",");
+		            			   for(var s in result){
+		            				   if(bno == result[s]){
+		            					   markflag = true;
+		            				   }
+		            			   }
+		            				if(markflag){
+		            					  now.context.src = "${root}/res/image/innerBookmark.png";
+		            				}else{
+		            					  now.context.src = "${root}/res/image/outLineBookmark.png";
+		            				}
 		            		   }
 		            	   });
 		               };
@@ -564,6 +576,8 @@
 					<div class="swiper-scrollbar"></div>
 				</div>
 				<div>
+				</div>
+				<div>
 					<input class="loveList" type="hidden" value="${boardDto.good}">
 					<input class="bno" type="hidden" value="${boardDto.no }">
 					<c:forEach var="l" items="${loveList[status.index] }">
@@ -583,8 +597,8 @@
 					</c:choose>
 					<c:set var="flag" value="${false}"></c:set>
 					<c:set var="markflag" value="${false}"></c:set>
-					<c:forEach var ="s" items="${scrapList }">
-						<c:if test="${userno == s }">
+					<c:forEach var ="s" items="${scrapList.split(',') }">
+						<c:if test="${boardDto.no == s }">
 							<c:set var="markflag" value="${true}"></c:set>
 						</c:if>
 					</c:forEach>

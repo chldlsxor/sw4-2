@@ -45,5 +45,3 @@
 	<div class="empty-row"></div>
 	<div class="empty-row"></div>
 	<div class="empty-row"></div>
-	<div class="empty-row"></div>
-	<div class="empty-row"></div>
