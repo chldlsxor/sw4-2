@@ -34,6 +34,10 @@
             a:visited, a:link {
             	color:#00A2E8;
             }
+            .head > a{
+            	font-size:30px;
+            	color:white;
+            }
             
             @media screen and (max-width:768px){
                 .swiper-container{
@@ -101,6 +105,11 @@
         </script>
     </head>
     <body>
+    	<header>
+			<div class="row left head">
+				<a href="login">InStory</a>
+			</div>
+		</header>
     	<div class="empty-row"></div>
         <div class="empty-row"></div>
         <div class="container">

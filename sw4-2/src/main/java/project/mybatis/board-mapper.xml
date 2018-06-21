@@ -55,5 +55,9 @@
 	<select id="my_list" parameterType="String" resultType="BoardDto">
 		select * from board where writer=#{writer}
 	</select>
+	
+	<select id="scrap_list" parameterType="int" resultType="BoardDto">
+		select * from board where no=#{no}
+	</select>
 
 </mapper>

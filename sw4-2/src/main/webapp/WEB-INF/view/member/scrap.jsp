@@ -160,10 +160,10 @@
                 });
             });
         </script>
+        <jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
     </head>
     <body>
-    	<div class="empty-row"></div>
-    	<div class="empty-row"></div>
+    	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
         <div class="container">
             <div class="main-container">
                 <div class="profile">
@@ -186,7 +186,7 @@
                             </tr>
                             <tr>
                                 <td>${memberDto.name}</td>
-                                <td>게시물 0</td>
+                                <td>스크랩 ${scrap_cnt}</td>
                             </tr>
                             <tr>
                                 <td><a href="follower_list?nick=${memberDto.nick}">팔로워 ${follower_cnt}</a></td>
@@ -205,15 +205,21 @@
                 </table>
             </div>
             <div class="img-container">
-                <div class="img"><img src="img/bg001.jpg"></div>
-                <div class="img"><img src="img/bg002.jpg"></div>
-                <div class="img"><img src="img/bg002.jpg"></div>
-                <div class="img"><img src="img/bg004.jpg"></div>
-                <div class="img"><img src="img/bg005.jpg"></div>
-                <div class="img"><img src="img/bg003.jpg"></div>
-                <div class="img"><img src="img/bg003.jpg"></div>
-                <div class="img"><img src="img/bg003.jpg"></div>
-                <div class="img"><img src="img/bg003.jpg"></div>
+            	<c:forEach var="boardDto" items="${scrap_list}" varStatus="status">
+            		<div class="swiper-container img">
+						<div class="swiper-wrapper">
+		            		<c:forEach var="photoDto" items="${photo_list[status.index]}">
+								<img class="swiper-slide" src="${root}/board/image?name=${photoDto.name}">
+		            		</c:forEach>
+	            		</div>
+	            		
+	            		<!-- 페이징 버튼 -->
+	                    <div class="swiper-pagination"></div>
+	
+	                    <!-- 스크롤바 -->
+	                    <div class="swiper-scrollbar"></div>
+	            	</div>
+            	</c:forEach>
             </div>
         </div>
     </body>
