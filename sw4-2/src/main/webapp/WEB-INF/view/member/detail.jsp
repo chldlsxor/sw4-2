@@ -9,13 +9,30 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
+        /* 	레이어 프레임 적용 */
+		.mask {
+			position: absolute;
+			left: 0;
+			top: 0;
+			z-index: 9999;
+			background-color: #000;
+			display: none;
+		}
+		
+		
+		.content-view {
+			display: none;
+			background-color: #ffffff;
+			z-index: 99999;
+		}
         	.container{
         		width:900px;
+        		font-size: 18px;
         	}
             *{
                 box-sizing: border-box;
                 border:1px dotted black;
-                font-size: 18px;
+                
             }
             
             .main-container{
@@ -40,12 +57,17 @@
             }
             
             .img{
+            	width: 100%;
+            	height: 100%;
+            }
+            
+            .img{
                 float:left;
                 width: 33.333333%;
                 padding: 5px;
             }
             
-            img{
+            .img-profile{
                 width:100%;
                 height: 100%;
             }
@@ -65,13 +87,14 @@
             table{
                 width: 100%;
                 border-collapse: collapse;
+                font-size: 18px;
             }
             
             td{
             	padding:5px;
             }
             
-            button{
+            #myboard, #scrap{
                 padding: 10px;
                 background-color: white;
                 border: none;
@@ -112,7 +135,7 @@
                 .content{
                     width: 150px;
                 }
-                .empty-row{
+                .content > .empty-row{
                 	display:none;
                 }
             }
@@ -131,47 +154,49 @@
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src = "${root}/res/js/swiper.min.js"></script>
+        <jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
         <script>
-            $(window).resize(function(){
-                var w = $(".img").width();
-                $(".img").height(w);
-            });
-            $(document).ready(function() {
-                var w = $(".img").width();
-                $(".img").height(w);
-                
-                var swiper = new Swiper(".swiper-container",{
-                    spaceBetween:10,
-                    effect:'slide',
-                    pagination:{
-                        el:".swiper-pagination",    //버튼 영역
-                        
-                        //모양
-                        type:"bullets",     //동그라미
-                    },
+        $(window).resize(function(){
+            var w = $(".img").width();
+            $(".img").height(w);
+        });
+        $(document).ready(function() {
+            var w = $(".img").width();
+            $(".img").height(w);
+            
+            var swiper = new Swiper(".swiper-container",{
+                spaceBetween:10,
+                effect:'slide',
+                pagination:{
+                    el:".swiper-pagination",    //버튼 영역
                     
-                    //스크롤바 등록
-                    scrollbar:{
-                        el:".swiper-scrollbar",
-                        
-                        //스크롤바 드래그 설정
-                        draggable:true,
-                    },
-                });
+                    //모양
+                    type:"bullets",     //동그라미
+                },
+                
+                //스크롤바 등록
+                scrollbar:{
+                    el:".swiper-scrollbar",
+                    
+                    //스크롤바 드래그 설정
+                    draggable:true,
+                },
             });
+        });
         </script>
+        <jsp:include page="/WEB-INF/view/template/content_view_script.jsp"></jsp:include>
     </head>
     <body>
-    	<div class="empty-row"></div>
-    	<div class="empty-row"></div>
+    <jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
+
         <div class="container">
             <div class="main-container">
                 <div class="profile">
                 	<c:if test="${memberDto.profile=='pic.jpg'}">
-						<img class="img-circle" src="${root}/res/img/${memberDto.profile}">
+						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.profile}">
 					</c:if>
 					<c:if test="${memberDto.profile!='pic.jpg'}">
-						<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
+						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
 					</c:if>
                 </div>
                 <div class="content">
@@ -228,8 +253,9 @@
             	<c:forEach var="boardDto" items="${my_list}" varStatus="status">
             		<div class="swiper-container img">
 						<div class="swiper-wrapper">
+							<input class="boardNo" type="hidden" value="${boardDto.no }">
 		            		<c:forEach var="photoDto" items="${photo_list[status.index]}">
-								<img class="swiper-slide" src="${root}/board/image?name=${photoDto.name}">
+								<img class="swiper-slide imgs" src="${root}/board/image?name=${photoDto.name}">
 		            		</c:forEach>
 	            		</div>
 	            		

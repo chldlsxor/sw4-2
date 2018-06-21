@@ -60,7 +60,7 @@
 		<div>
 			<input class="content-view-bno" type="hidden" value="${boardDto.no }">
 			<input class="content-view-content reply-input" type="text" placeholder="댓글 쓰기...">
-			<button class="reply-btn btn btn-info">작성</button>
+			<button class="reply-btn btn btn-info btn-sm">작성</button>
 		</div>
 	</div>
 
