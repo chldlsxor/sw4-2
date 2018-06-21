@@ -32,17 +32,17 @@
 <body>
 	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
 	<main>
-	<div id="main-view" class="container-70">
+	<div id="main-view" class="container-60">
                 <div class="row">
                     <h2>글 쓰기</h2>
                 </div>
                 <form action="write" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="writer" value="${userid }">
                     <div class="row">
-                        <input type="file" name="file" multiple="multiple">
+                        <input type="file" name="file" multiple="multiple" required>
                     </div>
                     <div class="row">
-			             <textarea name="content" class="textarea" rows="10" cols="100"></textarea>
+			             <textarea name="content" class="textarea" rows="10" cols="83"></textarea>
 			             <input type="hidden" class="hashtag" name="hashtag" value="">
 		            </div>
                     <div class="row">

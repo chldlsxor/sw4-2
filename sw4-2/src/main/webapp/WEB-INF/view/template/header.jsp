@@ -11,8 +11,8 @@
 				<p>|</p>
 				<a href="${root }/board/list" class="left"> InStory</a>
 	
-				<a class="right"><i class="fa fa-search"></i></a>&nbsp;&nbsp;<a href="${root }/member/list" class="inner-right"><i class="fa fa-history"></i></a> &nbsp;
-				&nbsp; <a class="inner-right" href="${root }/member/message"><i class="fa fa-envelope"></i></a>
+				<a class="right"><i class="fa fa-hashtag"></i></a>&nbsp;&nbsp;<a href="${root }/member/name_search" class="inner-right"><i class="fa fa-search"></i></a> &nbsp;
+				&nbsp; <a class="inner-right" href="${root }/member/follow_list?nick=${usernick}"><i class="fa fa-envelope"></i></a>
 				&nbsp; &nbsp; <a href="${root }/member/detail?nick=${usernick }" class="inner-right"><i class="fa fa-user"></i></a>
 				&nbsp;&nbsp;<a class="inner-right"><i class="fa fa-bars"></i></a>
 			</div>

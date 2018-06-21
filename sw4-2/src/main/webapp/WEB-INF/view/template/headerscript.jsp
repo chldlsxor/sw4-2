@@ -36,7 +36,7 @@ $(document).ready(function(){
     });
 	
 	//검색 기능 
-	$(".fa-search").on("click",function(){
+	$(".fa-hashtag").on("click",function(){
 		$("#search").slideToggle();
 		$("#search-result").slideToggle();
 	});
