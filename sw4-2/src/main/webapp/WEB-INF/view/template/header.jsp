@@ -34,7 +34,7 @@
 			</div>
 				<div class="top-user-alert">       
 	            </div>
-			<form action="${root }/board/searchlist">
+			<form action="${root }/board/list">
 				<div id="search">
 						<input class="top-search" type="text" name="key" placeholder="검색">
 				</div>
