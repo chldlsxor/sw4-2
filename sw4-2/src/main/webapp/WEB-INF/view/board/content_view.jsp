@@ -6,12 +6,15 @@
 <!-- 	마스크 div -->
 <div class="mask"></div>
 <div class="content-view">
-	<div class="content-header"><c:if test="${boardDto.profile=='pic.jpg'}">
+	<div class="content-header">
+	<a href="${root }/member/detail?nick=${boardDto.nick}" style="text-decoration:none">
+	<c:if test="${boardDto.profile=='pic.jpg'}">
 						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.profile}" width="50px" height="50px">
 					</c:if>
 					<c:if test="${boardDto.profile!='pic.jpg'}">
 						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
-					</c:if> ${boardDto.nick }</div>
+					</c:if> ${boardDto.nick }
+					</a></div>
 	<div class="swiper-container content-photo">
 		<div class="swiper-wrapper view-swiper">
 			<c:forEach var="photoDto" items="${photoList}">

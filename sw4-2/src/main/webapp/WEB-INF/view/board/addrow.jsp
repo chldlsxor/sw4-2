@@ -14,7 +14,7 @@
 					</c:if> 
 					${boardDto.nick }
 					</div>
-				<div class="swiper-container">
+				<div class="swiper-container main-view-photo">
 					<div class="swiper-wrapper">
 					<input id="boardNo" type="hidden" value="${boardDto.no }">
 						<c:forEach var="photoDto" items="${photoList[status.index]}">

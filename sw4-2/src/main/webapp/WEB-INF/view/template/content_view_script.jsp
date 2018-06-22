@@ -55,14 +55,17 @@ function wrapWindowByMask() {
 }
 
 $(window).resize(function(){
-	var w = $(".swiper-container").width();
-	$(".swiper-container").height(w);
+	//리스트 사진 크기 정렬
+	var w = $(".main-view-photo").width();
+	$(".main-view-photo").height(w);
+	//글 상세보기 사진 크기 정렬
+	var w = $(".content-photo").width();
+	$(".content-photo").height(w);
 	
 	var contentViewWidth = $('.content-view').width();
 	
 	if($(document).width() > 1112){
 		var contentviewHeight = contentViewWidth*0.4;
-		$(".fa-bars").hide();
 		$("#chaser").show();
 		$("#top-chaser").hide();
 	}else {
@@ -112,18 +115,16 @@ $(window).resize(function(){
 
 $(document).ready(function() {
 	if($(document).width() > 1250){
-		$(".fa-bars").hide();
 		$("#chaser").show();
 		$("#top-chaser").hide();
 	}else {
-		$(".fa-bars").show();
 		$("#chaser").hide();
 		$("#top-chaser").hide();
 	}
 	
 	console.log("key = ${param.key}");
-	var w = $(".swiper-container").width();
-	$(".swiper-container").height(w);
+	var w = $(".main-view-photo").width();
+	$(".main-view-photo").height(w);
 					var userNo = $("#userNo").val();
 					var listCnt = $("#listCnt").val();
 					console.log("userNo = ", userNo);
@@ -160,8 +161,8 @@ $(document).ready(function() {
 															$("#main-view").append(div);
 															listCnt--;
 															listCnt--;
-															var w = $(".swiper-container").width();
-															$(".swiper-container").height(w);
+															var w = $(".main-view-photo").width();
+															$(".main-view-photo").height(w);
 															if (listCnt > 0) {
 																flag = true;
 															}
@@ -222,8 +223,8 @@ $(document).ready(function() {
 										});
 										
 										//사진크기
-										var w = $(".swiper-container").width();
-										$(".swiper-container").height(w);
+										var w = $(".content-photo").width();
+										$(".content-photo").height(w);
 										
 										//자세히보기 사이즈
 										var contentViewWidth = $('.content-view').width();

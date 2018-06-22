@@ -279,6 +279,11 @@ header {
 	order:1;
 }
 
+#menu>a:hover {
+	background-color: lightblue;
+	cursor: pointer;
+}
+
 #menu>a, #menu>p {
 	display: block;
 	color: white;
@@ -288,10 +293,6 @@ header {
 
 #menu>a>i {
 	font-size: 1.5em;
-}
-
-#menu>a:hover {
-	background-color: lightcoral;
 }
 
 #menu>a.left {
@@ -363,6 +364,12 @@ header {
 
 .pleft {
 	display: inline-block;
+	color:white;
+}
+
+.pleft:hover{
+	background-color: lightblue;
+	color:white;
 }
 
 .pright {
@@ -528,12 +535,15 @@ header {
 	}
 }
 @MEDIA SCREEN AND (MAX-WIDTH:1130PX) {
+	.pleft{
+		padding-top: 20%;
+	}
 	#main-view {
 		margin-left: 24%;
 	}
 }
 
-@MEDIA SCREEN AND (MAX-WIDTH:750PX) {
+@MEDIA SCREEN AND (MAX-WIDTH:800PX) {
 	#menu>a.right {
 		margin-left: 30%;
 	}
@@ -566,7 +576,7 @@ header {
 		margin-left: 27%;
 	}
 	#menu{
-		margin-left:1%;
+		margin-left:15%;
 	}
 	#menu>a, #menu>p {
 		font-size: 122%;
