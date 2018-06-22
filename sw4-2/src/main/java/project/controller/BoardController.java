@@ -58,6 +58,7 @@ public class BoardController {
 		String id = (String)session.getAttribute("userid");
 		int no = (int)session.getAttribute("userno");
 		ContentDto contentDto = contentService.list(key, id);
+		model.addAttribute("memberDto", memberService.get(id));
 		model.addAttribute("list", contentDto.getListBoardDto());
 		model.addAttribute("photoList", contentDto.getListPhotoDto());
 		model.addAttribute("loveCnt", contentService.loveCnt(contentDto.getListBoardDto()));

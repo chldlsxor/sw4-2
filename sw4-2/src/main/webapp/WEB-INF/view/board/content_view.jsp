@@ -6,7 +6,12 @@
 <!-- 	마스크 div -->
 <div class="mask"></div>
 <div class="content-view">
-	<div class="content-header"><img class="img-circle" src="http://via.placeholder.com/50x50"> ${boardDto.nick }</div>
+	<div class="content-header"><c:if test="${boardDto.profile=='pic.jpg'}">
+						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.profile}" width="50px" height="50px">
+					</c:if>
+					<c:if test="${boardDto.profile!='pic.jpg'}">
+						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
+					</c:if> ${boardDto.nick }</div>
 	<div class="swiper-container content-photo">
 		<div class="swiper-wrapper view-swiper">
 			<c:forEach var="photoDto" items="${photoList}">
@@ -22,6 +27,7 @@
 		<div class="content-post">
 			${boardDto.content}
 		</div>
+		<hr>
 		<div class="content-reply">
 			<c:forEach var="replyDto" items="${replyList}">
 				<p class="reply-text">${replyDto.nick} | ${replyDto.content}</p>
@@ -53,7 +59,6 @@
 					</c:if>
 					<a class="re-reply-hide" style="display: none">답글 접기</a>
 				</c:if>
-				<br><br>
 				<c:set var="replyflag" value="${false}"></c:set>
 			</c:forEach>
 		</div>
