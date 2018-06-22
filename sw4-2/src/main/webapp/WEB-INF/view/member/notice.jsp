@@ -27,12 +27,14 @@
 						</a>
 					</c:if>
 					<c:if test="${noticeDto.type==2}">
-						<a class="board_notice" href="${root}/board/content_view?no=${noticeDto.bno}">
+						<input type="hidden" value="${noticeDto.bno}">
+						<a class="board_notice" style="color:black;">
 							${noticeDto.nick}님이 회원님의 게시물을 좋아합니다.
 						</a>
 					</c:if>
 					<c:if test="${noticeDto.type==3}">
-						<a class="board_notice" href="${root}/board/content_view?no=${noticeDto.bno}">
+						<input type="hidden" value="${noticeDto.bno}">
+						<a class="board_notice" style="color:black;">
 							${noticeDto.nick}님이 댓글을 남겼습니다.
 						</a>
 					</c:if>

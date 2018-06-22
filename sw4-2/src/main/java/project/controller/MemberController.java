@@ -166,13 +166,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/name_search")
-	public String name_search(Model model, String name) {
+	public String name_search(Model model, String name, HttpSession session) {
 		List<MemberDto> list = null;
-		
+		String id = (String)session.getAttribute("userid");
 		if(name != null) {
 			list = memberService.name_search(name);
 		}
-		
+		model.addAttribute("memberDto", memberService.get(id));
 		model.addAttribute("list",list);
 		model.addAttribute("name",name);
 		
@@ -180,13 +180,13 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/nick_search")
-	public String nick_search(Model model, String nick) {
+	public String nick_search(Model model, String nick, HttpSession session) {
 		List<MemberDto> list = null;
-		
+		String id = (String)session.getAttribute("userid");
 		if(nick != null) {
 			list = memberService.nick_search(nick);
 		}
-		
+		model.addAttribute("memberDto", memberService.get(id));
 		model.addAttribute("list",list);
 		model.addAttribute("nick",nick);
 		
@@ -262,10 +262,10 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/follow_list")
-	public String follow_list(Model model, String type, String keyword, String nick) {
+	public String follow_list(Model model, String type, String keyword, String nick, HttpSession session) {
 		//닉네임을 받아와서 회원정보를 뽑음
 		MemberDto memberDto = memberService.get_by_nick(nick);
-		
+		String sid = (String)session.getAttribute("userid");
 		List<String> follow_list = new ArrayList<>();
 		//그 회원의 팔로우 리스트를 뽑음
 		if(keyword != null) {
@@ -281,7 +281,7 @@ public class MemberController {
 			log.info("id={}",id);
 			list.add(memberService.get(id));
 		}
-		
+		model.addAttribute("memberDto", memberService.get(sid));
 		model.addAttribute("nick",nick);
 		model.addAttribute("list",list);
 		model.addAttribute("type",type);

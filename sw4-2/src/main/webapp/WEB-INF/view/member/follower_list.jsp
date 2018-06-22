@@ -4,6 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
+    <meta name="viewport" content="width=device-width, init-scale=1.0">
         <title>팔로워 리스트</title>    
 <!--        디자인 코드 작성 공간-->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

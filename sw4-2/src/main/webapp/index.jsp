@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:forward page="register"></jsp:forward>
+<jsp:forward page="login"></jsp:forward>
 <%-- <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <h1><a href = "/sw4-2/board/list">board_list</a></h1>
 <h1><a href = "/sw4-2/member/message">message</a></h1>

@@ -4,6 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
+    <meta name="viewport" content="width=device-width, init-scale=1.0">
         <title>상세보기</title>
         <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -56,10 +57,10 @@
                 clear: both;
             }
             
-            .imgs{
-            	width: 100%;
-            	height: 100%;
-            }
+/*             .imgs{ */
+/*             	width: 100%; */
+/*             	height: 100%; */
+/*             } */
             
             .img{
                 float:left;
@@ -67,7 +68,7 @@
                 padding: 5px;
             }
             
-            .img-profile{
+            .profile > .img-profile{
                 width:100%;
                 height: 100%;
             }
@@ -193,7 +194,7 @@
 						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.profile}">
 					</c:if>
 					<c:if test="${memberDto.profile!='pic.jpg'}">
-						<img class="img-profile i	mg-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
+						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
 					</c:if>
                 </div>
                 <div class="content">

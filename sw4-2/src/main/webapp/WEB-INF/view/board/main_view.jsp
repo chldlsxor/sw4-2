@@ -5,6 +5,7 @@
 <c:set var="flag" value="${false}"></c:set>
 <html>
 <head>
+<meta name="viewport" content="width=device-width, init-scale=1.0">
 <style>
 #main-view {
 	display: flex;
@@ -41,6 +42,14 @@
 }
 section {
 	text-align: left;
+}
+
+#chaser > .row{
+	padding-left: 15%;
+}
+
+.imgs, .love, .mark{
+	cursor: pointer;
 }
 
 /* 반응형 웹 */
@@ -88,6 +97,20 @@ section {
 	href="${root}/res/css/swiper.min.css">
 <script src="${root}/res/js/swiper.min.js"></script>
 <jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
+<style>
+#top-chaser>.top-user-alert>a{
+	color:black;
+}
+a:visited, a:link {
+	color: black;
+	text-decoration: none;
+}
+a:hover{
+	cursor: pointer;
+	color: black;
+	text-decoration: none;
+}
+</style>
 <script>
 	//반응형 flex로 변경해야함
 	var flag = true;
@@ -143,10 +166,13 @@ section {
 		$('.content-view').show();
 	}
 
-	$(window).resize(
-			function() {
-				var w = $(".swiper-container").width();
-				$(".swiper-container").height(w);
+	$(window).resize(function() {
+				//리스트 사진 크기 정렬
+				var w = $(".main-view-photo").width();
+				$(".main-view-photo").height(w);
+				//글 상세보기 사진 크기 정렬
+				var w = $(".content-photo").width();
+				$(".content-photo").height(w);
 
 				var contentViewWidth = $('.content-view').width();
 
@@ -201,9 +227,7 @@ section {
 
 	//해쉬태그 색칠
 
-	$(document)
-			.ready(
-					function() {
+	$(document).ready(function() {
 						if ($(document).width() > 1250) {
 							$(".fa-bars").hide();
 							$("#chaser").show();
@@ -215,8 +239,8 @@ section {
 						}
 
 						console.log("key = ${param.key}");
-						var w = $(".swiper-container").width();
-						$(".swiper-container").height(w);
+						var w = $(".main-view-photo").width();
+						$(".main-view-photo").height(w);
 						var userNo = $("#userNo").val();
 						var listCnt = $("#listCnt").val();
 						console.log("userNo = ", userNo);
@@ -260,20 +284,13 @@ section {
 																				div);
 																listCnt--;
 																listCnt--;
-																var w = $(
-																		".swiper-container")
-																		.width();
-																$(
-																		".swiper-container")
-																		.height(
-																				w);
+																var w = $(".main-view-photo").width();
+																$(".main-view-photo").height(w);
 																if (listCnt > 0) {
 																	flag = true;
 																}
 
-																new Swiper(
-																		".swiper-container",
-																		{
+																new Swiper(".swiper-container",{
 																			mode : 'horizontal',
 																			loop : false,
 																			//스크롤바 등록
@@ -295,10 +312,8 @@ section {
 						function loveClick() {
 							var now = $(this);
 							var bno = $(this).prevAll(".bno").val();
-							var list = $(this).prevAll(".loveList").val()
-									.split(',');
-							var mylove = now.parents("div.row")
-									.find(".loveCnt").text();
+							var list = $(this).prevAll(".loveList").val().split(',');
+							var mylove = now.parents("div.row").find(".loveCnt").text();
 							var userNo = $("#userNo").val();
 							$
 									.ajax({
@@ -322,6 +337,7 @@ section {
 						;
 
 						$("body").on("click", "img.imgs", contentView);
+						$("body").on("click","a.board_notice", contentView);
 						// 뒤 검은 마스크를 클릭시 모두 제거하도록 처리합니다.
 						$("body").on("click", ".mask", maskOff);
 						function maskOff() {
@@ -339,9 +355,7 @@ section {
 							$
 									.ajax({
 										url : "${root}/board/content_view",
-										data : {
-											"no" : boardNo
-										},
+										data : {"no" : boardNo},
 										contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 										success : function(result) {
 
@@ -358,10 +372,7 @@ section {
 													reReplyHide);
 											$(".reply-love").on("click",
 													ReplyLove);
-											$(".reply-input")
-													.on(
-															"keyup",
-															function(e) {
+											$(".reply-input").on("keyup",function(e) {
 																var keyCode = e.which ? e.which
 																		: e.keyCode;
 																var text = $(
@@ -381,10 +392,8 @@ section {
 											var contentviewHeight = contentViewWidth * 0.55;
 
 											//글 내용 사이즈
-											var contentText = $(".content-text")
-													.width();
-											$(".content-text").height(
-													contentText);
+											var contentText = $(".content-text").width();
+											$(".content-text").height(contentText);
 
 											// imgs를 클릭시 작동하며 검은 마스크 배경과 레이어 팝업을 띄웁니다.
 											wrapWindowByMask();
@@ -609,6 +618,7 @@ section {
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
 			<div class="row my-align left">
 				<div>
+					<a href="${root }/member/detail?nick=${boardDto.nick}" style="text-decoration:none">
 					<c:if test="${boardDto.profile=='pic.jpg'}">
 						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.profile}" width="50px" height="50px">
 					</c:if>
@@ -616,9 +626,10 @@ section {
 						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
 					</c:if>
 					${boardDto.nick }
+					</a>
 				</div>
 				<div class="main-view-cover">
-					<div class="swiper-container">
+					<div class="swiper-container main-view-photo">
 						<div class="swiper-wrapper">
 							<input class="boardNo" type="hidden" value="${boardDto.no }">
 							<c:forEach var="photoDto" items="${photoList[status.index]}">
@@ -680,10 +691,8 @@ section {
 			</div>
 		</c:forEach>
 	</div>
-	<div id="add-view">
-		<button class="btn btn-info">글 더 보기</button>
-	</div>
 	</section>
-	<footer> 제작사 등등 </footer>
+	<hr color="lightblue">
+	<footer>KGITBANK 자바 SW 개발자 양성반 2팀 </footer>
 </body>
 </html>

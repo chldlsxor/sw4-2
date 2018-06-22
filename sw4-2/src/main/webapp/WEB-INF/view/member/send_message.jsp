@@ -4,6 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
+    <meta name="viewport" content="width=device-width, init-scale=1.0">
         <title>메신져</title>
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

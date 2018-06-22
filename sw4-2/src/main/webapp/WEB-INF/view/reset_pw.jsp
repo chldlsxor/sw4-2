@@ -4,6 +4,7 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
+    <meta name="viewport" content="width=device-width, init-scale=1.0">
         <title>비밀번호 재설정</title>    
 <!--        디자인 코드 작성 공간-->
         <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">

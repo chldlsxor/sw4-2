@@ -4,9 +4,10 @@
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
     <head>
-        <title>flex 배우기</title>
+    <meta name="viewport" content="width=device-width, init-scale=1.0">
+        <title>스크랩</title>
+        <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
        /* 	레이어 프레임 적용 */
@@ -68,7 +69,7 @@
                 padding: 5px;
             }
             
-            .img-profile{
+            .profile > .img-profile{
                 width:100%;
                 height: 100%;
             }
@@ -161,7 +162,7 @@
                 $(".img").height(w);
                 
                 var swiper = new Swiper(".swiper-container",{
-                    spaceBetween:10,
+                	spaceBetween:10,
                     effect:'slide',
                     pagination:{
                         el:".swiper-pagination",    //버튼 영역
