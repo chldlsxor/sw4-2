@@ -9,9 +9,6 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
-        	.container{
-        		width:900px;
-        	}
         	th{
         		width:100px;
         	}
@@ -19,24 +16,37 @@
         		margin:10px;
         	}
         	.nick, .name{
-        		padding:5px 20px;
+        		padding:20px 20px;
         		display: inline-block;
         		border:none;
         	}
         	.name{
         		color:gray;
         	}
-        	
-        	@media screen and (max-width:900px){
-                .container{
-                    width:100%;
-                }
+        	.result{
+            	width:100%;
+            	border:1px solid lightgray;
             }
-            
+        	h3{
+        		padding:10px;
+        	}
+        	.empty{
+        		display: none;
+        	}
+
         	@media screen and (max-width:600px){
                 .nick, .name{
+                	padding:10px 20px;
                     display: block;
                 }
+            }
+            @media screen and (max-width:350px){
+				.empty{
+	        		display: block;
+	        	}
+	        	th{
+	        		display:none;
+	        	}
             }
         </style>
 <!--        jQuery를 사용하기 위해 라이브러리를 불러오도록 설정-->
@@ -52,7 +62,7 @@
     </head>
     <body>
     	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
-    	<div class="container">
+    	<div class="page-container">
     		<form action="follower_list" method="get">
 	        	<div class="row">
 	        		<input type="hidden" name="nick" value="${nick}">
@@ -60,16 +70,16 @@
 						<option value="name">이름</option>
 						<option value="nick" <c:if test="${type == 'nick'}">selected</c:if>>닉네임</option>
 					</select>
+					<div class="empty"></div>
 	        		<input class="form-input inline" value="${keyword}" type="text" name="keyword" placeholder="팔로워 검색" required>
 	        		<input class="form-btn inline" type="submit" value="검색">
 	        	</div>
 	        </form>
-			<div class="empty-row"></div>
 			<div>
 				<h3>팔로워 : ${follower_cnt} 명</h3>
 			</div>
-			<div class="row">
-				<table>
+			<div class="row result">
+				<table class="table">
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
 						<tr>

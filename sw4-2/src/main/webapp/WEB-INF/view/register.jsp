@@ -84,14 +84,14 @@
                 	event.preventDefault();
                 	
                 	var name_regex = /^[가-힣]{2,10}$/;
-                	var nick_regex = /^[a-zA-Z0-9]{2,60}$/;
+                	var nick_regex = /^[a-zA-Z0-9]{2,20}$/;
                 	var pw_regex = /^[a-zA-Z0-9]{6,15}$/;
                 	
                 	if(!name_regex.test($("#name").val())){
                 		alert("이름은 한글 2~10자리 입니다.");
                 		return;
                 	}else if(!nick_regex.test($("#nick").val())){
-                		alert("닉네임은 영문숫자 2~60자리 입니다.");
+                		alert("닉네임은 영문숫자 2~20자리 입니다.");
                 		return;
                 	}else if(!pw_regex.test($("#pw").val())){
                 		alert("비밀번호는 영문숫자 6~15자리 입니다.");
@@ -137,7 +137,7 @@
                         	<input class="form-input" type="text" name="name" id="name" required placeholder="이름">
                         </div>
                         <div class="row">
-                        	<input class="form-input" type="text" name="nick" id="nick" required placeholder="닉네임(영문숫자 2~60자리)">
+                        	<input class="form-input" type="text" name="nick" id="nick" required placeholder="닉네임(영문숫자 2~20자리)">
                         </div>
                         <div class="row">
                         	<input class="form-input" type="password" name="pw" id="pw" required placeholder="비밀번호(영문숫자  6~15자리)">

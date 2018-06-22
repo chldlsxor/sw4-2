@@ -149,4 +149,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.getHeavyUploader();
 	}
 
+	@Override
+	public String get_writer(int no) {
+		return boardDao.get_writer(no);
+	}
+
 }

@@ -12,20 +12,21 @@
                 box-sizing: border-box;
                 font-size: 18px;
             }
-            main, aside, section{
+            .select-container, .content-container{
                 border:1px solid black;
                 min-height: 600px;
             }
-            main{
+            .page-container{
                 display: flex;
                 /*다음 줄로 넘어가는 것을 허용하겠다*/
                 flex-wrap: wrap;
-                width:900px;
+                width: 900px;
             }
-            aside{
-                width: 230px;
+            .select-container{
+                width: 180px;
             }
-            section{
+            .content-container{
+            	padding:20px;
                 flex-grow: 1;
             }
             
@@ -33,20 +34,18 @@
                 width: 100%;
                 border-collapse: collapse;
             }
-            th{
+            .th{
                 text-align: right;
                 padding: 10px;
                 width: 160px;
                 margin : 10px;
             }
-            td{
+            .td{
                 flex-grow: 1;
+                margin-left: 10px;
             }
             .form-control{
             	margin : 10px;
-            }
-            .form-btn {
-            	width:200px;
             }
             input[type=submit]{
             	margin-top:20px;
@@ -62,17 +61,35 @@
             	font-weight: bold;
                 border-left: 3px solid black;
             }
-            
-            @media screen and (max-width:900px){
-                main{
-                	width:100%;
-                }
+            #edit, #exit{
+				color:gray;
+			}
+            .profile{
+                height: 100px;
+                width:100px;
+                display: inline-block;
+                padding : 10px;
+            }
+            .content{
+                flex-grow:1;
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 10px;
+            }
+            .empty{
+            	height:30px;
             }
             
             @media screen and (max-width:768px){
-                aside{
+                .select-container{
                     display: none;
-                }
+	            }
+	            .th, .td{
+	            	display: block;
+	            }
+	            .th{
+	            	text-align: left;
+	            }
             }
 
         </style>
@@ -111,8 +128,8 @@
     </head>
     <body>
     	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
-        <main>
-            <aside>
+		<div class="page-container">
+            <div class="select-container">
                 <table>
                     <tbody>
                         <tr><button id="edit">프로필 편집</button></tr>
@@ -120,43 +137,46 @@
                         <tr><button id="exit">회원 탈퇴</button></tr>
                     </tbody>
                 </table>
-            </aside>
-            <section>
+            </div>
+            <div class="content-container">
+            	<div class="row">
+            		<div class="profile">
+	                    <c:if test="${memberDto.profile=='pic.jpg'}">
+							<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70" id="profile">
+						</c:if>
+						<c:if test="${memberDto.profile!='pic.jpg'}">
+							<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70" id="profile">
+						</c:if>
+					</div>
+					<div class="content">
+						<div class="empty"></div>
+                    	${memberDto.nick}
+                    </div>
+            	</div>
+            	<hr>
                 <form action="edit_pw" method="post" id="member_edit">
                     <table>
                         <tbody>
-                        	<tr height=100>
-                                <th>
-                                	<c:if test="${memberDto.profile=='pic.jpg'}">
-										<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70" id="profile">
-									</c:if>
-									<c:if test="${memberDto.profile!='pic.jpg'}">
-										<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70" id="profile">
-									</c:if>
-                                </th>
-                                
-                                <td>${memberDto.nick}</td>
+                            <tr>
+                                <td class="th">이전 비밀번호</td>
+                                <td class="td"><input class="form-control" type="password" name="pw" id="pw" required></td>
                             </tr>
                             <tr>
-                                <th>이전 비밀번호</th>
-                                <td><input class="form-control" type="password" name="pw" id="pw" required></td>
+                                <td class="th">새 비밀번호</td>
+                                <td class="td"><input class="form-control" type="password" name="new_pw" id="new_pw" required></td>
                             </tr>
                             <tr>
-                                <th>새 비밀번호</th>
-                                <td><input class="form-control" type="password" name="new_pw" id="new_pw" required></td>
+                                <td class="th">새 비밀번호 확인</td>
+                                <td class="td"><input class="form-control" type="password" id="new_pw_check"required></td>
                             </tr>
                             <tr>
-                                <th>새 비밀번호 확인</th>
-                                <td><input class="form-control" type="password" id="new_pw_check"required></td>
-                            </tr>
-                            <tr>
-                            	<td colspan="2" class="center"><input class="form-btn" type="submit" value="비밀번호 변경"></td>
+                            	<td colspan="2" class="center"><input class="form-btn inline" type="submit" value="비밀번호 변경"></td>
                             </tr>
                         </tbody>
                     </table>
                     <input type="hidden" name="id" value="${memberDto.id}">
                 </form>
-            </section>
-        </main>
+            </div>
+        </div>
     </body>
 </html>

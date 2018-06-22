@@ -25,8 +25,7 @@
 			background-color: #ffffff;
 			z-index: 99999;
 		}
-        	.container{
-        		width:900px;
+        	.page-container{
         		font-size: 18px;
         	}
             *{
@@ -37,6 +36,7 @@
             .main-container{
                 width: 100%;
                 height: 250px;
+                border:1px solid lightgray;
             }
 
             .select-container{
@@ -47,6 +47,8 @@
             .img-container{
                 width:100%;
                 min-height: 60px;
+                border:1px solid lightgray;
+                margin-top:5px;
             }
             
             .img-container::after{
@@ -89,14 +91,12 @@
                 font-size: 18px;
             }
             
-            td{
-            	padding:5px;
-            }
-            
             #myboard, #scrap{
                 padding: 10px;
                 background-color: white;
-                border: none;
+                border-bottom : none;
+                border-right : none;
+                border-left : none;
                 height: 100%;
             }
             
@@ -111,18 +111,10 @@
             }
             #myboard{
             	color: gray;
+            	border-top:none;
             }
-            
-            @media screen and (max-width:900px){
-                .container{
-                    width:100%;
-                }
-            }
-            
+
             @media screen and (max-width:768px){
-                .main-container{
-                    height: 210px;
-                }
                 .profile{
                     height: 200px;
                     width: 200px;
@@ -137,16 +129,22 @@
                 .content > .empty-row{
                 	display:none;
                 }
+                table{
+                	font-size:14px;
+                }
             }
             @media screen and (max-width:460px){
                 .profile{
-                    height: 70px;
-                    width: 70px;
-                    padding:0px;
-                    margin-top:50px;
+                    height: 100px;
+                    width: 100px;
+                    padding:10px;
+                    margin-top:20px;
                 }
                 table{
-                	font-size:14px;
+                	font-size:12px;
+                }
+                .content{
+                    width: 120px;
                 }
             }
         </style>
@@ -180,7 +178,7 @@
     </head>
     <body>
     	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
-        <div class="container">
+        <div class="page-container">
             <div class="main-container">
                 <div class="profile">
                 	<c:if test="${memberDto.profile=='pic.jpg'}">
@@ -192,7 +190,7 @@
                 </div>
                 <div class="content">
                 	<div class="empty-row"></div>
-                    <table>
+                    <table class="table">
                         <tbody>
                             <tr>
                                 <td>${memberDto.nick}</td>
@@ -222,7 +220,7 @@
             </div>
             <div class="img-container">
             	<c:forEach var="boardDto" items="${scrap_list}" varStatus="status">
-            		<div class="swiper-container img">
+            		<div class="swiper-container img main-view-photo">
 						<div class="swiper-wrapper">
 						<input class="boardNo" type="hidden" value="${boardDto.no }">
 		            		<c:forEach var="photoDto" items="${photo_list[status.index]}">

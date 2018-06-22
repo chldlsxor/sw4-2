@@ -84,13 +84,13 @@ public class AdminController {
 	
 	//신고글 삭제하기 (그전에 알람 보내기)
 	@PostMapping("/report_list")
-	public String  delete_report(NoticeDto noticeDto, String id, int bno) {
+	public String  delete_report(NoticeDto noticeDto, String id, int bno, HttpSession session) {
 		//가능하면 삭제확인 메세지 띄우기
 		log.info("삭제 요청 받음 {}", id);
 		adminService.delete_report(bno);
 		noticeDto.setReceiver(id);
-		noticeDto.setSender("id");
-		noticeDto.setType(5);
+		noticeDto.setSender(session.getAttribute("userid").toString());
+		noticeDto.setType(1);
 		noticeService.send_notice(noticeDto);
 		return "redirect:report_list";
 	}

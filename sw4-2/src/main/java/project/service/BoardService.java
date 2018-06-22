@@ -24,4 +24,5 @@ public interface BoardService {
 	public List<BoardDto> my_list(String id);
 	public BoardDto scrap_list(int no);
 	public List<Map<String, Integer>> getHeavyUploader();
+	public String get_writer(int no);
 }
