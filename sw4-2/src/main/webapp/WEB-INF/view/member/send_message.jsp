@@ -8,9 +8,6 @@
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <style>
-        	#result{
-        		/* max-height:100%;  */
-        	}
         	.not-read{
     			color: fuchsia;
     		}
@@ -21,13 +18,18 @@
     			padding: 10px;
     			background-color: lightpink;
     		}
-    		.userimg-container{
-    			width = 40%;
+    		.userimg-container, .userinfo-container{
     			display: inline-block;
+    			vertical-align: top;
+    			margin-left: 10px;
+    			padding:5px;
     		}
-    		.userinfo-container{
-    			width = 60%;
-    			display: inline-block;
+    		.nick{
+    			font-size:20px;
+    		}
+    		.name{
+    			font-size:15px;
+    			color:gray;
     		}
     		.input-message{
     			position: fixed;
@@ -35,18 +37,14 @@
     			right: 0;
     			bottom: 0;
     		}
-    		.message-container > .message-header{
-    			 width: 350px;
-    			 height : 700px;
-    		}
-    		.result-message{
-    			height: 100%;   		
-    		}
     		.my-message{
     			background-color: lightpink;
     		}
     		.your-message{
     			background-color: lightyellow;
+    		}
+    		.message{
+    			padding:3px;
     		}
         </style>
         
@@ -138,7 +136,7 @@
 	    	<input type="hidden" id  = "userid" value = "${userid }">
 	    	<div class="container-fluid">
 	    		<header class = "message-header">
-	    			<div class = "container-100">  
+	    			<div class = "container-100 left">  
 	    				<div class = "userimg-container">
 	    					<c:if test="${receive_info.profile=='pic.jpg'}">
 								<img class="img-circle" src="${root}/res/img/${receive_info.profile}"  width="70" height="70">
@@ -148,47 +146,39 @@
 							</c:if>
 	    				</div>
 	    				<div class = "userinfo-container">	
-	    					<div>ID : ${receive_info.id }</div>
-				   			<div>name : ${receive_info.name }</div>
-				   			<div>nick : ${receive_info.nick }</div>
+				   			<div class="nick">${receive_info.nick }</div>
+				   			<div class="name">${receive_info.name }</div>
 	    				</div>
 	    			</div>
 	    		</header>
-	    		<div class="empty-row"></div>	
 	    		<div class="empty-row"></div>
 	    		<div class="empty-row"></div>
-	    		<section class = "">
-	    		<div class="row" >
-	    			<div id="result" class="col-md-offset-1 col-md-10">
-	    				<!-- DB리스트에 있는 메세지 리스트는 이 창이 열린 순간 다 읽음 처리 되므로 read 표시 안함 -->
-	    				<c:forEach var = "message" items="${message_list}">
-	    					<!-- 내가 보낸 메세지 리스트 -->
-	    					<c:if test="${userid == message.send }">
-	    						<c:if test="${message.read==0 }">
-	    							<div align= "right" class = "message not-read"><span class = "my-message">${message.content }</span></div>
-	    						</c:if>
-	    						<c:if test="${message.read==1 }">
-	    							<div align="right" class = "message"> <span class = "right my-message">${message.content }</span></div>
-	    						</c:if>					
-							</c:if>
-							<!-- 내가 받은 메세지 리스트 (창여는 순간 무조건 읽음 처리)-->
-							<c:if test="${messageto == message.send }">
-								<div  align= "left" class= "message"><span class = "your-message">${message.content }</span></div>
-							</c:if>
-						</c:forEach>
-	    			</div>
-	    		</div>
-	    		<div class="empty-row"></div>
-	    		<div class="empty-row"></div>
-	    		</section>
-		    		<div class="row input-message">
-		    			<div class="col-md-offset-1 col-md-8">		
-		    				<input id="chat" type="text" placeholder="입력.." class="form-control">
+	    		<section>
+		    		<div class="row" >
+		    			<div id="result" class="col-md-offset-1 col-md-10">
+		    				<!-- DB리스트에 있는 메세지 리스트는 이 창이 열린 순간 다 읽음 처리 되므로 read 표시 안함 -->
+		    				<c:forEach var = "message" items="${message_list}">
+		    					<!-- 내가 보낸 메세지 리스트 -->
+		    					<c:if test="${userid == message.send }">
+		    						<c:if test="${message.read==0 }">
+		    							<div align= "right" class = "message not-read"><span class = "my-message">${message.content }</span></div>
+		    						</c:if>
+		    						<c:if test="${message.read==1 }">
+		    							<div align="right" class = "message"> <span class = "right my-message">${message.content }</span></div>
+		    						</c:if>					
+								</c:if>
+								<!-- 내가 받은 메세지 리스트 (창여는 순간 무조건 읽음 처리)-->
+								<c:if test="${messageTo == message.send }">
+									<div  align= "left" class= "message"><span class = "your-message">${message.content }</span></div>
+								</c:if>
+							</c:forEach>
 		    			</div>
-		    			<div class="col-md-2">
-		    				<input id="send" type="button" value="전송" class="btn btn-default btn-block">
+		    			<div class="row">
+		    				<input id="chat" type="text" placeholder="입력.." class="form-input inline">
+		    				<input id="send" type="button" value="전송" class="form-btn inline">
 		    			</div>
 		    		</div>
+	    		</section>
 	    	</div>
     	</div>
     </body>

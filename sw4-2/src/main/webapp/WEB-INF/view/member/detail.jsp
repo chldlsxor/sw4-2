@@ -32,7 +32,6 @@
             *{
                 box-sizing: border-box;
                 border:1px dotted black;
-                
             }
             
             .main-container{
@@ -48,6 +47,8 @@
             .img-container{
                 width:100%;
                 min-height: 60px;
+                border:1px solid lightgray;
+                margin-top:5px;
             }
             
             .img-container::after{
@@ -88,16 +89,19 @@
                 width: 100%;
                 border-collapse: collapse;
                 font-size: 18px;
+                padding:10px;
             }
             
             td{
-            	padding:5px;
+            	padding:10px;
             }
             
             #myboard, #scrap{
                 padding: 10px;
                 background-color: white;
-                border: none;
+                border-bottom : none;
+                border-right : none;
+                border-left : none;
                 height: 100%;
             }
             
@@ -112,6 +116,7 @@
             }
             #scrap{
             	color: gray;
+            	border-top:none;
             }
             
             @media screen and (max-width:900px){
@@ -132,6 +137,9 @@
                 td{
                     display: block;
                 }
+                table{
+                	margin-top:20px;
+                }
                 .content{
                     width: 150px;
                 }
@@ -140,14 +148,17 @@
                 }
             }
             @media screen and (max-width:460px){
+            	.main-container{
+                    height: 120px;
+                }
                 .profile{
-                    height: 70px;
-                    width: 70px;
+                    height: 100px;
+                    width: 100px;
                     padding:0px;
-                    margin-top:50px;
                 }
                 table{
                 	font-size:14px;
+                	margin-top:0px;
                 }
             }
         </style>
@@ -196,7 +207,7 @@
 						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.profile}">
 					</c:if>
 					<c:if test="${memberDto.profile!='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
+						<img class="img-profile i	mg-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
 					</c:if>
                 </div>
                 <div class="content">

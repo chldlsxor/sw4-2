@@ -31,7 +31,6 @@
         	}
             *{
                 box-sizing: border-box;
-                border:1px dotted black;
                 
             }
             
@@ -110,7 +109,7 @@
             	font-weight: bold;
                 border-top: 3px solid black;
             }
-            #scrap{
+            #myboard{
             	color: gray;
             }
             
