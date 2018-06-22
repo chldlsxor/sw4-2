@@ -40,7 +40,7 @@ public class HomeController {
 	//홈
 	@RequestMapping("/")
 	public String home() {
-		return "home";
+		return "register";
 	}
 	
 	//로그인(get)
@@ -55,7 +55,12 @@ public class HomeController {
 		if(homeService.select_id(memberDto.getId())) {
 			boolean login = homeService.login(session, memberDto, request, response, save);
 			if(login) {
-				return "redirect:/";
+				if(session.getAttribute("userpwr").equals("회원")) {//회원 일 때
+					return "redirect:board/list";
+				}
+				else {//관리자 일때
+					return "redirect:admin/admin";
+				}	
 			}
 			else {
 				model.addAttribute("msg", "비밀번호가 틀렸습니다.");

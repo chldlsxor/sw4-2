@@ -143,4 +143,10 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.scrap_list(no);
 	}
 
+	@Override
+	public List<Map<String, Integer>> getHeavyUploader() {
+		// TODO Auto-generated method stub
+		return boardDao.getHeavyUploader();
+	}
+
 }

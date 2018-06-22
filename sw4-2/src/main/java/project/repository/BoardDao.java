@@ -24,4 +24,6 @@ public interface BoardDao {
 	public void remove_board(int no);
 	public List<BoardDto> my_list(String id);
 	public BoardDto scrap_list(int no);
+	public List<Map<String, Integer>> getHeavyUploader();
+
 }

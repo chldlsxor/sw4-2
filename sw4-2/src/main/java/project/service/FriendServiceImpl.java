@@ -1,6 +1,7 @@
 package project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,11 @@ public class FriendServiceImpl implements FriendService{
 	@Override
 	public List<String> follower_list_search(String follow, String type, String keyword) {
 		return friendDao.follower_list_search(follow, type, keyword);
+	}
+
+	@Override
+	public List<Map<String, Integer>> get_follow_top_list() {
+		return friendDao.get_follow_top_list();
 	}
 
 }

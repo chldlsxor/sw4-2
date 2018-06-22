@@ -1,6 +1,7 @@
 package project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,12 @@ public class HashtagServiceImpl implements HashtagService{
 	public List<String> searchTag(String key) {
 		// TODO Auto-generated method stub
 		return hashtagDao.searchTag(key);
+	}
+
+	@Override
+	public List<Map<String, Integer>> countTag() {
+		// TODO Auto-generated method stub
+		return hashtagDao.countTag();
 	}
 
 }

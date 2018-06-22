@@ -1,6 +1,7 @@
 package project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,4 +23,5 @@ public interface BoardService {
 	public void remove_board(int no);
 	public List<BoardDto> my_list(String id);
 	public BoardDto scrap_list(int no);
+	public List<Map<String, Integer>> getHeavyUploader();
 }

@@ -64,13 +64,20 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/send_message")
-	public String send_message(String messageTo, HttpSession session) {
+	public String send_message(String messageTo, HttpSession session, Model model) {
 		
 		//세션에 받는 사람 추가(연결 끊기면 삭제)
 		session.setAttribute("messageTo", messageTo);
 		
-		session.setAttribute("message_list", messageService.getMessage(messageTo, session.getAttribute("userid").toString()));
-		session.setAttribute("receive_info", memberService.get(messageTo));
+		//메세지 리스트 가져오기
+		//세션에 저장할 필요있나..?
+		//session.setAttribute("message_list", messageService.getMessage(messageTo, session.getAttribute("userid").toString()));
+		model.addAttribute("message_list", messageService.getMessage(messageTo, session.getAttribute("userid").toString()));
+		
+		//받는 사람 정보 가져오기
+		//굳이..?
+		//session.setAttribute("receive_info", memberService.get(messageTo));
+		model.addAttribute("receive_info", memberService.get(messageTo));
 		
 		return "member/send_message";
 	}
@@ -331,5 +338,4 @@ public class MemberController {
 		int no = (int)session.getAttribute("userno");
 		return memberService.scrapUpdate(no,bno);
 	}
-	
 }

@@ -111,5 +111,11 @@ public class BoardDaoImpl implements BoardDao{
 	public BoardDto scrap_list(int no) {
 		return sqlSession.selectOne("scrap_list",no);
 	}
+
+	@Override
+	public List<Map<String, Integer>> getHeavyUploader() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("getHeavyUploader");
+	}
 	
 }
