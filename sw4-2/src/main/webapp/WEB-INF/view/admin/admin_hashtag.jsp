@@ -101,5 +101,3 @@
 	 	<canvas id = "hashTagChart" height = "350" width = "400"></canvas>
 	</div>	
 </div>
-
-<jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>

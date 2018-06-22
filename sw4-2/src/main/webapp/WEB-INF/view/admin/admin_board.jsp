@@ -105,5 +105,3 @@
  	인기 해시태그
  	<canvas id = "5hashTagChart" height = "350" width = "400"></canvas>
 </div>
-
-<jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>
