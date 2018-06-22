@@ -18,4 +18,3 @@
          
   </script>
 <div> 관리자 페이지</div>
-<jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>

@@ -35,4 +35,3 @@
 	</table>
 </div>
 
-<jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>
