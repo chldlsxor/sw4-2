@@ -1,6 +1,7 @@
 package project.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -18,4 +19,5 @@ public interface FriendService{
 	boolean search(FriendDto friendDto);
 	List<String> follow_list_search(String follower, String type, String keyword);
 	List<String> follower_list_search(String follow, String type, String keyword);
+	List<Map<String, Integer>> get_follow_top_list();
 }

@@ -46,4 +46,8 @@
 	<select id="follower_list_search_nick" parameterType="map" resultType="String">
 		select id from (select * from member inner join friend on (member.id = friend.follower) where nick like #{keyword}||'%') where follow=#{follow}
 	</select>
+	
+	<select id="follow_top_list" parameterType="map" resultType="hashmap">
+		select follow, count from (select rownum rn, A.* from(select follow, count(*) count from friend group by follow order by count desc)A) where rn between 1 and 20
+	</select>
 </mapper>

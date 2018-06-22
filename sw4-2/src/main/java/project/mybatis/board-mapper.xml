@@ -36,6 +36,11 @@
 		select count(no) from board
 	</select>
 	
+	<select id="getHeavyUploader" resultType = "hashmap">
+		select * from (select rownum rn, A.* from(select writer, count(*) count from board group by writer order by count desc)A) where rn between 1 and 20
+	</select>
+	
+	
 	<select id="reportList" resultType="BoardDto" >
 		select * from board where report > 0 order by report desc, reg asc 
 	</select>

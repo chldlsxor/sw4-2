@@ -27,38 +27,69 @@ public class WebSocketServer extends TextWebSocketHandler{
 	
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-		 String messageFrom = session.getAttributes().get("userid").toString();
-		 String messageTo = session.getAttributes().get("messageto").toString();		
-		 user.put(messageFrom+messageTo, session);//내 메세지창에 session저장
-		 
-		 int count = 0;
-		 for(String gid : user.keySet()) {
-			 if(gid.equals(messageFrom+messageTo)||gid.equals(messageTo+messageFrom)) {
-				 count++;
-			 }
+		log.info("웹소켓 연결><");
+		//메신져는 사용자가 관리자가 아닌 회원일때 사용
+		if(session.getAttributes().get("userpwr").toString().equals("회원")) {
+			String messageFrom = (String)session.getAttributes().get("userid");
+			String messageTo = (String)session.getAttributes().get("messageTo");	
+			if(messageTo==null) {
+				//로그인
+				log.info("{}가 로그인 성공", messageFrom);
+				user.put(messageFrom, session);
+			}else {
+				//메신저 창
+				log.info("{}가{}에게 메세지", messageFrom, messageTo);
+				user.put(messageFrom+messageTo, session);
+				int count = 0;
+				for(String gid : user.keySet()) {
+					 if(gid.equals(messageFrom+messageTo)||gid.equals(messageTo+messageFrom)) {
+						 count++;
+					 }
+				 }
+				 //채팅방에 사람이 다 찼을때 --> 신호 보내서 not read제거
+				 if(count==2) {
+					 TextMessage text = new TextMessage(full_signal);
+					 user.get(messageFrom+messageTo).sendMessage(text);//내방에 신호
+					 user.get(messageTo+messageFrom).sendMessage(text);//상대방에 신호
+				 }
+			}
+		}
+		log.info("지금 까지 로그인한 유저");
+		for(String gid : user.keySet()) {
+			 log.info("방 :{}",gid);
+			 log.info("방의 session : {}",user.get(gid));
+			 log.info("-----------------------------------------------");
 		 }
-		 //채팅방에 사람이 다 찼을때 --> 신호 보내서 not read제거
-		 if(count==2) {
-			 TextMessage text = new TextMessage(full_signal);
-			 user.get(messageFrom+messageTo).sendMessage(text);//내방에 신호
-			 user.get(messageTo+messageFrom).sendMessage(text);//상대방에 신호
-		 }	
+		
 	}
 	
 	@Override
 	public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-		user.remove(session.getAttributes().get("userid").toString()+session.getAttributes().get("messageto").toString());
-		session.getAttributes().remove("messageto");//session에서 messageto 제거
-		log.info("사용자 종료 : {}", session.getRemoteAddress().getAddress());
+		
+		/*log.info("종료 하려고 한애  : {}",session.getAttributes().get("userid"));
+		log.info("종료 하려고 한애  : {}",session.getAttributes().get("userweb"));*/
+		String messageFrom = (String)session.getAttributes().get("userid");
+		String messageTo = (String)session.getAttributes().get("messageTo");
+		if(messageTo==null) {
+			//로그인
+			log.info("냠종료");
+			user.remove(messageFrom);
+		}else {
+			//메신저 창
+			log.info("종료");		
+			user.remove(messageFrom+messageTo);
+			session.getAttributes().remove("messageTo");
+		}
 	}
 	
 	@Override
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String messageFrom  = (String)session.getAttributes().get("userid");
-		String messageTo = (String)session.getAttributes().get("messageto");
+		String messageTo = (String)session.getAttributes().get("messageTo");
 		String context = message.getPayload();
 		TextMessage sender = new TextMessage(messageFrom);
 		TextMessage content = new TextMessage(context);
+		TextMessage alarm = new TextMessage(messageFrom+"로 부터 메세지가 도착하였습니다");
 		
 		MessageDto messageDto = new MessageDto();
 		messageDto.setSend(messageFrom);
@@ -73,12 +104,20 @@ public class WebSocketServer extends TextWebSocketHandler{
 			log.info("	- 보낸이  : {}",sender.toString());
 			log.info("	- 보낸이  : {}",content.toString());
 			
-			if(gid.equals(messageFrom+messageTo)||gid.equals(messageTo+messageFrom)) {	//(나-->상대방), (상대방-->나) 창에 메세지 표시
+			if(gid.equals(messageFrom+messageTo)) {//(나-->상대방)
 				user.get(gid).sendMessage(sender);
 				user.get(gid).sendMessage(content);
-				log.info("--> 메세지 전송 완료");
 				count++;
-			}		
+				log.info("--> 메세지 전송 완료");
+			}else if(gid.equals(messageTo+messageFrom)) {
+				user.get(gid).sendMessage(sender);
+				user.get(gid).sendMessage(content);
+				count++;
+				log.info("--> 메세지 전송 완료");
+			}else if(gid.equals(messageTo)) {
+				user.get(gid).sendMessage(alarm);
+				log.info("--> 알람 전송 완료");
+			}
 		}
 		if(count==2) {
 			messageDto.setRead(1);//메세지 읽음 상태로

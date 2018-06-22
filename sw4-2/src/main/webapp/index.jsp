@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
+<jsp:forward page="register"></jsp:forward>
+<%-- <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <h1><a href = "/sw4-2/board/list">board_list</a></h1>
 <h1><a href = "/sw4-2/member/message">message</a></h1>
 <h1><a href = "/sw4-2/login">login</a></h1>
@@ -14,6 +15,5 @@
 <h1><a href = "/sw4-2/member/detail?nick=${usernick}">내정보</a></h1>
 <h1>userid : ${userid}</h1>
 <h1>session-id : ${pageContext.session.id}</h1>
-<h1>applicaion: ${servletContext.applicaion.scMap}</h1>
-<h1><%=application.getAttribute("scMap") %></h1>
-<h1><a href = "/sw4-2/member/notice">알림 메세지</a></h1>
+<h1>userweb: ${userweb}</h1>
+<h1><a href = "/sw4-2/member/notice">알림 메세지</a></h1> --%>

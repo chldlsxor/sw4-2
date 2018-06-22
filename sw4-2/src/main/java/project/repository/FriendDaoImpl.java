@@ -73,4 +73,9 @@ public class FriendDaoImpl implements FriendDao{
 		else
 			return sqlSession.selectList("follower_list_search_nick", map);
 	}
+
+	@Override
+	public List<Map<String, Integer>> get_follow_top_list() {
+		return sqlSession.selectList("follow_top_list");
+	}
 }

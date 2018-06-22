@@ -101,13 +101,19 @@
     <body>
 	    <header class = "admin_header">
 	    	<h2><a href = "admin">InStory</a></h2>
+	    	<h2><a href = "/sw4-2/member/logout">Logout</a></h2>
 	    </header>
 	    <nav class = "admin_nav">
 	   		<input type="checkbox" id="hamburger">
             <label for="hamburger">&#8801;</label>
 	    	<a href = "member_list">회원 리스트</a>
 	    	<a href = "report_list">신고 글 리스트</a>
-	    	<a href = "admin_count">통계 확인하기</a>
+	    	<a href = "admin_session">월별 세션 확인하기</a>
+	    	<a href = "admin_upload">월별 업로드 확인하기</a>
+	    	<a href = "admin_hashtag">인기 해시태그</a>
+	    	<a href = "admin_board">인기 게시글</a>
+	    	<a href = "admin_star">instory star</a>
+	    	
 	    	<a href = "#">내용 검색하기</a>
 	    </nav>
 	    <section class = "admin_section">

@@ -31,6 +31,7 @@ import project.repository.MemberDao;
 import project.service.AdminService;
 import project.service.BoardService;
 import project.service.FriendService;
+import project.service.HashtagService;
 import project.service.MemberService;
 import project.service.NoticeService;
 
@@ -45,9 +46,6 @@ public class AdminController {
 	private MemberService memberService;
 	
 	@Autowired
-	private MemberDao memberDao;
-	
-	@Autowired
 	private BoardService boardService;
 	
 	@Autowired
@@ -57,7 +55,7 @@ public class AdminController {
 	private FriendService friendService;
 	
 	@Autowired
-	private HashtagDao hashtagDao;
+	private HashtagService hashtagService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -120,11 +118,11 @@ public class AdminController {
 	}
 	
 	//사용자 수정하기
-	@RequestMapping("/edit_user")
+	/*@RequestMapping("/edit_user")
 	public String  edit_user() {
 		adminService.edit_user();
 		return "edit_user";
-	}
+	}*/
 	
 	//사용자 삭제하기
 	@RequestMapping("/delete_user")
@@ -134,12 +132,32 @@ public class AdminController {
 		return "redirect:member_list";
 	}
 	
-	@RequestMapping("/admin_count")
-	public String admin_count(HttpServletRequest request) {
-		return "admin/admin_count";
+	@RequestMapping("/admin_session")
+	public String admin_session() {
+		return "admin/admin_session";
 	}
 	
-
+	@RequestMapping("/admin_upload")
+	public String admin_upload() {
+		return "admin/admin_upload";
+	}
+	
+	@RequestMapping("/admin_hashtag")
+	public String admin_hashtag() {
+		return "admin/admin_hashtag";
+	}
+	
+	@RequestMapping("/admin_board")
+	public String admin_board() {
+		return "admin/admin_board";
+	}
+	
+	@RequestMapping("/admin_star")
+	public String admin_star() {
+		return "admin/admin_star";
+	}
+	
+	//월별 접속자
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/getDailyVisitor")
 	@ResponseBody
@@ -163,12 +181,34 @@ public class AdminController {
 		return gson.toJson(list);
 	}
 	
+	//인기 해시 태그
 	@RequestMapping(value = "/getHashtagCount", produces = "text/json; charset=UTF-8")
 	@ResponseBody
-	public  String hashtag_count(HttpServletRequest request) {
+	public  String hashtag_count() {
         Gson gson = new Gson();
-        List<Map<String, Integer>> list = hashtagDao.countTag();
+        List<Map<String, Integer>> list = hashtagService.countTag();
 		return gson.toJson(list);
 	}
+	
+	//인기 팔로워
+	@RequestMapping(value = "/getFollowTopList", produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public  String get_follow_top_list() {
+        Gson gson = new Gson();
+        List<Map<String, Integer>> list = friendService.get_follow_top_list();
+		return gson.toJson(list);
+	}
+	
+	//헤비 업로더(필요 없는 듯..)
+	@RequestMapping(value = "/getUploadTopList", produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public  String get_upload_top_list() {
+        Gson gson = new Gson();
+        List<Map<String, Integer>> list = boardService.getHeavyUploader();
+		return gson.toJson(list);
+	}
+	
+	//월별 업로드
+	//인기 게시물(좋아요로)??
 	
 }

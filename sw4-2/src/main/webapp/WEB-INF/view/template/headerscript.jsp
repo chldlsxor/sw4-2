@@ -11,6 +11,9 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
 $(document).ready(function(){
+	//웹소켓 연결
+	connect();
+
 	$("#top-chaser").hide();
 	$(".fa-bars").on("click",function(){
 		$("#top-chaser").slideToggle();
@@ -65,4 +68,22 @@ $(document).ready(function(){
 		$(".top-search").val($(this).text());
 	};
 });
+$(document).on("unload", function(){
+	disconnect();
+});  
+function connect(){	
+	if(window.websocket) return;	
+	var uri = "ws://localhost:8080/sw4-2/send_message";
+	
+	window.websocket = new WebSocket(uri);	
+	//메세지 오면 알람
+	websocket.onmessage = function(e){
+		alert(e.data);
+	};
+}
+function disconnect(){
+	if(!websocket) return;
+	websocket.close();
+	websocket = null;
+}
 </script>
