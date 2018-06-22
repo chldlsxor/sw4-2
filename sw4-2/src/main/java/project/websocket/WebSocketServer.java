@@ -58,6 +58,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 		for(String gid : user.keySet()) {
 			 log.info("방 :{}",gid);
 			 log.info("방의 session : {}",user.get(gid));
+			 log.info("방의 session : {}",user.get(gid).getId());
 			 log.info("-----------------------------------------------");
 		 }
 		
