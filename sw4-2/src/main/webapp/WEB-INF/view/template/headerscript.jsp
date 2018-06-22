@@ -74,7 +74,7 @@ $(document).on("unload", function(){
 function connect(){	
 	if(window.websocket) return;	
 	var uri = "ws://localhost:8080/sw4-2/send_message";
-	
+	"${messageTo = null}";
 	window.websocket = new WebSocket(uri);	
 	//메세지 오면 알람
 	websocket.onmessage = function(e){
