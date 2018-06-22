@@ -18,11 +18,13 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import project.bean.BoardDto;
 import project.bean.ContentDto;
+import project.bean.NoticeDto;
 import project.service.BoardService;
 import project.service.ContentService;
 import project.service.FriendService;
 import project.service.HashtagService;
 import project.service.MemberService;
+import project.service.NoticeService;
 import project.service.PhotoService;
 import project.service.ReplyService;
 
@@ -50,6 +52,9 @@ public class BoardController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private NoticeService noticeService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -100,7 +105,12 @@ public class BoardController {
 	
 	@RequestMapping("/good")
 	@ResponseBody
-	public int good(int bno, String id) {
+	public int good(NoticeDto noticeDto, int bno, String id, HttpSession session) {
+		noticeDto.setReceiver(boardService.get_writer(bno));
+		noticeDto.setSender(session.getAttribute("userid").toString());
+		noticeDto.setType(2);
+		noticeDto.setBno(bno);
+		noticeService.send_notice(noticeDto);
 		return boardService.love(bno, id);
 	}
 	

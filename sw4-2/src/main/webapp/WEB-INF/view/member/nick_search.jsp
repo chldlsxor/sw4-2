@@ -9,9 +9,6 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
-        	.container{
-        		width:900px;
-        	}
         	th{
         		width:100px;
         	}
@@ -45,11 +42,8 @@
                 border-top: 3px solid black;
                 color: black;
             }
-            
-        	@media screen and (max-width:900px){
-                .container{
-                    width:100%;
-                }
+            .result{
+            	border:1px solid lightgray;
             }
         	
         	@media screen and (max-width:600px){
@@ -72,7 +66,7 @@
     </head>
     <body>
     	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
-    	<div class="container">
+    	<div class="page-container">
     		<div class="select-container">
                 <table>
                     <tbody>
@@ -88,7 +82,7 @@
 	        		<input type="submit" class="form-btn inline" value="검색">
 	        	</div>
 	        </form>
-			<div class="row">
+			<div class="row result">
 				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">

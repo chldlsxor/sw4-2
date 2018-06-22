@@ -102,6 +102,16 @@ section {
 	width: 100%;
 	margin: auto;
 }
+.page-container{
+	width:900px;
+	margin: auto;
+	padding:15px;
+}
+@media screen and (max-width:900px){
+    .page-container{
+        width:100%;
+    }
+}
 
 .row {
 	margin-top: 10px;
@@ -138,14 +148,11 @@ section {
 
 /* 테이블 관련 스타일 */
 .table {
-	border: 1px solid black;
-	border-collapse: collapse;
 	width: 100%;
 }
 
 .table td, .table th {
-	border: 1px solid black;
-	padding: 10px;
+	padding: 5px;
 }
 
 /* 테이블 제목에 색상 부여*/
@@ -330,7 +337,7 @@ header {
 	z-index: 10;
 	left: 80%;
 	top: 20%;
-	background-color: pink;
+	background-color: #00A2E8;
 }
 
 #chaser>div {
@@ -520,6 +527,11 @@ header {
 		font-size: 200%;
 	}
 }
+@MEDIA SCREEN AND (MAX-WIDTH:1130PX) {
+	#main-view {
+		margin-left: 24%;
+	}
+}
 
 @MEDIA SCREEN AND (MAX-WIDTH:750PX) {
 	#menu>a.right {
@@ -550,11 +562,14 @@ header {
 	.content-view {
 		font-size: 0.2em;
 	}
+	#main-view {
+		margin-left: 27%;
+	}
 	#menu{
-		margin-left:10%;
+		margin-left:1%;
 	}
 	#menu>a, #menu>p {
-		font-size: 150%;
+		font-size: 122%;
 	}
 }
 

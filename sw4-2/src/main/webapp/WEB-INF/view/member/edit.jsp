@@ -12,20 +12,21 @@
                 box-sizing: border-box;
                 font-size: 18px;
             }
-            main, aside, section{
+            .select-container, .content-container{
                 border:1px solid black;
                 min-height: 600px;
             }
-            main{
+            .page-container{
                 display: flex;
                 /*다음 줄로 넘어가는 것을 허용하겠다*/
                 flex-wrap: wrap;
                 width: 900px;
             }
-            aside{
-                width: 230px;
+            .select-container{
+                width: 180px;
             }
-            section{
+            .content-container{
+            	padding:20px;
                 flex-grow: 1;
             }
             
@@ -33,20 +34,18 @@
                 width: 100%;
                 border-collapse: collapse;
             }
-            th{
+            .th{
                 text-align: right;
                 padding: 10px;
                 width: 160px;
                 margin : 10px;
             }
-            td{
+            .td{
                 flex-grow: 1;
+                margin-left: 10px;
             }
             .form-control{
             	margin : 10px;
-            }
-            .form-btn {
-            	width:200px;
             }
             input[type=submit]{
             	margin-top:20px;
@@ -79,17 +78,35 @@
 				padding:0px;
 				color:#00A2E8;
 			} 
-			
-			@media screen and (max-width:900px){
-                main{
-                	width:100%;
-                }
+			#edit_pw, #exit{
+				color:gray;
+			}
+            .profile{
+                height: 100px;
+                width:100px;
+                display: inline-block;
+                padding : 10px;
+            }
+            .content{
+                flex-grow:1;
+                display: inline-block;
+                vertical-align: top;
+                margin-left: 10px;
+            }
+            .empty{
+            	height:30px;
             }
             
             @media screen and (max-width:768px){
-                aside{
+                .select-container{
                     display: none;
-                }
+	            }
+	            .th, .td{
+	            	display: block;
+	            }
+	            .th{
+	            	text-align: left;
+	            }
             }
 
         </style>
@@ -115,13 +132,13 @@
                 	event.preventDefault();
                 	
                 	var name_regex = /^[가-힣]{2,10}$/;
-                	var nick_regex = /^[a-zA-Z0-9]{2,60}$/;
+                	var nick_regex = /^[a-zA-Z0-9]{2,20}$/;
                 	
                 	if(!name_regex.test($("#name").val())){
                 		alert("이름은 한글 2~10자리 입니다.");
                 		return;
                 	}else if(!nick_regex.test($("#nick").val())){
-                		alert("닉네임은 영문숫자 2~60자리 입니다.");
+                		alert("닉네임은 영문숫자 2~20자리 입니다.");
                 		return;
                 	}else{
                 		document.querySelector("#member_edit").submit();
@@ -146,8 +163,8 @@
     </head>
     <body>
     	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
-        <main>
-            <aside>
+        <div class="page-container">
+            <div class="select-container">
                 <table>
                     <tbody>
                         <tr><button id="edit" class="now">프로필 편집</button></tr>
@@ -155,12 +172,28 @@
                         <tr><button id="exit">회원 탈퇴</button></tr>
                     </tbody>
                 </table>
-            </aside>
-            <section>
+            </div>
+            <div class="content-container">
                 <form action="edit" method="post" id="member_edit" enctype="multipart/form-data">
+                	<div class="row">
+	            		<div class="profile">
+		                    <c:if test="${memberDto.profile=='pic.jpg'}">
+								<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70" id="profile">
+							</c:if>
+							<c:if test="${memberDto.profile!='pic.jpg'}">
+								<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70" id="profile">
+							</c:if>
+						</div>
+						<div class="content">
+							<div class="empty"></div>
+							<button class="look">프로필 사진 변경</button>
+                            <input type="file" name="f" id="f" onchange="LoadImg(this)">
+	                    </div>
+	            	</div>
+	            	<hr>
                     <table>
                         <tbody>
-                            <tr height=100>
+                            <%-- <tr height=100>
                                 <th>
                                 	<c:if test="${memberDto.profile=='pic.jpg'}">
 										<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70" id="profile">
@@ -174,22 +207,22 @@
                                 	<button class="look">프로필 사진 변경</button>
                                 	<input type="file" name="f" id="f" onchange="LoadImg(this)">
                                 </td>
+                            </tr> --%>
+                            <tr>
+                                <td class="th">아이디(이메일)</td>
+                                <td class="td"><input class="form-control" type="text" name="id" required value="${memberDto.id}" readonly></td>
                             </tr>
                             <tr>
-                                <th>아이디(이메일)</th>
-                                <td><input class="form-control" type="text" name="id" required value="${memberDto.id}" readonly></td>
+                                <td class="th">이름</td>
+                                <td class="td"><input class="form-control" type="text" name="name" id="name" required value="${memberDto.name}"></td>
                             </tr>
                             <tr>
-                                <th>이름</th>
-                                <td><input class="form-control" type="text" name="name" id="name" required value="${memberDto.name}"></td>
+                                <td class="th">닉네임</td>
+                                <td class="td"><input class="form-control" type="text" name="nick" id="nick" required value="${memberDto.nick}"></td>
                             </tr>
                             <tr>
-                                <th>닉네임</th>
-                                <td><input class="form-control" type="text" name="nick" id="nick" required value="${memberDto.nick}"></td>
-                            </tr>
-                            <tr>
-                            	<th>공개범위</th>
-                            	<td>
+                            	<td class="th">공개범위</td>
+                            	<td class="td">
                             		<select name="open" class="form-control">
                             			<option <c:if test="${memberDto.open == 0}">selected</c:if> value="0">전체공개</option>
                             			<option <c:if test="${memberDto.open == 1}">selected</c:if> value="1">팔로워만 공개</option>
@@ -198,12 +231,12 @@
                             	</td>
                             </tr>
                             <tr>
-                            	<td colspan="2" class="center"><input class="form-btn" type="submit" value="수정"></td>
+                            	<td colspan="2" class="center"><input class="form-btn inline" type="submit" value="수정"></td>
                             </tr>
                         </tbody>
                     </table>
                 </form>
-            </section>
-        </main>
+            </div>
+        </div>
     </body>
 </html>

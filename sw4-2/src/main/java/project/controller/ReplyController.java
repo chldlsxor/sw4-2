@@ -2,6 +2,8 @@ package project.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import project.bean.NoticeDto;
 import project.bean.ReplyDto;
+import project.service.BoardService;
+import project.service.NoticeService;
 import project.service.ReplyService;
 
 @Controller
@@ -22,6 +27,12 @@ public class ReplyController {
 	@Autowired
 	private ReplyService replyService;
 	
+	@Autowired
+	private BoardService boardService;
+	
+	@Autowired
+	private NoticeService noticeService;
+	
 	@RequestMapping("/list")
 	@ResponseBody
 	public List<ReplyDto> replyList(int bno) {
@@ -29,8 +40,13 @@ public class ReplyController {
 	}
 	
 	@RequestMapping("/write")
-	public String replyWrite(ReplyDto replyDto, Model model) {
+	public String replyWrite(NoticeDto noticeDto, ReplyDto replyDto, Model model, HttpSession session) {
 		model.addAttribute("replyList", replyService.replyWrite(replyDto));
+		noticeDto.setReceiver(boardService.get_writer(replyDto.getBno()));
+		noticeDto.setSender(session.getAttribute("userid").toString());
+		noticeDto.setType(3);
+		noticeDto.setBno(replyDto.getBno());
+		noticeService.send_notice(noticeDto);
 		return "board/addreply";
 	}
 	

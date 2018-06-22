@@ -117,5 +117,10 @@ public class BoardDaoImpl implements BoardDao{
 		// TODO Auto-generated method stub
 		return sqlSession.selectList("getHeavyUploader");
 	}
+
+	@Override
+	public String get_writer(int no) {
+		return sqlSession.selectOne("get_writer",no);
+	}
 	
 }
