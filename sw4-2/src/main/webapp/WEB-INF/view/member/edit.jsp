@@ -26,6 +26,9 @@
             .select-container{
                 width: 180px;
             }
+            .select{
+            	display: block;
+            }
             .content-container{
             	padding:20px;
                 flex-grow: 1;
@@ -99,14 +102,22 @@
             }
             
             @media screen and (max-width:768px){
+            	.select{
+            		display: inline-block;
+            	}
                 .select-container{
-                    display: none;
+                    width:100%;
+                    min-height: 30px;
 	            }
 	            .th, .td{
 	            	display: block;
 	            }
 	            .th{
 	            	text-align: left;
+	            }
+	            .now{
+	                border-top: 3px solid black;
+	                border-left: none;
 	            }
             }
 
@@ -168,9 +179,9 @@
             <div class="select-container">
                 <table>
                     <tbody>
-                        <tr><button id="edit" class="now">프로필 편집</button></tr>
-                        <tr><button id="edit_pw">비밀번호 변경</button></tr>
-                        <tr><button id="exit">회원 탈퇴</button></tr>
+                        <td class="select"><button id="edit" class="now">프로필 편집</button></td>
+                        <td class="select"><button id="edit_pw">비밀번호 변경</button></td>
+                        <td class="select"><button id="exit">회원 탈퇴</button></td>
                     </tbody>
                 </table>
             </div>

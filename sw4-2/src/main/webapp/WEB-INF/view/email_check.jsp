@@ -49,6 +49,9 @@
                 .register-container{
                     width: 95%;
                 }
+                .register-container > .empty-row{
+                	display: none;
+                }
             }
             @media screen and (max-width:320px){
                 .container{

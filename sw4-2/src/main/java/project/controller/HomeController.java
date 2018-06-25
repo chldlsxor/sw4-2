@@ -83,20 +83,20 @@ public class HomeController {
 	
 	//회원가입
 	@RequestMapping("/register")
-	public String register(String id, Model model) {
-		model.addAttribute("id", id);
+	public String register() {
 		return "register";
 	}
 	
 	//회원가입(post)
 	@PostMapping("/register")
-	public String register(MemberDto memberDto,Model model) throws NoSuchAlgorithmException {
+	public String register(HttpSession session, MemberDto memberDto,Model model) throws NoSuchAlgorithmException {
 		if(homeService.select_nick(memberDto.getNick())) {
-			model.addAttribute("msg", memberDto.getNick()+"은(는) 이미 있는 닉네임");
-			model.addAttribute("go", "register?id="+memberDto.getId());
+			model.addAttribute("msg", memberDto.getNick()+"은(는) 이미 존재하는 닉네임입니다.");
+			model.addAttribute("go", "register");
 			return "redirect:/result";
 		}else {
 			homeService.register(memberDto);
+			session.removeAttribute("email_check");
 			model.addAttribute("msg", "회원가입이 완료되었습니다.");
 			model.addAttribute("go", "login");
 			return "redirect:/result";
@@ -138,7 +138,7 @@ public class HomeController {
 				return "redirect:/email_check?type="+type;
 			}else {
 				//없는아이디임
-				model.addAttribute("msg", emailDto.getId()+"은(는) 이미 존재하지 않는 아이디입니다.");
+				model.addAttribute("msg", emailDto.getId()+"은(는) 존재하지 않는 아이디입니다.");
 				model.addAttribute("go", "email?type="+type);
 				return "redirect:/result";
 			}
@@ -154,12 +154,12 @@ public class HomeController {
 	}
 	
 	@PostMapping("/email_check")
-	public String email_check(EmailDto emailDto, Model model, String type) {
+	public String email_check(HttpSession session, EmailDto emailDto, Model model, String type) {
 		log.info("id={}",emailDto.getId());
 		log.info("num={}",emailDto.getNum());
 		if(emailService.check(emailDto)) {
 //			emailService.check_ok(emailDto);
-			model.addAttribute("id", emailDto.getId());
+			session.setAttribute("email_check", emailDto.getId());
 			return "redirect:/"+type;
 		}
 		else {
@@ -171,15 +171,15 @@ public class HomeController {
 	
 	//비번 재설정
 	@RequestMapping("/reset_pw")
-	public String reset_pw(String id, Model model) {
-		model.addAttribute("id", id);
+	public String reset_pw() {
 		return "reset_pw";
 	}
 	
 	//비번 재설정(post)
 	@PostMapping("/reset_pw")
-	public String reset_pw(MemberDto memberDto, Model model) throws NoSuchAlgorithmException {
-		homeService.reset_pw(memberDto);		
+	public String reset_pw(HttpSession session, MemberDto memberDto, Model model) throws NoSuchAlgorithmException {
+		homeService.reset_pw(memberDto);
+		session.removeAttribute("email_check");
 		model.addAttribute("msg", "비밀번호가 재설정 되었습니다.");
 		model.addAttribute("go", "login");
 		return "redirect:/result";
