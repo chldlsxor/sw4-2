@@ -122,5 +122,10 @@ public class BoardDaoImpl implements BoardDao{
 	public String get_writer(int no) {
 		return sqlSession.selectOne("get_writer",no);
 	}
+
+	@Override
+	public List<BoardDto> searchListByContent(String keyword) {
+		return sqlSession.selectList("searchListByContent", keyword);
+	}
 	
 }

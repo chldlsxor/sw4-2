@@ -37,9 +37,14 @@
 		});
 	});        
 </script>
-<div style = "text-align : center; ">
-	<div style="width: 70%; margin : auto;">
-	 	<div>instory star 상위 20</div>
-	 	<canvas id = "starChart" height = "500" width = "400"></canvas>
+<div class = "container-70 main-sectin-container">
+	<table class = "table">
+		<tr>
+			<td class= "center">Instory star 상위 20<td>
+		</tr>
+	</table>
+	<div class="chart-container">
+	 	<canvas id = "starChart"></canvas>
 	</div>	
 </div>
+<jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>

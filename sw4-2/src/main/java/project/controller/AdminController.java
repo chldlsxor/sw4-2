@@ -1,5 +1,8 @@
 package project.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import project.bean.ContentDto;
 import project.bean.FriendDto;
 import project.bean.MemberDto;
 import project.bean.NoticeDto;
@@ -30,6 +34,7 @@ import project.repository.HashtagDao;
 import project.repository.MemberDao;
 import project.service.AdminService;
 import project.service.BoardService;
+import project.service.ContentService;
 import project.service.FriendService;
 import project.service.HashtagService;
 import project.service.MemberService;
@@ -57,12 +62,14 @@ public class AdminController {
 	@Autowired
 	private HashtagService hashtagService;
 	
+	@Autowired
+	private ContentService contentService;
+	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/admin")
 	public String admin() {
-		
-		return "admin/admin_page";
+		return "admin/admin_session";
 	}
 	
 	/*@GetMapping("/member_list")
@@ -73,6 +80,11 @@ public class AdminController {
 	@RequestMapping("/member_list")
 	public ModelAndView member_list(PageDto pageDto, HttpServletRequest request) {
 		return memberService.member_page_list(pageDto, request);
+	}
+	
+	@RequestMapping("/admin_search")
+	public String admin_search() {
+		return "admin/admin_search";
 	}
 	
 	//신고글 확인하기
@@ -98,8 +110,7 @@ public class AdminController {
 	
 	//사용자 상세보기
 	@RequestMapping("/detail_user")
-	public String  detail_user(FriendDto friendDto, Model model, String nick, HttpSession session) {
-		log.info("nick={}",nick);
+	public String  detail_user(FriendDto friendDto, Model model, String nick) {
 		MemberDto memberDto = memberService.get_by_nick(nick);
 		model.addAttribute("memberDto", memberDto);
 		
@@ -108,21 +119,13 @@ public class AdminController {
 		model.addAttribute("follow_cnt",follow_cnt);
 		model.addAttribute("follower_cnt",follower_cnt);
 		
-		friendDto.setFollower(session.getAttribute("userid").toString());
-		log.info(friendDto.getFollower());
-		friendDto.setFollow(memberDto.getId());
-		log.info(friendDto.getFollow());
-		boolean follow_check = friendService.search(friendDto);
-		model.addAttribute("follow_check",follow_check);
+		ContentDto contentDto = contentService.my_list(memberDto.getId());
+		model.addAttribute("my_list",contentDto.getListBoardDto());
+		model.addAttribute("photo_list",contentDto.getListPhotoDto());
+		model.addAttribute("board_cnt",contentDto.getListBoardDto().size());
+		
 		return "admin/detail_user";
 	}
-	
-	//사용자 수정하기
-	/*@RequestMapping("/edit_user")
-	public String  edit_user() {
-		adminService.edit_user();
-		return "edit_user";
-	}*/
 	
 	//사용자 삭제하기
 	@RequestMapping("/delete_user")
@@ -132,23 +135,19 @@ public class AdminController {
 		return "redirect:member_list";
 	}
 	
-	@RequestMapping("/admin_session")
-	public String admin_session() {
-		return "admin/admin_session";
-	}
-	
-	@RequestMapping("/admin_upload")
-	public String admin_upload() {
-		return "admin/admin_upload";
-	}
-	
 	@RequestMapping("/admin_hashtag")
 	public String admin_hashtag() {
 		return "admin/admin_hashtag";
 	}
 	
-	@RequestMapping("/admin_board")
+	@GetMapping("/admin_board")
 	public String admin_board() {
+		return "admin/admin_board";
+	}
+	
+	@PostMapping("/admin_board")
+	public String admin_board(String keyword, Model model) {
+		model.addAttribute("boardList", boardService.searchListByContent(keyword));
 		return "admin/admin_board";
 	}
 	
@@ -162,25 +161,44 @@ public class AdminController {
 	@RequestMapping("/getDailyVisitor")
 	@ResponseBody
 	public  String daily_visiter(HttpServletRequest request, String month) {
-		TreeMap<String,Integer> scmap = (TreeMap<String, Integer>) request.getServletContext().getAttribute("scMap");
-        Gson gson = new Gson();
-        log.info("month : {}",month);
+		String dir = request.getServletContext().getRealPath("");
+		File target = new File(dir, month+".db");
+		
+		Map<String, Integer> sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+		try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(target));){
+			sessionCountMap = (Map<String, Integer>) in.readObject();
+		}catch(Exception e) {
+			sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+		}
+		
+		Gson gson = new Gson();
         List<HashMap<String, String>> list = new ArrayList<>();
-        for(String day :scmap.keySet()) {
-        	log.info("day.substring(0, 6) : {}" ,day.substring(0, 7));
-        	if(month.equals(day.substring(0, 7))) {
-        		
-        		HashMap<String,String> map = new HashMap<String,String>();
-                map.put("month", day);
-                map.put("count", scmap.get(day).toString());
-                list.add(map);
-        	}  	
+        for(String day :sessionCountMap.keySet()) {
+    		HashMap<String,String> map = new HashMap<String,String>();
+            map.put("month", day);
+            map.put("count", sessionCountMap.get(day).toString());
+            list.add(map);
         }
         log.info("gson : {}",gson.toJson(list));
 
 		return gson.toJson(list);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/getTodaySession", produces = "text/json; charset=UTF-8")
+	@ResponseBody
+	public  String getTodaySession(HttpServletRequest request) {
+		Gson gson = new Gson();
+		Map<String, Integer> scMap = (Map<String, Integer>) request.getServletContext().getAttribute("scMap");
+        List<Map<String, String>> list = new ArrayList<>();
+		for(String day :scMap.keySet()) {
+			HashMap<String,String> map = new HashMap<String,String>();
+		    map.put("month", day);
+		    map.put("count", scMap.get(day).toString());
+		    list.add(map);
+		}
+		return gson.toJson(list);
+	}
 	//인기 해시 태그
 	@RequestMapping(value = "/getHashtagCount", produces = "text/json; charset=UTF-8")
 	@ResponseBody
@@ -198,17 +216,5 @@ public class AdminController {
         List<Map<String, Integer>> list = friendService.get_follow_top_list();
 		return gson.toJson(list);
 	}
-	
-	//헤비 업로더(필요 없는 듯..)
-	@RequestMapping(value = "/getUploadTopList", produces = "text/json; charset=UTF-8")
-	@ResponseBody
-	public  String get_upload_top_list() {
-        Gson gson = new Gson();
-        List<Map<String, Integer>> list = boardService.getHeavyUploader();
-		return gson.toJson(list);
-	}
-	
-	//월별 업로드
-	//인기 게시물(좋아요로)??
 	
 }

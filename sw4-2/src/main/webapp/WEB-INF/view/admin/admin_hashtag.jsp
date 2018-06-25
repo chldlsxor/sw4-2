@@ -13,91 +13,65 @@
 	$(document).ready(function(){
 		var chartLabels = [];
 		var chartData = [];
-		/* var chartLabels5 = [];
-		var chartData5 = []; */
 		var etcData = 0;
 		
 		var ctx = document.getElementById("hashTagChart");
-		//var ctx2 = document.getElementById("5hashTagChart");  
-    	  //데이터 받아오기
-          $.getJSON("./getHashtagCount", function(data){
-        	  $.each(data, function(key, value){
-        		  //받아온 데이터 저장
-        		  var tag = value.TAG;
-        		  var count = value.COUNT;
-        		  if(key<10){
-        			  chartLabels.push(tag);
-        			  chartData.push(count);
-       			  }
-        		  else{
-        			  etcData +=count;
-       			  }
-       		  });
-        	  
-        	  chartLabels.push('기타');
-        	  chartData.push(etcData);
-        	  
-        	  chartLabels5 = chartLabels.slice(0,5);
-        	  chartData5 = chartData.slice(0,5);
-        	    
-        	//데이터 받아오면 그래프 그리기
-        	  var PieChart = new Chart(ctx,{
-        		  type: 'pie',
-        		  data:{
-        			  datasets: [{
-        			    	label:'해시태그',
-        			        data: chartData,
-        			        backgroundColor:[
-        			        	'rgba(255, 0, 0, 0.2)',
-        			        	'rgba(255, 228, 0, 0.2)',
-        			        	'rgba(29, 219, 22, 0.2)',
-        			        	'rgba(0, 84, 255, 0.2)',
-        			        	'rgba(102, 0, 88, 0.2)',
-        			        	'rgba(255, 94, 0, 0.2)',
-        			        	'rgba(171, 242, 0, 0.2)',
-        			        	'rgba(0, 216,255, 0.2)',
-        			        	'rgba(255, 255, 108, 0.2)',
-        			        	'rgba(102, 37, 0, 0.2)',
-        			        	'rgba(140, 140, 140, 0.2)'
-        			        ],
-                            borderWidth: 1
-        			    }],
-        			    // These labels appear in the legend and in the tooltips when hovering different arcs
-        			    labels: chartLabels
-        			}
-        		});
-        	
-        	/*   var myPieChart = new Chart(ctx2,{
-        		  type: 'pie',
-        		  data:{
-        			  datasets: [{
-        			    	label:'해시태그',
-        			        data: chartData5,
-        			        backgroundColor:[
-        			        	'rgba(255, 99, 132, 0.2)',
-        			        	'rgba(54, 162, 235, 0.2)',
-        			        	'rgba(255, 206, 86, 0.2)',
-        			        	'rgba(75, 192, 192, 0.2)',
-        			        	'rgba(153, 102, 255, 0.2)',
-        			        ],
-                            borderWidth: 1
-        			    }],
-        			    // These labels appear in the legend and in the tooltips when hovering different arcs
-        			    labels: chartLabels5
-        			}
-        		});
-        	  
- 
- */        	  
-          });
-
-	});
-      
+		$.ajax({
+			url:"getHashtagCount",
+			type :"get",//또는 "post"외 4개
+			dataType:"json",//결과물의 형태]
+			success:function(data){
+				etcData = 0;
+				$.each(data, function(key, value){
+		 			var tag = value.TAG;
+		   			var count = value.COUNT;
+		   			if(key<10){
+						chartLabels.push(tag);
+						chartData.push(count);
+					}
+					else{
+						etcData +=count;
+					}
+				});
+				chartLabels.push('기타');
+	        	chartData.push(etcData);
+	        	var PieChart = new Chart(ctx,{
+	        		  type: 'pie',
+	        		  data:{
+	        			  datasets: [{
+	        			    	label:'해시태그',
+	        			        data: chartData,
+	        			        backgroundColor:[
+	        			        	'rgba(255, 0, 0, 0.2)',
+	        			        	'rgba(255, 228, 0, 0.2)',
+	        			        	'rgba(29, 219, 22, 0.2)',
+	        			        	'rgba(0, 84, 255, 0.2)',
+	        			        	'rgba(102, 0, 88, 0.2)',
+	        			        	'rgba(255, 94, 0, 0.2)',
+	        			        	'rgba(171, 242, 0, 0.2)',
+	        			        	'rgba(0, 216,255, 0.2)',
+	        			        	'rgba(255, 255, 108, 0.2)',
+	        			        	'rgba(102, 37, 0, 0.2)',
+	        			        	'rgba(140, 140, 140, 0.2)'
+	        			        ],
+	                            borderWidth: 1
+							}],
+						labels: chartLabels
+					}
+				});
+			}
+		});
          
-  </script>
-<div style = "text-align : center;">
-	<div style="width: 50%; margin :auto;">
-	 	인기 해시태그
-	 	<canvas id = "hashTagChart" height = "350" width = "400"></canvas>
+	});      
+</script>
+<div class = "container-70 main-section-container">
+	<table class = "table">
+		<tr>
+			<td class= "center">Instory 인기 해시태그<td>
+		</tr>
+	</table>
+	<div class="chart-container">
+	 	<canvas id = "hashTagChart"></canvas>
 	</div>	
 </div>
+<jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>

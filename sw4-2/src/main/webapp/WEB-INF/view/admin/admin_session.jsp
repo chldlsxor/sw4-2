@@ -1,159 +1,118 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <jsp:include page="/WEB-INF/view/admin/admin_header.jsp"></jsp:include>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>  
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-        
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>          
         <!--스크립트 작성 공간-->
         <script>            
             $(document).ready(function(){
+            	//이번달 그래프
+            	var todayLabels = [];
+                var todayData=[];
+                var todayctx = document.getElementById("todayChart").getContext("2d");
+                $.getJSON("./getTodaySession", function(data){
+                	 $.each(data, function(key, value){
+                		 console.log(data);
+                		 todayLabels.push(value.month);
+                		 todayData.push(value.count);
+        			 });
+       			
+	       			lineChartData = {
+						labels : todayLabels,
+	                    datasets : [ {
+							label : "일 별 방문자 수",
+	                        backgroundColor:"#bfdaf9",
+	                        borderColor: "#80b6f4",
+	                        pointBorderColor: "#80b6f4",
+	                        pointBackgroundColor: "#80b6f4",
+	                        pointHoverBackgroundColor: "#80b6f4",
+	                        pointHoverBorderColor: "#80b6f4",
+	                        fill: false,
+	                        borderWidth: 4,
+	                        data : todayData
+						} ]
+					}
+	       			
+	       			LineChartDemo = Chart.Line(todayctx, {
+	                    data : lineChartData
+					});
+                });
             	
-            	//변수 만들기
-            	var chartLabels = []; //받아올 이름
-            	var chartData = [];	//받아올 데이터
-            	var month = "";
-            	
-            	//var cooContractNo = '<c:out value="${no}"/>';
-            	var cooContractNo = 11;
             	//차트 함수
+            	var month;
             	function createChart(){
-            		var ctx = document.getElementById("myChart").getContext("2d");
-            		LineChartDemo = Chart.Line(ctx, {
-                        data : lineChartData,
-                        options : {
-                            scales : {
-                                yAxes : [ {
-                                    ticks : {
-                                        beginAtZero : true
-                                    }
-                                } ]
-                            }
-                        }
+            		var monthctx = document.getElementById("monthChart").getContext("2d");
+            		LineChartDemo = Chart.Line(monthctx, {
+                        data : lineChartData
                     });
             	}
             	
-            	//selectlist로 월을 생성해서 ajax로 받아옴
             	$("#selectMonth").on("change", function(){
             		var changeMonth = $("#selectMonth").val();
             		month = changeMonth;
             		console.log("month : "+month);
             	});
             	
-            	//버튼 누르면 차트 생성
-                $("#btn-chart").on("click", function(){
+            	$("#btn-chart").on("click", function(){
                 	chartLabels = [];
                     chartData=[];
-                    
-                    //getJson으로 데이터 
-                    $.getJSON("./getDailyVisitor", {//보내는 데이터
-                        cooContractNo : cooContractNo,
-                        month : month
-                    }, function(data) {
-                    	console.log("data"+data);
-                        $.each(data, function(key, value) {
-                        	console.log("key"+key);
-                        	console.log("value"+value);
-                            console.log("value.month"+value.month);
-                            console.log("value.count"+value.count);
-                            chartLabels.push(value.month);
-                            chartData.push(value.count);
-                        });
-                        
-                        lineChartData = {
-                                labels : chartLabels,
-                                datasets : [ {
-                                    label : "일 별 방문자 수",
-                                    backgroundColor:"#bfdaf9",
-                                    borderColor: "#80b6f4",
-                                    pointBorderColor: "#80b6f4",
-                                    pointBackgroundColor: "#80b6f4",
-                                    pointHoverBackgroundColor: "#80b6f4",
-                                    pointHoverBorderColor: "#80b6f4",
-                                    fill: false,
-                                    borderWidth: 4,
-                                    data : chartData
-                                } ]
-         
-                            }
-                        createChart();
-                        
-                    });
-//                         var ctx = document.getElementById("myChart");
-//                         var myChart = new Chart(ctx, {
-//                             type: 'bar',
-//                             data: {
-//                                 labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-//                                 datasets: [{
-//                                     label: '월 별 요청량',
-//                                     data: [12, 19, 3, 5, 2, 3],
-//                                     backgroundColor: [
-//                                         'rgba(255, 99, 132, 0.2)',
-//                                         'rgba(54, 162, 235, 0.2)',
-//                                         'rgba(255, 206, 86, 0.2)',
-//                                         'rgba(75, 192, 192, 0.2)',
-//                                         'rgba(153, 102, 255, 0.2)',
-//                                         'rgba(255, 159, 64, 0.2)'
-//                                     ],
-//                                     borderColor: [
-//                                         'rgba(255,99,132,1)',
-//                                         'rgba(54, 162, 235, 1)',
-//                                         'rgba(255, 206, 86, 1)',
-//                                         'rgba(75, 192, 192, 1)',
-//                                         'rgba(153, 102, 255, 1)',
-//                                         'rgba(255, 159, 64, 1)'
-//                                     ],
-//                                     borderWidth: 1
-//                                 }]
-//                             },
-//                             options: {
-//                                 scales: {
-//                                     yAxes: [{
-//                                         ticks: {
-//                                             beginAtZero:true
-//                                         }
-//                                     }]
-//                                 }
-//                             }
-//                         });
-                    });
-                });
+            	
+	           		$.ajax({
+	   					url:"getDailyVisitor",
+	   					data:{
+	   						month : month
+	                       },
+	   					type :"get",//또는 "post"외 4개
+	   					dataType:"json",//결과물의 형태]
+	   					success:function(data){
+	   						var chartLabels = []; //받아올 이름
+	   		            	var chartData = [];	//받아올 데이터
+	      						$.each(data, function(key, value){
+	      							chartData.push(value.count);
+	      							chartLabels.push(value.month);   
+	      						});
+	      						
+      							lineChartData = {
+                                       labels : chartLabels,
+                                       datasets : [ {
+                                           label : "일 별 방문자 수",
+                                           backgroundColor:"#bfdaf9",
+                                           borderColor: "#80b6f4",
+                                           data : chartData
+                                       } ]
+                                   }
+                               createChart();
+	   					}
+	   				});
+	           	
+            	});
+            	
+            	
+			});
                
         </script>
+<div class = "container-70 main-section-container">
+	<table class = "table">
+		<tr>
+			<td class= "center">이번달 방문자 그래프<td>
+		</tr>
+	</table>
+	<div class="chart-container">
+		<canvas id = "todayChart"></canvas>
+	</div>
+	<div class = "empty-row"> </div>
+	<div class = "empty-row"> </div>
 
-    <body>
-        <div>
-	        <!-- 세션 통계 -->
-			<div class="container-60">
-				<div class="row f2">일자별 세션 요청 통계</div>
-				<div class="row">
-					<table class="table table-stripe">
-						<thead>
-							<tr>
-								<th width="50%">달 별</th> 
-								<th>요청량</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="day" items="${scMap.keySet()}">
-								<tr>
-									<td>${day}</td>
-									<td>${scMap.get(day)}</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</div>   
-			<div style="margin-top:20px; margin-left:80px">
-				<input type = "month" name = "selectMonth" id="selectMonth">
-                    <button id="btn-chart">월 별 그래프 보기</button>
-                </div>      
-            <div class="chart-container" style="position: relative; height:40vh; width:80vw">
-           		<canvas id = "myChart"></canvas>
-            </div>
-            
-        </div>
-    </body>
-
-<div class="empty-row"></div>
+	<table class = "table">
+		<tr>
+			<td colspan="2" class = "center">월별 방문자 그래프 검색<td>
+		</tr>
+		<tr>
+			<td><input type = "month" name = "selectMonth" id="selectMonth" class = "form-input"></td>
+		    <td><button id="btn-chart" class = "form-btn">월 별 그래프 보기</button></td>
+	    </tr>
+	</table>      
+	<div class="chart-container">
+		<canvas id = "monthChart"></canvas>
+	</div>
+</div> 
+<jsp:include page="/WEB-INF/view/admin/admin_footer.jsp"></jsp:include>

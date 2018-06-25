@@ -24,6 +24,7 @@ import project.service.ContentService;
 import project.service.FriendService;
 import project.service.HashtagService;
 import project.service.MemberService;
+import project.service.MessageService;
 import project.service.NoticeService;
 import project.service.PhotoService;
 import project.service.ReplyService;
@@ -56,6 +57,9 @@ public class BoardController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@Autowired
+	private MessageService messageService;
+	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@RequestMapping("/list")
@@ -70,6 +74,7 @@ public class BoardController {
 		model.addAttribute("loveList", contentService.loveList(contentDto.getListBoardDto()));
 		model.addAttribute("listCnt", boardService.listCnt());
 		model.addAttribute("scrapList", memberService.scrapLoad(no));
+		model.addAttribute("messageCnt", messageService.messageCnt(id));
 		return "board/main_view";
 	}
 	

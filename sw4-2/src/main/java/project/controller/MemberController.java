@@ -84,8 +84,10 @@ public class MemberController {
 	
 	@RequestMapping("/edit")
 	public String edit(Model model, HttpSession session) {
-		MemberDto memberDto = memberService.get(session.getAttribute("userid").toString());
+		String id = (String)session.getAttribute("userid");
+		MemberDto memberDto = memberService.get(id);
 		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("messageCnt", messageService.messageCnt(id));
 		return "member/edit";
 	}
 	
@@ -122,8 +124,10 @@ public class MemberController {
 	
 	@RequestMapping("/edit_pw")
 	public String edit_pw(Model model, HttpSession session) {
-		MemberDto memberDto = memberService.get(session.getAttribute("userid").toString());
+		String id = (String)session.getAttribute("userid");
+		MemberDto memberDto = memberService.get(id);
 		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("messageCnt", messageService.messageCnt(id));
 		return "member/edit_pw";
 	}
 	
@@ -145,8 +149,10 @@ public class MemberController {
 
 	@RequestMapping("/exit")
 	public String exit(Model model, HttpSession session) {
-		MemberDto memberDto = memberService.get(session.getAttribute("userid").toString());
+		String id = session.getAttribute("userid").toString();
+		MemberDto memberDto = memberService.get(id);
 		model.addAttribute("memberDto", memberDto);
+		model.addAttribute("messageCnt", messageService.messageCnt(id));
 		return "member/exit";
 	}
 	
@@ -175,6 +181,7 @@ public class MemberController {
 		model.addAttribute("memberDto", memberService.get(id));
 		model.addAttribute("list",list);
 		model.addAttribute("name",name);
+		model.addAttribute("messageCnt", messageService.messageCnt(id));
 		
 		return "member/name_search";
 	}
@@ -189,6 +196,7 @@ public class MemberController {
 		model.addAttribute("memberDto", memberService.get(id));
 		model.addAttribute("list",list);
 		model.addAttribute("nick",nick);
+		model.addAttribute("messageCnt", messageService.messageCnt(id));
 		
 		return "member/nick_search";
 	}
@@ -210,6 +218,7 @@ public class MemberController {
 		log.info(friendDto.getFollow());
 		boolean follow_check = friendService.search(friendDto);
 		model.addAttribute("follow_check",follow_check);
+		model.addAttribute("messageCnt", messageService.messageCnt(session.getAttribute("userid").toString()));
 		
 //		List<BoardDto> my_list = boardService.my_list(memberDto.getId());
 //		model.addAttribute("my_list",my_list);
@@ -288,6 +297,9 @@ public class MemberController {
 		model.addAttribute("keyword",keyword);
 		int follow_cnt = friendService.follow_cnt(memberDto.getId());
 		model.addAttribute("follow_cnt",follow_cnt);
+		model.addAttribute("messageCnt", messageService.messageCnt(sid));
+		log.info("dd{}", sid);
+		model.addAttribute("messageCntSend", messageService.messageCnt_send(sid));
 		
 		return "member/follow_list";
 	}
