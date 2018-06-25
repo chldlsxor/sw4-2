@@ -154,4 +154,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.get_writer(no);
 	}
 
+	@Override
+	public List<BoardDto> searchListByContent(String keyword) {
+		return boardDao.searchListByContent(keyword);
+	}
+
 }

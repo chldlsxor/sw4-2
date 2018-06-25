@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.ProcessHandle.Info;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
@@ -60,8 +61,7 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 	
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
-			ModelAndView modelAndView) throws Exception {
-		log.info("카운트 인터셉터 종료 ");		
+		ModelAndView modelAndView) throws Exception {
 		saveCount(dir);
 	}
 	//세션 증가
@@ -81,7 +81,8 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 	}
 	//파일 저장
 	private void saveCount(String dir) {
-		File target = new File(dir, "count.db");
+		String fname = getToday().substring(0, 7);
+		File target = new File(dir, fname+".db");
 		try(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(target));){
 			out.writeObject(sessionCountMap);
 		}catch(IOException e) {
@@ -91,7 +92,8 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 
 	@SuppressWarnings("unchecked")
 	private void loadCount(String dir) {
-		File target = new File(dir, "count.db");
+		String fname = getToday().substring(0, 7);
+		File target = new File(dir, fname+".db");
 		try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(target));){
 			sessionCountMap = (Map<String, Integer>) in.readObject();
 		}catch(Exception e) {

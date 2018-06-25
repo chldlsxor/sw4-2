@@ -26,4 +26,5 @@ public interface BoardDao {
 	public BoardDto scrap_list(int no);
 	public List<Map<String, Integer>> getHeavyUploader();
 	public String get_writer(int no);
+	public List<BoardDto> searchListByContent(String keyword);
 }

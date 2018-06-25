@@ -90,7 +90,7 @@ public class WebSocketServer extends TextWebSocketHandler{
 		String context = message.getPayload();
 		TextMessage sender = new TextMessage(messageFrom);
 		TextMessage content = new TextMessage(context);
-		TextMessage alarm = new TextMessage(messageFrom+"로 부터 메세지가 도착하였습니다");
+		TextMessage alarm = new TextMessage(messageFrom);
 		
 		MessageDto messageDto = new MessageDto();
 		messageDto.setSend(messageFrom);

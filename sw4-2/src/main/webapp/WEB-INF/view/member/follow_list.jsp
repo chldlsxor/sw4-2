@@ -63,6 +63,16 @@
         <script>
             $(document).ready(function(){
             	$(".messenger_btn").on("click", function(){
+            		var count = Number($("#message-count").text())-Number($(this).next().text());
+            		if(count!=0){
+            			$("#message-count").text(count);
+            			$(this).next().text(count)
+            		}else{
+            			$("#message-count").text("");
+            			$(this).next().text("")
+            		}
+            		
+            		
     		        window.open("send_message?messageTo="+$(this).find("h7").text(),
     		        		$(this).text(),//팝업창 이름
     		        		'toolbar=no, menubar=no, location=no, directories=no, status=no, resizable=yes, scrollbars=yes, width=350,height=700,left=0,top=0' );
@@ -90,7 +100,7 @@
 				<h3>팔로우 : ${follow_cnt} 명</h3>
 			</div>
 			<div class="row result">
-				<table class="table">
+				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
 						<tr>
@@ -115,7 +125,8 @@
 							</td>
 							<c:if test="${usernick == nick}">
 								<td>
-									<button class = "messenger_btn form-btn inline"><h7>${memberDto.id}</h7><i class="fa fa-envelope"></i></button>
+									<button class = "messenger_btn form-btn inline"><h7 id = "messageNick">${memberDto.id}</h7><i class="fa fa-envelope"></i>
+									</button><label id="messageCntNick">${messageCntSend.get(memberDto.id)}</label>
 								</td>
 							</c:if>
 						</tr> 

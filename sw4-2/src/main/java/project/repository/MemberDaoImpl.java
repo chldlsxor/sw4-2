@@ -121,12 +121,5 @@ public class MemberDaoImpl implements MemberDao{
 		map.put("scrap", scrap);
 		sqlSession.update("scrapUpdate", map);
 	}
-
-	
-
-	
-
-	
-
 	
 }

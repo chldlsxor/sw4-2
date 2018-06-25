@@ -139,11 +139,15 @@ public class MemberServiceImpl implements MemberService{
 		pageDto.setBlockmax((pageDto.getBoardcount()+pageDto.getList_num()-1)/pageDto.getList_num());
 		if(pageDto.getBlockmax()<pageDto.getBlockfinish()) pageDto.setBlockfinish(pageDto.getBlockmax());
 		
-		if(pageDto.isSearchMode())
-			pageDto.setUrl("&keyword_type="+pageDto.getKeyword_type()+"&keyword="+pageDto.getKeyword()
+		if(pageDto.isSearchMode()) {
+			String url = "&keyword_type="+pageDto.getKeyword_type()+"&keyword="+pageDto.getKeyword()
 			+"&order_type="+pageDto.getOrder_type()+"&order="+pageDto.getOrder()
 			+"&list_num="+pageDto.getList_num()
-			+"&power="+pageDto.getPower());
+			+"&power="+pageDto.getPower();
+			url = url.replace("||", "%7C%7C");
+			log.info("url : {}", url);
+			pageDto.setUrl(url);
+		}
 		else
 			pageDto.setUrl("");
 		

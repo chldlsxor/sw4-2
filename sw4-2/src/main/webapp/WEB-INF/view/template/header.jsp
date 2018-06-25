@@ -12,7 +12,12 @@
 				<a href="${root }/board/list" class="left"> InStory</a>
 	
 				<a class="right"><i class="fa fa-hashtag"></i></a>&nbsp;&nbsp;<a href="${root }/member/name_search" class="inner-right"><i class="fa fa-search"></i></a> &nbsp;
-				&nbsp; <a class="inner-right" href="${root }/member/follow_list?nick=${usernick}"><i class="fa fa-envelope"></i></a>
+				&nbsp; <a class="inner-right message-icon"  href="${root }/member/follow_list?nick=${usernick}"><i class="fa fa-envelope"></i></a>
+				<label id = "message-count">
+					<c:if test="${messageCnt!=0}">
+					${messageCnt}
+					</c:if>
+				</label>
 				&nbsp; &nbsp; <a href="${root }/member/detail?nick=${usernick }" class="inner-right"><i class="fa fa-user"></i></a>&nbsp;&nbsp;<a class="inner-right"><i class="fa fa-bars"></i></a>
 				&nbsp;&nbsp;<a class="inner-right" href="${root}/member/logout"><i class="fa fa-external-link"></i></a>
 			</div>

@@ -42,7 +42,7 @@
 	
 	
 	<select id="reportList" resultType="BoardDto" >
-		select * from board where report > 0 order by report desc, reg asc 
+		select * from board where report > 10 order by report desc, reg asc 
 	</select>
 	
 	<delete id="remove_board" parameterType="int">
@@ -67,6 +67,10 @@
 	
 	<select id="get_writer" parameterType="int" resultType="String">
 		select writer from board where no=#{no}
+	</select>
+	
+	<select id="searchListByContent" resultType="BoardDto" parameterType="String">
+		select * from board where content like '%'||#{keyword}||'%' order by reg asc
 	</select>
 
 </mapper>
