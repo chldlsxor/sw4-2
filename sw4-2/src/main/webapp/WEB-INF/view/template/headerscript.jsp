@@ -9,11 +9,28 @@
 	href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <script
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	 <script src = "${root}/res/js/swiper.min.js"></script>
+	 <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
 	
 	<style>
 		.receive-mail{
 			color : yellow !important;
 		}
+		
+		.mask {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 9999;
+	background-color: #000;
+	display: none;
+}
+
+.content-view {
+	background-color: #ffffff;
+	z-index: 99999;
+}
+		
 	</style>
 <script>
 $(document).ready(function(){

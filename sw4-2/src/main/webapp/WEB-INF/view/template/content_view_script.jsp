@@ -180,6 +180,7 @@ $(document).ready(function() {
 									});
 
 					$("body").on("click", "img.imgs", contentView);
+					$("body").on("click","a.board_notice", contentView);
 					// 뒤 검은 마스크를 클릭시 모두 제거하도록 처리합니다.
 					$("body").on("click", ".mask", maskOff);
 					function maskOff() {

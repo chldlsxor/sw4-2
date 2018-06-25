@@ -275,6 +275,7 @@
             });
         </script>
         <jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
+        <jsp:include page="/WEB-INF/view/template/content_view_script.jsp"></jsp:include>
     </head>
     <body>
     	<jsp:include page="/WEB-INF/view/template/header.jsp"></jsp:include>
