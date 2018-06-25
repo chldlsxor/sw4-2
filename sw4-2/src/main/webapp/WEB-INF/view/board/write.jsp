@@ -47,7 +47,7 @@
                 <form action="write" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="writer" value="${userid }">
                     <div class="row">
-                        <input type="file" name="file" multiple="multiple" required>
+                        <input type="file" name="file" multiple="multiple" required style="margin-left: 1.5%;">
                     </div>
                     <div class="row">
 			             <textarea name="content" class="textarea" rows="10"></textarea>
@@ -60,6 +60,6 @@
                 </form>
             </div>
 	</section>
-	<footer> 제작사 등등 </footer>
+	<footer> KGITBANK 자바 SW 개발자 양성반 2팀 </footer>
 </body>
 </html>

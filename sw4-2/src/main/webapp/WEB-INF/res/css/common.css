@@ -543,7 +543,7 @@ header {
 	}
 }
 
-@MEDIA SCREEN AND (MAX-WIDTH:800PX) {
+@MEDIA SCREEN AND (MAX-WIDTH:850PX) {
 	#menu>a.right {
 		margin-left: 30%;
 	}
@@ -580,6 +580,30 @@ header {
 	}
 	#menu>a, #menu>p {
 		font-size: 122%;
+	}
+}
+
+@MEDIA SCREEN AND (MAX-WIDTH:400PX) {
+	#menu>a.right {
+		margin-left: 5%;
+	}
+	#top-chaser {
+		padding-left: 0px;
+	}
+	.reply-input{
+		width: 75%;
+	}
+	.content-view {
+		font-size: 0.2em;
+	}
+	#main-view {
+		margin-left: 27%;
+	}
+	#menu{
+		margin-left:3%;
+	}
+	#menu>a, #menu>p {
+		font-size: 110%;
 	}
 }
 
