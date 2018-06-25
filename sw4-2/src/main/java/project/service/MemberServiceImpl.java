@@ -78,7 +78,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException {
-		File dir = new File("E:/upload");
+		File dir = new File(mRequest.getServletContext().getRealPath("")+"/WEB-INF/res/img");
 		MultipartFile file = mRequest.getFile("f");
 		String fname = memberDto.getId()+"_"+file.getOriginalFilename();
 		File target = new File(dir, fname);
