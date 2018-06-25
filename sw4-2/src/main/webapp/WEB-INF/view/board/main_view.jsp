@@ -615,11 +615,7 @@ a:hover{
 	<div id="main-view" class="container-60">
 		<%-- 		<div>session = ${userno }</div> --%>
 		<%-- 		<div>session = ${userid }</div> --%>
-		<c:if test="${list == null }">
-			<div>
-				<h1>팔로우를 추가해 보세요!</h1>
-			</div>
-		</c:if>
+			
 		<c:forEach var="boardDto" items="${list}" varStatus="status">
 			<div class="row my-align left">
 				<div>
@@ -695,6 +691,14 @@ a:hover{
 					<div>${boardDto.content }</div>
 			</div>
 		</c:forEach>
+	</div>
+	<div class="empty-row"></div>
+	<div class="empty-row"></div>
+	<div>
+		<a href="${root }/member/name_search">
+		<h1 color=lightblue;>팔로우를 추가해 보세요!</h1>
+		<img alt="팔로우 추천 그림" src="${root }/res/image/follow.png">
+		</a>
 	</div>
 	</section>
 	<hr color="lightblue">
