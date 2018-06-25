@@ -39,6 +39,11 @@
 	 		<mvc:mapping path="/admin/**"/>
 	 		<bean class = "project.interceptor.AdminInterceptor"></bean>
 	 	</mvc:interceptor>
+	 	<mvc:interceptor>
+	 		<mvc:mapping path="/register"/>
+ 	 		<mvc:mapping path="/reset_pw"/>
+	 		<bean class = "project.interceptor.EmailInterceptor"></bean>
+	 	</mvc:interceptor>
 	 </mvc:interceptors>
 
     <mvc:annotation-driven />

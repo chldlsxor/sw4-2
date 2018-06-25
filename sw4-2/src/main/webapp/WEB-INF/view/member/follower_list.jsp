@@ -80,7 +80,7 @@
 				<h3>팔로워 : ${follower_cnt} 명</h3>
 			</div>
 			<div class="row result">
-				<table class="table">
+				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
 						<tr>
