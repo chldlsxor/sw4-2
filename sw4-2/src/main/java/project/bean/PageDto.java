@@ -32,5 +32,4 @@ public class PageDto {
 	public boolean isNotLastBlock() {
 		return getBlockfinish() < getBlockmax();
 	}
-	
 }
