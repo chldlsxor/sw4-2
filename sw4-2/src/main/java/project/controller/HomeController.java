@@ -1,9 +1,7 @@
 package project.controller;
 
-import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,19 +9,16 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import project.bean.EmailDto;
+import project.bean.FriendDto;
 import project.bean.MemberDto;
 import project.service.EmailService;
+import project.service.FriendService;
 import project.service.HomeService;
 
 @Controller
@@ -34,6 +29,9 @@ public class HomeController {
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private FriendService friendService;
 	
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -89,7 +87,7 @@ public class HomeController {
 	
 	//회원가입(post)
 	@PostMapping("/register")
-	public String register(HttpSession session, MemberDto memberDto,Model model) throws NoSuchAlgorithmException {
+	public String register(FriendDto friendDto, HttpSession session, MemberDto memberDto,Model model) throws NoSuchAlgorithmException {
 		if(homeService.select_nick(memberDto.getNick())) {
 			model.addAttribute("msg", memberDto.getNick()+"은(는) 이미 존재하는 닉네임입니다.");
 			model.addAttribute("go", "register");
@@ -97,6 +95,9 @@ public class HomeController {
 		}else {
 			homeService.register(memberDto);
 			session.removeAttribute("email_check");
+			friendDto.setFollower(memberDto.getId());
+			friendDto.setFollow(memberDto.getId());
+			friendService.follow(friendDto);
 			model.addAttribute("msg", "회원가입이 완료되었습니다.");
 			model.addAttribute("go", "login");
 			return "redirect:/result";
