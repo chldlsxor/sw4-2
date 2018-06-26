@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +55,22 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException {
-		File dir = new File(mRequest.getSession().getServletContext().getRealPath("/WEB-INF/res/img"));
+//		File dir = new File(mRequest.getSession().getServletContext().getRealPath("/WEB-INF/res/img"));
+		File dir = new File("E:\\sw4-2\\profile");
 		MultipartFile file = mRequest.getFile("f");
 		String fname = memberDto.getId()+"_"+file.getOriginalFilename();
 		File target = new File(dir, fname);
 		file.transferTo(target);
 		return file.getOriginalFilename();
-		
+	}
+	
+	@Override
+	public byte[] load_profile(String name) throws IOException{
+		File target = new File("E:\\sw4-2\\profile", name);
+
+		// 파일을 읽어와서 사용자에게 쏴준다
+		byte[] data = FileUtils.readFileToByteArray(target);
+		return data;
 	}
 
 	@Override

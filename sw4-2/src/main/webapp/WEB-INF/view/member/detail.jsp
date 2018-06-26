@@ -189,10 +189,10 @@
             <div class="main-container">
                 <div class="profile">
                 	<c:if test="${memberDto.profile=='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.profile}">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${memberDto.profile}">
 					</c:if>
 					<c:if test="${memberDto.profile!='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${memberDto.id}_${memberDto.profile}">
 					</c:if>
                 </div>
                 <div class="content">

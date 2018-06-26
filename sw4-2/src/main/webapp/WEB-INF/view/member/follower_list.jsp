@@ -87,10 +87,10 @@
 						<tr>
 							<th>
 								<c:if test="${memberDto.profile=='pic.jpg'}">
-									<img class="img-circle" src="${root}/res/img/${memberDto.profile}" width="70" height="70">
+									<img class="img-circle" src="${root}/member/image?name=${memberDto.profile}" width="70" height="70">
 								</c:if>
 								<c:if test="${memberDto.profile!='pic.jpg'}">
-									<img class="img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="70" height="70">
+									<img class="img-circle" src="${root}/member/image?name=${memberDto.id}_${memberDto.profile}" width="70" height="70">
 								</c:if>
 							</th>
 							<td align="left">

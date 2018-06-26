@@ -8,10 +8,10 @@
 			<div class="alert-row">
 				<span class="alert-profile">
 					<c:if test="${noticeDto.profile=='pic.jpg'}">
-					<img class="img-circle" src="${root}/res/img/${noticeDto.profile}" width="50" height="50">
+						<img class="img-circle" src="${root}/member/image?name=${noticeDto.profile}" width="50" height="50">
 					</c:if>
 					<c:if test="${noticeDto.profile!='pic.jpg'}">
-						<img class="img-circle" src="${root}/res/img/${noticeDto.id}_${noticeDto.profile}" width="50" height="50">
+						<img class="img-circle" src="${root}/member/image?name=${noticeDto.id}_${noticeDto.profile}" width="50" height="50">
 					</c:if>
 				</span>
 				<span class="alert-content">
