@@ -161,7 +161,7 @@ public class AdminController {
 	@RequestMapping("/getDailyVisitor")
 	@ResponseBody
 	public  String daily_visiter(HttpServletRequest request, String month) {
-		String dir = request.getServletContext().getRealPath("");
+		String dir = "E:\\sw4-2\\session\\";
 		File target = new File(dir, month+".db");
 		
 		Map<String, Integer> sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
