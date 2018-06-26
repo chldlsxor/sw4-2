@@ -132,5 +132,11 @@ public class BoardDaoImpl implements BoardDao{
 	public void report_board(int no) {
 		sqlSession.update("report_board", no);
 	}
+
+	@Override
+	public void deleteNo(int no) {
+		// TODO Auto-generated method stub
+		sqlSession.delete("boardDel", no);
+	}
 	
 }

@@ -9,10 +9,10 @@
 	<div class="content-header">
 	<a href="${root }/member/detail?nick=${boardDto.nick}" style="text-decoration:none">
 	<c:if test="${boardDto.profile=='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.profile}" width="50px" height="50px">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${boardDto.profile}" width="50px" height="50px">
 					</c:if>
 					<c:if test="${boardDto.profile!='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
 					</c:if> ${boardDto.nick }
 					</a></div>
 	<div class="swiper-container content-photo">

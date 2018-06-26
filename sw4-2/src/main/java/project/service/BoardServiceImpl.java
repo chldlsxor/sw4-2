@@ -48,9 +48,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int write(BoardDto boardDto) {
+	public int write(BoardDto boardDto, int no) {
 		// TODO Auto-generated method stub
-		int no = boardDao.getNo();
 		boardDto.setNo(no);
 		boardDao.write(boardDto);
 		return no;
@@ -162,6 +161,18 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void report_board(int no) {
 		boardDao.report_board(no);
+	}
+
+	@Override
+	public int getBoardNo() {
+		// TODO Auto-generated method stub
+		return boardDao.getNo();
+	}
+
+	@Override
+	public void boardDel(int no) {
+		// TODO Auto-generated method stub
+		boardDao.deleteNo(no);
 	}
 
 }

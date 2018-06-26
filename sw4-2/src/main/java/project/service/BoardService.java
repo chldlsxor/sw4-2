@@ -13,7 +13,7 @@ public interface BoardService {
 
 	public List<BoardDto> list(String key, String id);
 	public List<BoardDto> addList(int start, String key, String id);
-	public int write(BoardDto boardDto);
+	public int write(BoardDto boardDto, int no);
 	public String[] loveList(BoardDto boardDto);
 	public int loveCnt(String[] loveList);
 	public int love(int bno,String id);
@@ -27,4 +27,6 @@ public interface BoardService {
 	public String get_writer(int no);
 	public List<BoardDto> searchListByContent(String keyword);
 	public void report_board(int no);
+	public int getBoardNo();
+	public void boardDel(int no);
 }

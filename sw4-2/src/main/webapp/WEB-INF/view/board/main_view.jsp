@@ -609,10 +609,10 @@ a:hover{
 		<div class="row" style="width: 95%">
 			<div class="user-profile">
 				<c:if test="${memberDto.profile=='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.profile}" width="50px" height="50px">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${memberDto.profile}" width="50px" height="50px">
 					</c:if>
 					<c:if test="${memberDto.profile!='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${memberDto.id}_${memberDto.profile}" width="50px" height="50px">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${memberDto.id}_${memberDto.profile}" width="50px" height="50px">
 					</c:if>
 			</div>
 			<div class="user-profile">
@@ -638,10 +638,10 @@ a:hover{
 				<div>
 					<a href="${root }/member/detail?nick=${boardDto.nick}" style="text-decoration:none">
 					<c:if test="${boardDto.profile=='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.profile}" width="50px" height="50px">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${boardDto.profile}" width="50px" height="50px">
 					</c:if>
 					<c:if test="${boardDto.profile!='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
 					</c:if>
 					${boardDto.nick }
 					</a>
@@ -700,7 +700,15 @@ a:hover{
 							</c:otherwise>
 						</c:choose>
 						<c:set var="markflag" value="${false}"></c:set>
-						<a class="reportTag"><i class="fa fa-ban" style="font-size: 20px;"></i></a>
+						<c:choose>
+							<c:when test="${boardDto.nick == usernick }">
+								<a href="delete?no=${boardDto.no }"><i class="fa fa-trash" style="font-size: 20px;"></i></a>
+							</c:when>
+							<c:otherwise>
+								<a class="reportTag"><i class="fa fa-ban" style="font-size: 20px;"></i></a>
+							</c:otherwise>
+						</c:choose>
+						
 					</div>
 					<div>
 						<p class="inline">좋아요&nbsp;&nbsp;</p>
