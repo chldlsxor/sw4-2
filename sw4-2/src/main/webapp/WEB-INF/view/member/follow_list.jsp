@@ -67,10 +67,10 @@
             		console.log(count);
             		if(count!=0){
             			$("#message-count").text(count);
-            			$(this).next().text(count)
+            			$(this).parent().next().children(".messageCnt").text(count);
             		}else{
             			$("#message-count").text("");
-            			$(this).next().text("")
+            			$(this).parent().next().children(".messageCnt").text("");
             		}
             		
             		

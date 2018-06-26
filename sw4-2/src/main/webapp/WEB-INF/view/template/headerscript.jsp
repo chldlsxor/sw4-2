@@ -95,7 +95,7 @@ $(document).on("unload", function(){
 });  
 function connect(){	
 	if(window.websocket) return;	
-	var uri = "ws://localhost:8080/sw4-2/send_message";
+	var uri = "ws://61.75.27.204:11000/sw4-2/send_message";
 	"${messageTo = null}";
 	window.websocket = new WebSocket(uri);	
 	//메세지 오면 알람
@@ -104,6 +104,7 @@ function connect(){
 		$("#message-count").text(count+1);
 		
 		var count_nick = $("#"+e.data).text();
+		console.log(count_nick);
 		$("#"+e.data).text(count_nick+1);
 	};
 }
