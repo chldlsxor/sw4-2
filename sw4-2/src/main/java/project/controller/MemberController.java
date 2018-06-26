@@ -98,18 +98,17 @@ public class MemberController {
 			log.info("프사={}",memberDto.getProfile());
 			log.info("프사={}",mRequest.getFile("f"));
 			log.info("프사={}",mRequest.getFile("f").getOriginalFilename());
-			//프로필사진 변경이 없는 경우
-			if(mRequest.getFile("f").getOriginalFilename()=="")
-				memberDto.setProfile(memberService.get(memberDto.getId()).getProfile());
-			else {
-//				File dir = new File("E:/upload");
-//				MultipartFile file = mRequest.getFile("f");
-//				String fname = memberDto.getId()+"_"+file.getOriginalFilename();
-//				File target = new File(dir, fname);
-//				file.transferTo(target);
-//				memberDto.setProfile(file.getOriginalFilename());
+			//프로필사진 변경이 없는 경우 or 그림파일이 아닌경우
+			if(mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".jpg") ||
+					mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".jpeg") ||
+					mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".png") ||
+					mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".gif") ||
+					mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".bmp")) {
 				memberDto.setProfile(memberService.profile(mRequest, memberDto));
+			}else {
+				memberDto.setProfile(memberService.get(memberDto.getId()).getProfile());
 			}
+				
 			log.info("프사={}",memberDto.getProfile());
 			memberService.edit(memberDto);
 			model.addAttribute("msg", "회원정보가 변경되었습니다.");
@@ -349,5 +348,11 @@ public class MemberController {
 	public String scrapUp(HttpSession session, int bno) {
 		int no = (int)session.getAttribute("userno");
 		return memberService.scrapUpdate(no,bno);
+	}
+	
+	@RequestMapping("/image")
+	@ResponseBody
+	public byte[] image(String name) throws IOException {
+		return memberService.load_profile(name);
 	}
 }
