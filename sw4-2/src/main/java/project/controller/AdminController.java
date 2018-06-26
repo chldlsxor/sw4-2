@@ -25,13 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.Gson;
 
+import project.bean.BoardDto;
 import project.bean.ContentDto;
 import project.bean.FriendDto;
 import project.bean.MemberDto;
 import project.bean.NoticeDto;
 import project.bean.PageDto;
-import project.repository.HashtagDao;
-import project.repository.MemberDao;
 import project.service.AdminService;
 import project.service.BoardService;
 import project.service.ContentService;
@@ -147,7 +146,17 @@ public class AdminController {
 	
 	@PostMapping("/admin_board")
 	public String admin_board(String keyword, Model model) {
-		model.addAttribute("boardList", boardService.searchListByContent(keyword));
+		List<BoardDto> boardList = boardService.searchListByContent(keyword);
+		List<Integer> cntlove = contentService.loveCnt(boardList);
+		int i =0;
+		for(BoardDto bdto : boardList) {
+			bdto.setGood(cntlove.get(i).toString());
+			i++;
+		}
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("loveCnt", contentService.loveCnt(boardList));
+		log.info("---------------------------여기{}",contentService.loveCnt(boardList));
+		model.addAttribute("keyword", keyword);
 		return "admin/admin_board";
 	}
 	
