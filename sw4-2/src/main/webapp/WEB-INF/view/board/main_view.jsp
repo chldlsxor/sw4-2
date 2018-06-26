@@ -690,17 +690,17 @@ a:hover{
 						<c:choose>
 							<c:when test="${markflag }">
 								<a><img class="mark"
-									src="${root}/res/image/innerBookmark.png" width="30px"
-									height="30px"></a>
+									src="${root}/res/image/innerBookmark.png" width="35px"
+									height="35px"></a>
 							</c:when>
 							<c:otherwise>
 								<a><img class="mark"
-									src="${root}/res/image/outLineBookmark.png" width="30px"
-									height="30px"></a>
+									src="${root}/res/image/outLineBookmark.png" width="35px"
+									height="35px"></a>
 							</c:otherwise>
 						</c:choose>
 						<c:set var="markflag" value="${false}"></c:set>
-						<a class="reportTag"><i class="fa fa-bell"></i></a>
+						<a class="reportTag"><i class="fa fa-ban" style="font-size: 20px;"></i></a>
 					</div>
 					<div>
 						<p class="inline">좋아요&nbsp;&nbsp;</p>

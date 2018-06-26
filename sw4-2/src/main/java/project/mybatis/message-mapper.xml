@@ -17,7 +17,7 @@
 	</update>
 	<!-- 안읽은 메세지 개수 가져오기 -->
 	<select id="messageCnt" parameterType="String" resultType="int">
-		select count(*) count from message where receive=#{id} and read=0 and send = (select follow from friend where follower = #{id})
+		select count(*) count from message inner join friend on friend.follow = message.send where friend.follower = 'usy94@hanmail.net' and message.receive = 'usy94@hanmail.net' and read = 0
 	</select>
 
 	<select id="messageCnt_send" parameterType="String" resultType="hashmap">
