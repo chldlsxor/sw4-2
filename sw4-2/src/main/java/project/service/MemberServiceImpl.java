@@ -43,30 +43,6 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public void editPassword() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void range() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void notice() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void friend() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public MemberDto get(String id) {
 		return memberDao.get(id);
 	}
