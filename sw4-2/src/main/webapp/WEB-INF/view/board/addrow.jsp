@@ -7,10 +7,10 @@
 				<div class="row my-align">
 				<div>
 				<c:if test="${boardDto.profile=='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.profile}" width="50px" height="50px">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${boardDto.profile}" width="50px" height="50px">
 					</c:if>
 					<c:if test="${boardDto.profile!='pic.jpg'}">
-						<img class="img-profile img-circle" src="${root}/res/img/${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
+						<img class="img-profile img-circle" src="${root}/member/image?name=${boardDto.id}_${boardDto.profile}"width="50px" height="50px">
 					</c:if> 
 					${boardDto.nick }
 					</div>
@@ -44,14 +44,38 @@
 						</c:otherwise>
 					</c:choose>
 					<c:set var="flag" value="${false}"></c:set>
-					<a><img class="mark"
-						src="${root}/res/image/outLineBookmark.png" width="30px"
-						height="30px"></a>
-					<a class="reportTag"><i class="fa fa-bell"></i></a>
+					<c:set var="markflag" value="${false}"></c:set>
+						<c:forEach var="s" items="${scrapList.split(',') }">
+							<c:if test="${boardDto.no == s }">
+								<c:set var="markflag" value="${true}"></c:set>
+							</c:if>
+						</c:forEach>
+						<c:choose>
+							<c:when test="${markflag }">
+								<a><img class="mark"
+									src="${root}/res/image/innerBookmark.png" width="35px"
+									height="35px"></a>
+							</c:when>
+							<c:otherwise>
+								<a><img class="mark"
+									src="${root}/res/image/outLineBookmark.png" width="35px"
+									height="35px"></a>
+							</c:otherwise>
+						</c:choose>
+						<c:set var="markflag" value="${false}"></c:set>
+					<c:choose>
+							<c:when test="${boardDto.nick == usernick }">
+								<a href="delete?no=${boardDto.no }"><i class="fa fa-trash" style="font-size: 20px;"></i></a>
+							</c:when>
+							<c:otherwise>
+								<a class="reportTag"><i class="fa fa-ban" style="font-size: 20px;"></i></a>
+							</c:otherwise>
+						</c:choose>
 				</div>
 				<div>
 					<p class="inline">좋아요&nbsp;&nbsp;</p>
 					<p class="inline loveCnt">${loveCnt[status.index]}</p>
+					
 				</div>
 				<div>${boardDto.content }</div>
 			</div>

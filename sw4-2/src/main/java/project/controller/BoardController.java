@@ -161,4 +161,10 @@ public class BoardController {
 		return "해당 게시물을 신고하였습니다";
 	}
 	
+	@RequestMapping("/delete")
+	public String boardDel(int no) {
+		boardService.boardDel(no);
+		return "redirect:/board/list";
+	}
+	
 }

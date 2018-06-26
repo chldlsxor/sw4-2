@@ -76,5 +76,9 @@
 	<select id="searchListByContent" resultType="BoardDto" parameterType="String">
 		select * from board where content like '%'||#{keyword}||'%' order by reg asc
 	</select>
+	
+	<delete id="boardDel" parameterType="int">
+		delete from board where no = #{no}
+	</delete>
 
 </mapper>

@@ -76,10 +76,15 @@ public class ContentServiceImpl implements ContentService {
 	@Override
 	public void write(BoardDto boardDto, MultipartHttpServletRequest mRequest) throws IllegalStateException, IOException {
 		// TODO Auto-generated method stub
-		int no = boardService.write(boardDto);
+		
+		int no = boardService.getBoardNo();
+		boardService.write(boardDto, no);
 		PhotoDto photoDto = new PhotoDto();
 		photoDto.setBno(no);
-		photoService.writePhoto(photoDto, mRequest);
+		boolean flag = photoService.writePhoto(photoDto, mRequest);
+		if(flag) {
+			boardService.boardDel(no);
+		}
 	}
 
 	@Override
