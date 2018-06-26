@@ -11,15 +11,14 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<style>
-		.receive-mail{
-			color : yellow !important;
+		.messageCnt{
+			color : red;
 		}
 	</style>
 <script>
 $(document).ready(function(){
 	//웹소켓 연결
 	connect();
-
 	$("#top-chaser").hide();
 	$(".fa-bars").on("click",function(){
 		$("#top-chaser").slideToggle();
@@ -84,18 +83,11 @@ function connect(){
 	window.websocket = new WebSocket(uri);	
 	//메세지 오면 알람
 	websocket.onmessage = function(e){
-		$(".message-icon").addClass('receive-mail');
 		var count = Number($("#message-count").text());
-		console.log(count);
 		$("#message-count").text(count+1);
-		console.log($("#messageCntNick").text())
-		if(e.data==messageNick){
-			
-		}
-		console.log(e.data);
-		//$("#messageCntNick").text(count+1);
-		//디비에
-		//해당 아이디에도
+		
+		var count_nick = $("#"+e.data).text();
+		$("#"+e.data).text(count_nick+1);
 	};
 }
 function disconnect(){

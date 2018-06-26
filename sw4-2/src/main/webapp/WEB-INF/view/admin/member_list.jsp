@@ -105,7 +105,18 @@
 				<td> ${member.name }</td>
 				<td> ${member.nick}</td>
 				<td> ${member.power }</td>
-				<td> ${member.open }</td>
+				<td><c:if test = "${member.power=='회원'}">
+						<c:if test="${member.open==0}">
+							전체 공개
+						</c:if>
+						<c:if test="${member.open==1}">
+							친구 공개
+						</c:if>
+						<c:if test="${member.open==2}">
+							비공개
+						</c:if>
+					</c:if>
+				</td>
 				<td>
 					<form action = "detail_user" >
 						<input type = "hidden" name = "nick" value="${member.nick}">

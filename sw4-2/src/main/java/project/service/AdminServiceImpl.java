@@ -29,17 +29,4 @@ public class AdminServiceImpl implements AdminService{
 		boardDao.remove_board(bno);
 	}
 
-
-	@Override
-	public void edit_user() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void delete_member() {
-		//memberDao.remove(no);
-	}
-
 }

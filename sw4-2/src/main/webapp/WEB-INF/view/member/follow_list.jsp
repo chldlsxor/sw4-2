@@ -63,7 +63,8 @@
         <script>
             $(document).ready(function(){
             	$(".messenger_btn").on("click", function(){
-            		var count = Number($("#message-count").text())-Number($(this).next().text());
+            		var count = Number($("#message-count").text())-Number($(this).parent().next().children(".messageCnt").text());
+            		console.log(count);
             		if(count!=0){
             			$("#message-count").text(count);
             			$(this).next().text(count)
@@ -125,8 +126,10 @@
 							</td>
 							<c:if test="${usernick == nick}">
 								<td>
-									<button class = "messenger_btn form-btn inline"><h7 id = "messageNick">${memberDto.id}</h7><i class="fa fa-envelope"></i>
-									</button><label id="messageCntNick">${messageCntSend.get(memberDto.id)}</label>
+									<button class = "messenger_btn form-btn inline"><h7 id = "messageNick">${memberDto.id}</h7><i class="fa fa-envelope"></i></button>
+								</td>
+								<td>
+									<label class = "messageCnt" id="${memberDto.nick}">${messageCntSend.get(memberDto.id)}</label>
 								</td>
 							</c:if>
 						</tr> 

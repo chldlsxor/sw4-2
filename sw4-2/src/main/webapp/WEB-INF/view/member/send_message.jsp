@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.net.InetAddress" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <html>
@@ -71,8 +72,7 @@
         	
         	function connect(){
         		if(window.websocket) return;
-				
-        		var uri = "ws://61.75.27.204:11000/sw4-2/member/send_message";
+        		var uri = "ws://${InetAddress.getLocalHost().getHostAddress()}:11000/sw4-2/member/send_message";
         		
         		window.websocket = new WebSocket(uri);
         		

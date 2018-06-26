@@ -27,4 +27,5 @@ public interface BoardDao {
 	public List<Map<String, Integer>> getHeavyUploader();
 	public String get_writer(int no);
 	public List<BoardDto> searchListByContent(String keyword);
+	public void report_board(int no);
 }

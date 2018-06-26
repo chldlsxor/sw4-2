@@ -47,6 +47,7 @@
 					<a><img class="mark"
 						src="${root}/res/image/outLineBookmark.png" width="30px"
 						height="30px"></a>
+					<a class="reportTag"><i class="fa fa-bell"></i></a>
 				</div>
 				<div>
 					<p class="inline">좋아요&nbsp;&nbsp;</p>

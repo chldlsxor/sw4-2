@@ -159,4 +159,9 @@ public class BoardServiceImpl implements BoardService {
 		return boardDao.searchListByContent(keyword);
 	}
 
+	@Override
+	public void report_board(int no) {
+		boardDao.report_board(no);
+	}
+
 }

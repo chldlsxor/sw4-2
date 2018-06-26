@@ -145,4 +145,20 @@ public class BoardController {
 		return "board/search";
 	}
 	
+	/*@RequestMapping("/report_board")
+	public String report_board(String no) {
+		int boardno = Integer.parseInt(no);
+		log.info("no :{}",Integer.parseInt(no));
+		boardService.report_board(boardno);
+		return "redirect:list";
+	}*/
+	
+	@RequestMapping("report_board")
+	@ResponseBody
+	public String scrapUp(String bno) {
+		int no = Integer.parseInt(bno);
+		boardService.report_board(no);
+		return "해당 게시물을 신고하였습니다";
+	}
+	
 }
