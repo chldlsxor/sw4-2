@@ -35,7 +35,7 @@
 					<p class="user-name">${usernick }</p>
 				</div>
 				<div class="top-user-alert-div">
-					<a class="pleft">스토리</a>
+					<a class="pleft">알림</a>
 				</div>
 				<div>
 					<button type="button" class="profile-btn btn btn-info btn-lg"

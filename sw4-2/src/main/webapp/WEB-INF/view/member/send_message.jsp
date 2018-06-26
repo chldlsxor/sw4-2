@@ -72,7 +72,11 @@
         	
         	function connect(){
         		if(window.websocket) return;
-        		var uri = "ws://${InetAddress.getLocalHost().getHostAddress()}:11000/sw4-2/member/send_message";
+				
+        		//외부용
+//         		var uri = "ws://61.75.27.204:11000/sw4-2/send_message";
+        		//내부용
+				var uri = "ws://192.168.0.170:8080/sw4-2/send_message";
         		
         		window.websocket = new WebSocket(uri);
         		

@@ -14,7 +14,7 @@
 	<bean id="websocketServer" class="project.websocket.WebSocketServer"></bean>
 	<websocket:handlers>	
 		<!-- /echo로의 접속은 websocketServer에게 전달하겠습니다 -->
-		<websocket:mapping handler="websocketServer" path="/member/send_message"/>	
+		<websocket:mapping handler="websocketServer" path="/send_message"/>	
 		<!-- HttpSession의 정보를 같이 확인 할 수 있도록 인터 셉터 설정 -->
 		<websocket:handshake-interceptors>
 			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"></bean>
@@ -22,7 +22,7 @@
 	</websocket:handlers>
 
 	<context:component-scan base-package="project.controller"></context:component-scan>
-	<context:component-scan base-package="spring.exception"></context:component-scan>
+	<context:component-scan base-package="project.exception"></context:component-scan>
 
 	<!-- interceptor 설정 -->
 	<mvc:interceptors>

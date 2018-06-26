@@ -6,7 +6,6 @@
     <head>
     <meta name="viewport" content="width=device-width, init-scale=1.0">
         <title>상세보기</title>
-        <link rel="stylesheet" type="text/css" href="${root}/res/css/swiper.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>
@@ -151,7 +150,6 @@
         </style>
         <script src = "https://code.jquery.com/jquery-latest.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-        <script src = "${root}/res/js/swiper.min.js"></script>
         <jsp:include page="/WEB-INF/view/template/headerscript.jsp"></jsp:include>
         <script>
         $(window).resize(function(){

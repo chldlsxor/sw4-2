@@ -620,7 +620,7 @@ a:hover{
 			</div>
 			<hr>
 			<div class="user-alert-div">
-				<a class="pleft">스토리</a>
+				<a class="pleft">알림</a>
 			</div>
 			<div class="user-alert"></div>
 			<div>

@@ -1,4 +1,4 @@
-package spring.exception;
+package project.exception;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +16,7 @@ public class ExceptionController {
 		log.info("예외 발생!");
 		log.error("오류 발생", e);
 		model.addAttribute("msg", "잘못된 요청입니다.");
-		model.addAttribute("go", "login");
+		model.addAttribute("go", "board/list");
 		return "redirect:/result";
 	}
 }
