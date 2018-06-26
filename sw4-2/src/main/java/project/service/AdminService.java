@@ -7,6 +7,4 @@ import org.springframework.stereotype.Service;
 @Service
 public interface AdminService {
 	void delete_report(int bno);
-	void edit_user();
-	void delete_member();
 }

@@ -127,5 +127,10 @@ public class BoardDaoImpl implements BoardDao{
 	public List<BoardDto> searchListByContent(String keyword) {
 		return sqlSession.selectList("searchListByContent", keyword);
 	}
+
+	@Override
+	public void report_board(int no) {
+		sqlSession.update("report_board", no);
+	}
 	
 }

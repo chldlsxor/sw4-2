@@ -578,6 +578,23 @@ a:hover{
 									});
 						}
 						;
+						
+						$("body").on("click","a.reportTag", report);
+						function report() {
+							var bno = $(this).parent().find(".bno").val();
+							console.log(bno);
+							$.ajax({
+								url : "${root}/board/report_board",
+								data : {
+									"bno" : bno
+								},
+								dataType:"String",
+								success : function(result) {
+									alert(result)
+								}
+							});
+						}
+						;
 
 					});
 </script>
@@ -683,6 +700,7 @@ a:hover{
 							</c:otherwise>
 						</c:choose>
 						<c:set var="markflag" value="${false}"></c:set>
+						<a class="reportTag"><i class="fa fa-bell"></i></a>
 					</div>
 					<div>
 						<p class="inline">좋아요&nbsp;&nbsp;</p>

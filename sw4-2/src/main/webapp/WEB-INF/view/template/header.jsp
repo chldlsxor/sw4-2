@@ -13,7 +13,7 @@
 	
 				<a class="right"><i class="fa fa-hashtag"></i></a>&nbsp;&nbsp;<a href="${root }/member/name_search" class="inner-right"><i class="fa fa-search"></i></a> &nbsp;
 				&nbsp; <a class="inner-right message-icon"  href="${root }/member/follow_list?nick=${usernick}"><i class="fa fa-envelope"></i></a>
-				<label id = "message-count">
+				<label id = "message-count" class = "messageCnt">
 					<c:if test="${messageCnt!=0}">
 					${messageCnt}
 					</c:if>

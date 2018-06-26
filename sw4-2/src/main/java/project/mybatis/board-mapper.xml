@@ -61,6 +61,10 @@
 		select * from board where writer=#{writer}
 	</select>
 	
+	<update id="report_board" parameterType="int">
+		update board set report = report+1 where no = #{no}
+	</update>
+	
 	<select id="scrap_list" parameterType="int" resultType="BoardDto">
 		select * from board where no=#{no}
 	</select>
