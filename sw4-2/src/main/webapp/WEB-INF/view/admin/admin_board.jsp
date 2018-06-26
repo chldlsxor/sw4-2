@@ -19,7 +19,7 @@
 			 	<tr>
 			 		<td width="20%">검색</td>
 					<td>
-						<input class="form-input" type = "text" name = "keyword" placeholder="검색할 내용 입력" >
+						<input class="form-input" type = "text" name = "keyword" placeholder="검색할 내용 입력" value = ${keyword}>
 					</td>
 					<td width="20%">
 						<input class="form-btn" type ="submit" value = "검색">	
@@ -45,7 +45,7 @@
 					<td> ${board.writer }</td>
 					<td> ${board.content }</td>
 					<td> ${board.reg}</td>
-					<td> ${board.good }</td>
+					<td> ${board.good}</td>
 					<td> ${board.report }</td>
 				</tr>
 			</c:forEach>
