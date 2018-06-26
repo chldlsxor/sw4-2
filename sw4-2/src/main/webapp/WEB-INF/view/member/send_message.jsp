@@ -53,17 +53,24 @@
         <script src="http://code.jquery.com/jquery-latest.js"></script>
    	    <script>
         	$(document).ready(function(){
-        		connect();               	
+        		connect(); 
         		
-        		$("#send").on("click",function(){
-                     
+        		$("#chat").keypress(function(e){
+        			if(e.which ==13){
+        				sendMsg();
+        			}
+        		})
+        		
+        		$("#send").on("click",sendMsg);
+        		
+        		function sendMsg(){
         			if(!websocket) return;
         			var text = $("#chat").val();
         			if(!text) return;
         			
        				websocket.send(text);
         			 $("#chat").val(""); 
-        		});
+        		}
         	});
         	
         	$(document).on("unload", function(){
@@ -75,8 +82,9 @@
 				
         		//외부용
         		var uri = "ws://61.75.27.204:11000/sw4-2/send_message";
+        		
         		//내부용
-// 				var uri = "ws://192.168.0.170:8080/sw4-2/send_message";
+ 				//var uri = "ws://192.168.0.170:8080/sw4-2/send_message";
         		
         		window.websocket = new WebSocket(uri);
         		
