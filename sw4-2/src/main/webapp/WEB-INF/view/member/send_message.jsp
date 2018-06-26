@@ -152,10 +152,10 @@
 	    			<div class = "container-100 left">  
 	    				<div class = "userimg-container">
 	    					<c:if test="${receive_info.profile=='pic.jpg'}">
-								<img class="img-circle" src="${root}/res/img/${receive_info.profile}"  width="70" height="70">
+								<img class="img-circle" src="${root}/member/image?name=${receive_info.profile}"  width="70" height="70">
 							</c:if>
 							<c:if test="${receive_info.profile!='pic.jpg'}">
-								<img class="img-circle" src="${root}/res/img/${receive_info.id}_${receive_info.profile}"  width="70" height="70">
+								<img class="img-circle" src="${root}/member/image?name=${receive_info.id}_${receive_info.profile}"  width="70" height="70">
 							</c:if>
 	    				</div>
 	    				<div class = "userinfo-container">	
