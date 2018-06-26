@@ -20,10 +20,6 @@ public interface MemberService {
 	MemberDto get(String id);
 	MemberDto get_by_nick(String nick);
 	void edit(MemberDto memberDto);
-	void editPassword();
-	void range();
-	void friend();
-	void notice();
 	String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException;
 	List<MemberDto> name_search(String name);
 	List<MemberDto> nick_search(String nick);

@@ -22,7 +22,7 @@
 	</websocket:handlers>
 
 	<context:component-scan base-package="project.controller"></context:component-scan>
-	<context:component-scan base-package="spring.exception"></context:component-scan>
+	<context:component-scan base-package="project.exception"></context:component-scan>
 
 	<!-- interceptor 설정 -->
 	<mvc:interceptors>
