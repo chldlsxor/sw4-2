@@ -12,7 +12,7 @@
 	</select>
 	
 	<delete id="delete" parameterType="noticeDto">
-		delete notice where receiver=#{receiver} and sender=#{sender} and type=4
+		delete notice where receiver=#{receiver} and sender=#{sender} and type=#{type}
 	</delete>
 
 </mapper>

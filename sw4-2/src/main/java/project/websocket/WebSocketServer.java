@@ -1,5 +1,7 @@
 package project.websocket;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -101,9 +103,11 @@ public class WebSocketServer extends TextWebSocketHandler{
 	protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
 		String messageFrom  = (String)session.getAttributes().get("userid");
 		String messageTo = (String)session.getAttributes().get("messageTo");
+		String now = new SimpleDateFormat("HH:mm").format(new Date());
 		String context = message.getPayload();
 		TextMessage sender = new TextMessage(messageFrom);
 		TextMessage content = new TextMessage(context);
+		TextMessage time = new TextMessage(now);
 		TextMessage alarm = new TextMessage(memberService.get(messageFrom).getNick());
 		
 		MessageDto messageDto = new MessageDto();
@@ -127,11 +131,13 @@ public class WebSocketServer extends TextWebSocketHandler{
 			if(gid.equals(messageFrom+messageTo)) {//(나-->상대방)
 				user.get(gid).sendMessage(sender);
 				user.get(gid).sendMessage(content);
+				user.get(gid).sendMessage(time);
 				count++;
 				log.info("--> 메세지 전송 완료");
 			}else if(gid.equals(messageTo+messageFrom)) {
 				user.get(gid).sendMessage(sender);
 				user.get(gid).sendMessage(content);
+				user.get(gid).sendMessage(time);
 				count++;
 				log.info("--> 메세지 전송 완료");
 			}else if(gid.equals(messageTo)) {
