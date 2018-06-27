@@ -79,24 +79,6 @@ public class MemberController {
 		//session.setAttribute("receive_info", memberService.get(messageTo));
 		model.addAttribute("receive_info", memberService.get(messageTo));
 		
-//		friendDto.setFollower(messageTo);
-//		friendDto.setFollow(session.getAttribute("userid").toString());
-//		boolean follow_check = friendService.search(friendDto);
-//		model.addAttribute("follow_check",follow_check);
-//		if(follow_check) {
-//			//그냥 보내면됨
-//			log.info("맞팔임");
-//		}else {
-//			//알림 메세지
-//			log.info("맞팔 아님");
-//			NoticeDto noticeDto = new NoticeDto();
-//			noticeDto.setReceiver(messageTo);
-//			noticeDto.setSender(messageFrom);
-//			noticeDto.setType(4);
-//			noticeService.delete(noticeDto);
-//			noticeService.send_notice(noticeDto);
-//		}
-		
 		return "member/send_message";
 	}
 	
@@ -273,6 +255,7 @@ public class MemberController {
 		MemberDto memberDto = memberService.get(friendDto.getFollow());
 		model.addAttribute("nick",memberDto.getNick());
 		
+		//알림 메세지
 		noticeDto.setReceiver(friendDto.getFollow());
 		noticeDto.setSender(friendDto.getFollower());
 		noticeDto.setType(0);
@@ -281,10 +264,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("unfollow")
-	public String unfollow(FriendDto friendDto, Model model) {
+	public String unfollow(NoticeDto noticeDto, FriendDto friendDto, Model model) {
 		friendService.unfollow(friendDto);
 		MemberDto memberDto = memberService.get(friendDto.getFollow());
 		model.addAttribute("nick",memberDto.getNick());
+		
+		//알림 메세지 삭제
+		noticeDto.setReceiver(friendDto.getFollow());
+		noticeDto.setSender(friendDto.getFollower());
+		noticeDto.setType(0);
+		noticeService.delete(noticeDto);
 		return "redirect:detail";
 	}
 	

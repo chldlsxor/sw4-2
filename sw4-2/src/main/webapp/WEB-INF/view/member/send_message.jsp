@@ -45,8 +45,15 @@
     		.your-message{
     			background-color: lightyellow;
     		}
+    		.my-message, .your-message{
+    			word-break:break-all;
+    		}
     		.message{
     			padding:3px;
+    		}
+    		.time{
+    			font-size:10px;
+    			color:gray;
     		}
         </style>
         
@@ -81,16 +88,18 @@
         		if(window.websocket) return;
 				
         		//외부용
-        		//var uri = "ws://61.75.27.204:11000/sw4-2/send_message";
+        		var uri = "ws://61.75.27.204:11000/sw4-2/send_message";
         		
         		//내부용
  				//var uri = "ws://${InetAddress.getLocalHost().getHostAddress()}:8080/sw4-2/send_message";
- 				var uri = "ws://localhost:8080/sw4-2/send_message";
+ 				//var uri = "ws://localhost:8080/sw4-2/send_message";
 
         		window.websocket = new WebSocket(uri);
         		
         		var ismassage= false;
+        		var iscontent = false;
         		var send = null;
+        		var content = null;
         		
         		websocket.onopen = function(e){
         			$("#result").append("<h4>서버에 접속하였습니다</h4>");
@@ -119,15 +128,20 @@
         				ismassage = true;
         				send = e.data;
         			}
+        			else if(!iscontent){
+        				iscontent = true;
+        				content = e.data;
+        			}
         			else{
         				console.log("--> 메세지 표시")
         				ismassage = false;
+        				iscontent = false;
         				console.log(send==$("#userid").val().trim());
         				if(send==$("#userid").val().trim()){
-        					$("#result").append("<div align= 'right' class = 'message not-read'><span class = 'my-message'>"+e.data+"</span></div>")
+        					$("#result").append("<div class = 'right message not-read'><span class = 'time'>"+e.data+"</span>&nbsp;<span class = 'my-message'>"+content+"</span></div>")
         				}
         				else{
-        					$("#result").append("<div align= 'left' class = 'message not-read'><span class = 'your-message'>"+e.data+"</span></div>")
+        					$("#result").append("<div class = 'left message not-read'><span class = 'your-message'>"+content+"</span>&nbsp;<span class = 'time'>"+e.data+"</span></div>")
         				}
         				console.log($("#result"));
         				console.log($("#result")[0]);
@@ -175,15 +189,15 @@
 		    					<!-- 내가 보낸 메세지 리스트 -->
 		    					<c:if test="${userid == message.send }">
 		    						<c:if test="${message.read==0 }">
-		    							<div align= "right" class = "message not-read"><span class = "my-message">${message.content }</span></div>
+		    							<div class = "right message not-read"><span class = "time">${message.auto}</span>&nbsp;<span class = "my-message">${message.content }</span></div>
 		    						</c:if>
 		    						<c:if test="${message.read==1 }">
-		    							<div align="right" class = "message"> <span class = "right my-message">${message.content }</span></div>
-		    						</c:if>					
+		    							<div class = "right message"><span class = "time">${message.auto}</span>&nbsp;<span class = "my-message">${message.content }</span></div>
+		    						</c:if>	
 								</c:if>
 								<!-- 내가 받은 메세지 리스트 (창여는 순간 무조건 읽음 처리)-->
 								<c:if test="${messageTo == message.send }">
-									<div  align= "left" class= "message"><span class = "your-message">${message.content }</span></div>
+									<div class= "left message"><span class = "your-message">${message.content}</span>&nbsp;<span class = "time">${message.auto}</span></div>
 								</c:if>
 							</c:forEach>
 		    			</div>
