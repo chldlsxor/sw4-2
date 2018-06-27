@@ -38,6 +38,11 @@
 							${noticeDto.nick}님이 댓글을 남겼습니다.
 						</a>
 					</c:if>
+					<c:if test="${noticeDto.type==4}">
+						<a href="${root}/member/detail?nick=${noticeDto.nick}">
+							${noticeDto.nick}님이 메세지를 보냈습니다. 읽으시려면 팔로우를 해주세요.
+						</a>
+					</c:if>
 				</span>
 			</div>
 		</c:forEach>

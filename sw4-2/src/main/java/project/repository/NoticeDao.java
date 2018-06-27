@@ -10,4 +10,5 @@ import project.bean.NoticeDto;
 public interface NoticeDao {
 	void send_notice(NoticeDto noticeDto);
 	List<NoticeDto> notice_list(String id);
+	void delete(NoticeDto noticeDto);
 }

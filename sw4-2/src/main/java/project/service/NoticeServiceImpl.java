@@ -24,4 +24,9 @@ public class NoticeServiceImpl implements NoticeService{
 		noticeDao.send_notice(noticeDto);
 	}
 
+	@Override
+	public void delete(NoticeDto noticeDto) {
+		noticeDao.delete(noticeDto);
+	}
+
 }

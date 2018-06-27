@@ -12,14 +12,28 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
+import project.bean.FriendDto;
 import project.bean.MessageDto;
+import project.bean.NoticeDto;
+import project.service.FriendService;
+import project.service.MemberService;
 import project.service.MessageService;
+import project.service.NoticeService;
 
 public class WebSocketServer extends TextWebSocketHandler{
 	private Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private MessageService messageService;
+	
+	@Autowired
+	private FriendService friendService;
+	
+	@Autowired
+	private NoticeService noticeService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	//다중 사용자 저장소
 	private Map<String, WebSocketSession> user = new HashMap<>();
@@ -90,13 +104,18 @@ public class WebSocketServer extends TextWebSocketHandler{
 		String context = message.getPayload();
 		TextMessage sender = new TextMessage(messageFrom);
 		TextMessage content = new TextMessage(context);
-		TextMessage alarm = new TextMessage(messageFrom);
+		TextMessage alarm = new TextMessage(memberService.get(messageFrom).getNick());
 		
 		MessageDto messageDto = new MessageDto();
 		messageDto.setSend(messageFrom);
 		messageDto.setReceive(messageTo);
 		messageDto.setContent(context);	
 			
+		FriendDto friendDto = new FriendDto();
+		friendDto.setFollower(messageTo);
+		friendDto.setFollow(messageFrom);
+		boolean follow_check = friendService.search(friendDto);
+		
 		log.info("세션  : {}", session);
 		int count = 0;
 		for(String gid : user.keySet()) {
@@ -116,8 +135,10 @@ public class WebSocketServer extends TextWebSocketHandler{
 				count++;
 				log.info("--> 메세지 전송 완료");
 			}else if(gid.equals(messageTo)) {
-				user.get(gid).sendMessage(alarm);
-				log.info("--> 알람 전송 완료");
+				if(follow_check) {
+					user.get(gid).sendMessage(alarm);
+					log.info("--> 알람 전송 완료");
+				}
 			}
 		}
 		if(count==2) {
@@ -128,5 +149,15 @@ public class WebSocketServer extends TextWebSocketHandler{
 		 }
 		messageService.sendMessage(messageDto);
 		
+		if(!follow_check) {
+			//알림 메세지
+			log.info("맞팔 아님");
+			NoticeDto noticeDto = new NoticeDto();
+			noticeDto.setReceiver(messageTo);
+			noticeDto.setSender(messageFrom);
+			noticeDto.setType(4);
+			noticeService.delete(noticeDto);
+			noticeService.send_notice(noticeDto);
+		}
 	}
 }
