@@ -20,23 +20,33 @@
 						<a href="${root}/member/detail?nick=${noticeDto.nick}">
 							${noticeDto.nick}님이 회원님을 팔로우하기 시작했습니다.
 						</a>
+						&nbsp;/ ${noticeDto.auto}
 					</c:if>
 					<c:if test="${noticeDto.type==1}">
 						<a href="${root}/member/detail?nick=${usernick}">
 							회원님의 게시물이 신고로 인해 삭제되었습니다.
 						</a>
+						&nbsp;/ ${noticeDto.auto}
 					</c:if>
 					<c:if test="${noticeDto.type==2}">
 						<input type="hidden" value="${noticeDto.bno}">
 						<a class="board_notice" style="color:black;">
 							${noticeDto.nick}님이 회원님의 게시물을 좋아합니다.
 						</a>
+						&nbsp;/ ${noticeDto.auto}
 					</c:if>
 					<c:if test="${noticeDto.type==3}">
 						<input type="hidden" value="${noticeDto.bno}">
 						<a class="board_notice" style="color:black;">
 							${noticeDto.nick}님이 댓글을 남겼습니다.
 						</a>
+						&nbsp;/ ${noticeDto.auto}
+					</c:if>
+					<c:if test="${noticeDto.type==4}">
+						<a href="${root}/member/detail?nick=${noticeDto.nick}">
+							${noticeDto.nick}님이 메세지를 보냈습니다. 읽으시려면 팔로우를 해주세요.
+						</a>
+						&nbsp;/ ${noticeDto.auto}
 					</c:if>
 				</span>
 			</div>

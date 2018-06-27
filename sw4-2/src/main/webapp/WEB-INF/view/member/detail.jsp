@@ -246,22 +246,24 @@
 	            </div>
 			</c:if>
             <div class="img-container">
-            	<c:forEach var="boardDto" items="${my_list}" varStatus="status">
-            		<div class="swiper-container img main-view-photo">
-						<div class="swiper-wrapper">
-							<input class="boardNo" type="hidden" value="${boardDto.no }">
-		            		<c:forEach var="photoDto" items="${photo_list[status.index]}">
-								<img class="swiper-slide imgs" src="${root}/board/image?name=${photoDto.name}">
-		            		</c:forEach>
-	            		</div>
-	            		
-	            		<!-- 페이징 버튼 -->
-	                    <div class="swiper-pagination"></div>
-	
-	                    <!-- 스크롤바 -->
-	                    <div class="swiper-scrollbar"></div>
-	            	</div>
-            	</c:forEach>
+            	<c:if test="${memberDto.open=='0' || (memberDto.open=='1' && follow_check) || userid == memberDto.id}">
+	            	<c:forEach var="boardDto" items="${my_list}" varStatus="status">
+	            		<div class="swiper-container img main-view-photo">
+							<div class="swiper-wrapper">
+								<input class="boardNo" type="hidden" value="${boardDto.no }">
+			            		<c:forEach var="photoDto" items="${photo_list[status.index]}">
+									<img class="swiper-slide imgs" src="${root}/board/image?name=${photoDto.name}">
+			            		</c:forEach>
+		            		</div>
+		            		
+		            		<!-- 페이징 버튼 -->
+		                    <div class="swiper-pagination"></div>
+		
+		                    <!-- 스크롤바 -->
+		                    <div class="swiper-scrollbar"></div>
+		            	</div>
+	            	</c:forEach>
+            	</c:if>
             </div>
         </div>
     </body>

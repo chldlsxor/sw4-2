@@ -64,7 +64,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/send_message")
-	public String send_message(String messageTo, HttpSession session, Model model) {
+	public String send_message(FriendDto friendDto, String messageTo, HttpSession session, Model model) {
 		
 		//세션에 받는 사람 추가(연결 끊기면 삭제)
 		session.setAttribute("messageTo", messageTo);
@@ -99,6 +99,7 @@ public class MemberController {
 			log.info("프사={}",mRequest.getFile("f"));
 			log.info("프사={}",mRequest.getFile("f").getOriginalFilename());
 			//프로필사진 변경이 없는 경우 or 그림파일이 아닌경우
+			String msg = null;
 			if(mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".jpg") ||
 					mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".jpeg") ||
 					mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".png") ||
@@ -254,6 +255,7 @@ public class MemberController {
 		MemberDto memberDto = memberService.get(friendDto.getFollow());
 		model.addAttribute("nick",memberDto.getNick());
 		
+		//알림 메세지
 		noticeDto.setReceiver(friendDto.getFollow());
 		noticeDto.setSender(friendDto.getFollower());
 		noticeDto.setType(0);
@@ -262,10 +264,16 @@ public class MemberController {
 	}
 	
 	@PostMapping("unfollow")
-	public String unfollow(FriendDto friendDto, Model model) {
+	public String unfollow(NoticeDto noticeDto, FriendDto friendDto, Model model) {
 		friendService.unfollow(friendDto);
 		MemberDto memberDto = memberService.get(friendDto.getFollow());
 		model.addAttribute("nick",memberDto.getNick());
+		
+		//알림 메세지 삭제
+		noticeDto.setReceiver(friendDto.getFollow());
+		noticeDto.setSender(friendDto.getFollower());
+		noticeDto.setType(0);
+		noticeService.delete(noticeDto);
 		return "redirect:detail";
 	}
 	
