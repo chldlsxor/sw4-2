@@ -97,7 +97,8 @@ public class BoardController {
 	@PostMapping("/write")
 	public String postWrite(@ModelAttribute BoardDto boardDto, MultipartHttpServletRequest mRequest, String hashtag) throws IllegalStateException, IOException {
 		contentService.write(boardDto, mRequest);
-		if(hashtag != null)
+		log.info("hashtag = {}",hashtag);
+		if(!hashtag.equals(" ") || hashtag != null)
 			hashtagService.addHashTag(hashtag, boardDto.getNo());
 		return "redirect:/board/list";
 	}
