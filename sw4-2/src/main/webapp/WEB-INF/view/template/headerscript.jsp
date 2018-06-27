@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page language="java" import="java.net.InetAddress" %>
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
@@ -95,7 +96,11 @@ $(document).on("unload", function(){
 });  
 function connect(){	
 	if(window.websocket) return;	
-	var uri = "ws://61.75.27.204:11000/sw4-2/send_message";
+	//var uri = "ws://61.75.27.204:11000/sw4-2/send_message";
+	//var uri = "ws://${InetAddress.getLocalHost().getHostAddress()}:8080/sw4-2/send_message"
+	var uri = "ws://localhost:8080/sw4-2/send_message";
+
+	
 	"${messageTo = null}";
 	window.websocket = new WebSocket(uri);	
 	//메세지 오면 알람
@@ -103,8 +108,7 @@ function connect(){
 		var count = Number($("#message-count").text());
 		$("#message-count").text(count+1);
 		
-		var count_nick = $("#"+e.data).text();
-		console.log(count_nick);
+		var count_nick = Number($("#"+e.data).text());
 		$("#"+e.data).text(count_nick+1);
 	};
 }
