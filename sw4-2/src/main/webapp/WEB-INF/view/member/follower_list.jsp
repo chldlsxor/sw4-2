@@ -78,33 +78,35 @@
 	        	</div>
 	        </form>
 			<div>
-				<h3>팔로워 : ${follower_cnt} 명</h3>
+				<h3>팔로워 : ${follower_cnt-1} 명</h3>
 			</div>
 			<div class="row result">
 				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
-						<tr>
-							<th>
-								<c:if test="${memberDto.profile=='pic.jpg'}">
-									<img class="img-circle" src="${root}/member/image?name=${memberDto.profile}" width="70" height="70">
-								</c:if>
-								<c:if test="${memberDto.profile!='pic.jpg'}">
-									<img class="img-circle" src="${root}/member/image?name=${memberDto.id}_${memberDto.profile}" width="70" height="70">
-								</c:if>
-							</th>
-							<td align="left">
-								<div class="nick">
-								<!-- 제목 : 누르면 detail 페이지로 이동 -->
-								<a href="detail?nick=${memberDto.nick}">
-									${memberDto.nick}
-								</a>
-								</div>
-								<div class="name">
-									${memberDto.name}
-								</div>
-							</td>
-						</tr> 
+							<c:if test="${memberDto.id!=userid}">
+								<tr>
+									<th>
+										<c:if test="${memberDto.profile=='pic.jpg'}">
+											<img class="img-circle" src="${root}/member/image?name=${memberDto.profile}" width="70" height="70">
+										</c:if>
+										<c:if test="${memberDto.profile!='pic.jpg'}">
+											<img class="img-circle" src="${root}/member/image?name=${memberDto.id}_${memberDto.profile}" width="70" height="70">
+										</c:if>
+									</th>
+									<td align="left">
+										<div class="nick">
+										<!-- 제목 : 누르면 detail 페이지로 이동 -->
+										<a href="detail?nick=${memberDto.nick}">
+											${memberDto.nick}
+										</a>
+										</div>
+										<div class="name">
+											${memberDto.name}
+										</div>
+									</td>
+								</tr> 
+							</c:if>
 						</c:forEach>
 					</tbody>
 				</table>

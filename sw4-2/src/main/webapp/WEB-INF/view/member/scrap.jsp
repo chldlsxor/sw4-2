@@ -204,8 +204,8 @@
                                 <td>스크랩 ${scrap_cnt}</td>
                             </tr>
                             <tr>
-                                <td><a href="follower_list?nick=${memberDto.nick}">팔로워 ${follower_cnt}</a></td>
-                                <td><a href="follow_list?nick=${memberDto.nick}">팔로우 ${follow_cnt}</a></td>
+                                <td><a href="follower_list?nick=${memberDto.nick}">팔로워 ${follower_cnt-1}</a></td>
+                                <td><a href="follow_list?nick=${memberDto.nick}">팔로우 ${follow_cnt-1}</a></td>
                             </tr>
                         </tbody>
                     </table>

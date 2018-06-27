@@ -102,17 +102,17 @@
         		var content = null;
         		
         		websocket.onopen = function(e){
-        			$("#result").append("<h4>서버에 접속하였습니다</h4>");
+        			/* $("#result").append("<h4>서버에 접속하였습니다</h4>"); */
         			//스크롤바 맨 아래로
         			$("body").scrollTop($("body")[0].scrollHeight);
 
         		};
-        		websocket.onclose = function(e){
+/*         		websocket.onclose = function(e){
         			$("#result").append("<h4>서버와의 연결이 종료되었습니다</h4>");
         		};
         		websocket.onerror = function(e){
         			$("#result").append("<h4>서버에 접속할 수 없습니다</h4>");
-        		};
+        		}; */
         		websocket.onmessage = function(e){
         			console.log("넘어온 메세지 : "+e.data);
         			console.log("ismessage 값 : "+ ismassage);
