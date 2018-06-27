@@ -23,5 +23,10 @@ public class NoticeDaoImpl implements NoticeDao{
 	public List<NoticeDto> notice_list(String id) {
 		return sqlSession.selectList("notice_list", id);
 	}
+
+	@Override
+	public void delete(NoticeDto noticeDto) {
+		sqlSession.delete("delete", noticeDto);
+	}
 	
 }

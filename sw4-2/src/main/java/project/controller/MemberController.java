@@ -64,7 +64,7 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/send_message")
-	public String send_message(String messageTo, HttpSession session, Model model) {
+	public String send_message(FriendDto friendDto, String messageTo, HttpSession session, Model model) {
 		
 		//세션에 받는 사람 추가(연결 끊기면 삭제)
 		session.setAttribute("messageTo", messageTo);
@@ -78,6 +78,24 @@ public class MemberController {
 		//굳이..?
 		//session.setAttribute("receive_info", memberService.get(messageTo));
 		model.addAttribute("receive_info", memberService.get(messageTo));
+		
+//		friendDto.setFollower(messageTo);
+//		friendDto.setFollow(session.getAttribute("userid").toString());
+//		boolean follow_check = friendService.search(friendDto);
+//		model.addAttribute("follow_check",follow_check);
+//		if(follow_check) {
+//			//그냥 보내면됨
+//			log.info("맞팔임");
+//		}else {
+//			//알림 메세지
+//			log.info("맞팔 아님");
+//			NoticeDto noticeDto = new NoticeDto();
+//			noticeDto.setReceiver(messageTo);
+//			noticeDto.setSender(messageFrom);
+//			noticeDto.setType(4);
+//			noticeService.delete(noticeDto);
+//			noticeService.send_notice(noticeDto);
+//		}
 		
 		return "member/send_message";
 	}
@@ -99,6 +117,7 @@ public class MemberController {
 			log.info("프사={}",mRequest.getFile("f"));
 			log.info("프사={}",mRequest.getFile("f").getOriginalFilename());
 			//프로필사진 변경이 없는 경우 or 그림파일이 아닌경우
+			String msg = null;
 			if(mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".jpg") ||
 					mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".jpeg") ||
 					mRequest.getFile("f").getOriginalFilename().toLowerCase().endsWith(".png") ||
