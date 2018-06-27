@@ -99,41 +99,43 @@
 	        	</div>
 	        </form>
 			<div>
-				<h3>팔로우 : ${follow_cnt} 명</h3>
+				<h3>팔로우 : ${follow_cnt-1} 명</h3>
 			</div>
 			<div class="row result">
 				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
-						<tr>
-							<th>
-								<c:if test="${memberDto.profile=='pic.jpg'}">
-									<img class="img-circle" src="${root}/member/image?name=${memberDto.profile}" width="70" height="70">
-								</c:if>
-								<c:if test="${memberDto.profile!='pic.jpg'}">
-									<img class="img-circle" src="${root}/member/image?name=${memberDto.id}_${memberDto.profile}" width="70" height="70">
-								</c:if>
-							</th>
-							<td align="left">
-								<div class="nick">
-								<!-- 제목 : 누르면 detail 페이지로 이동 -->
-								<a href="detail?nick=${memberDto.nick}">
-									${memberDto.nick}
-								</a>
-								</div>
-								<div class="name">
-									${memberDto.name}
-								</div>
-							</td>
-							<c:if test="${usernick == nick}">
-								<td>
-									<button class = "messenger_btn form-btn inline"><h7 id = "messageNick">${memberDto.id}</h7><i class="fa fa-envelope"></i></button>
-								</td>
-								<td>
-									<label class = "messageCnt" id="${memberDto.nick}">${messageCntSend.get(memberDto.id)}</label>
-								</td>
-							</c:if>
-						</tr> 
+							<c:if test="${memberDto.id!=userid}">
+								<tr>
+									<th>
+										<c:if test="${memberDto.profile=='pic.jpg'}">
+											<img class="img-circle" src="${root}/member/image?name=${memberDto.profile}" width="70" height="70">
+										</c:if>
+										<c:if test="${memberDto.profile!='pic.jpg'}">
+											<img class="img-circle" src="${root}/member/image?name=${memberDto.id}_${memberDto.profile}" width="70" height="70">
+										</c:if>
+									</th>
+									<td align="left">
+										<div class="nick">
+										<!-- 제목 : 누르면 detail 페이지로 이동 -->
+										<a href="detail?nick=${memberDto.nick}">
+											${memberDto.nick}
+										</a>
+										</div>
+										<div class="name">
+											${memberDto.name}
+										</div>
+									</td>
+									<c:if test="${usernick == nick}">
+										<td>
+											<button class = "messenger_btn form-btn inline"><h7 id = "messageNick">${memberDto.id}</h7><i class="fa fa-envelope"></i></button>
+										</td>
+										<td>
+											<label class = "messageCnt" id="${memberDto.nick}">${messageCntSend.get(memberDto.id)}</label>
+										</td>
+									</c:if>
+								</tr>
+							</c:if> 
 						</c:forEach>
 					</tbody>
 				</table>
