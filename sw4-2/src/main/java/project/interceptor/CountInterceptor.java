@@ -1,5 +1,6 @@
 package project.interceptor;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -70,7 +71,7 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 		if(sessionCount == null) sessionCount = 0;
 		sessionCount++;
 		sessionCountMap.put(today, sessionCount);
-		log.info("[{}]신규 세션 발생 : {}", today, sessionCount);
+		//log.info("[{}]신규 세션 발생 : {}", today, sessionCount);
 	}
 	//오늘 날짜 반환
 	private String getToday() {
@@ -95,7 +96,10 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 		File target = new File(dir, fname+".db");
 		try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(target));){
 			sessionCountMap = (Map<String, Integer>) in.readObject();
-		}catch(Exception e) {
+			//log.info("{}",sessionCountMap);
+		}catch (EOFException e) {
+        }catch(Exception e) {
+			e.printStackTrace();
 			sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 		}
 	}
