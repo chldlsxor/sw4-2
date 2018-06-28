@@ -27,12 +27,10 @@
 	$(document).ready(function() {
 		$("textarea").on("blur", function() {
 			var text = $(".textarea").val();
-			var flag = text.indexOf("#");
-			if(flag != -1){
+			if($(".hashtag").val() == ""){
 				var hashTag = text.match(rgx);
 				$(".hashtag").val(hashTag);
-				console.log($(".hashtag").val());
-			};
+			}
 		});
 	});
 </script>
@@ -52,7 +50,7 @@
 				</div>
 				<div class="row">
 					<textarea name="content" class="textarea" rows="10"></textarea>
-					<input type="hidden" class="hashtag" name="hashtag" value="">
+					<input type="hidden" class="hashtag" name="hashtag" value=null>
 				</div>
 				<div class="alert alert-info" role="alert">
 					<strong>알림!</strong>해시태그는 <strong>#내용 </strong> 으로 사용 가능하며 내용 뒤에 <strong>띄어쓰기</strong>를
