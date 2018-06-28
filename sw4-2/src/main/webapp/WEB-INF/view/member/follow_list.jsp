@@ -105,7 +105,7 @@
 				<table>
 					<tbody>
 						<c:forEach var="memberDto" items="${list}">
-							<c:if test="${memberDto.id!=userid}">
+							<c:if test="${memberDto.nick!=nick}">
 								<tr>
 									<th>
 										<c:if test="${memberDto.profile=='pic.jpg'}">
