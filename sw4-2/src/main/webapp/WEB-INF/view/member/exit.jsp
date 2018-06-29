@@ -5,7 +5,7 @@
 <html>
     <head>
     <meta name="viewport" content="width=device-width, init-scale=1.0">
-        <title>비밀번호 변경</title>
+        <title>회원 탈퇴</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="${root}/res/css/common.css">
         <style>

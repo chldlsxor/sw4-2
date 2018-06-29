@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <html>
     <head>
-        <title>Javascript 배우기</title>    
+        <title></title>    
 <!--        디자인 코드 작성 공간-->
         <style>
         
