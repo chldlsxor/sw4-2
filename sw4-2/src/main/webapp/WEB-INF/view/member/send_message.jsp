@@ -88,7 +88,7 @@
         		if(window.websocket) return;
 				
         		//외부용
-        		var uri = "ws://61.75.27.204:11000/sw4-2/send_message";
+        		var uri = "ws://localhost:8080/sw4-2/send_message";
         		
         		//내부용
  				//var uri = "ws://${InetAddress.getLocalHost().getHostAddress()}:8080/sw4-2/send_message";
