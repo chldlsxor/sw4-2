@@ -32,12 +32,14 @@ public class CountInterceptor extends HandlerInterceptorAdapter{
 	private Map<String, Integer> sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 	
 	//경로
-	private String dir = "E:\\sw4-2\\session\\";
+	private String dir;
 			
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		
+		this.dir = request.getServletContext().getRealPath("session");
+		log.info(dir);
 		log.info("카운트 인터셉터 초기화");
 		loadCount(dir);
 		
