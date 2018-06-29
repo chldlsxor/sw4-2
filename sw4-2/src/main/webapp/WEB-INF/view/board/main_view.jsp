@@ -325,9 +325,9 @@ a:hover{
 										contentType : "application/x-www-form-urlencoded; charset=UTF-8",
 										success : function(result) {
 											if (result > mylove) {
-												now.context.src = "/sw4-2/res/image/innerHeart.png";
+												now.context.src = "${root}/res/image/innerHeart.png";
 											} else {
-												now.context.src = "/sw4-2/res/image/outLineHeart.png";
+												now.context.src = "${root}/res/image/outLineHeart.png";
 											}
 											now.parents("div.row").find(
 													".loveCnt").text(result);

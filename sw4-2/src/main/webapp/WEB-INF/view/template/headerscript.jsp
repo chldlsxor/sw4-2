@@ -96,7 +96,7 @@ $(document).on("unload", function(){
 });  
 function connect(){	
 	if(window.websocket) return;	
-	var uri = "ws://localhost:8080/sw4-2/send_message";
+	var uri = "ws://www.sysout.co.kr/instory/send_message";
 	//var uri = "ws://${InetAddress.getLocalHost().getHostAddress()}:8080/sw4-2/send_message"
 	//var uri = "ws://localhost:8080/sw4-2/send_message";
 

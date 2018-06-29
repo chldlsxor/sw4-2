@@ -185,6 +185,6 @@
 			    	<div class = "menu"><a href = "admin_hashtag">인기 해시태그</a></div>
 			    	<div class = "menu"><a href = "admin_star">인기 유저</a></div>
 		    	</div>
-	    	<div class = "menu"><a href = "/sw4-2/member/logout">로그아웃</a></div>
+	    	<div class = "menu"><a href = "/instory/member/logout">로그아웃</a></div>
 	    </nav>
 	    <section id = "admin-section">
