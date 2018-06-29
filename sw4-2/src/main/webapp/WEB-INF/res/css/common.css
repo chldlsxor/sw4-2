@@ -178,22 +178,22 @@ section {
 /* 글꼴 관련 스타일 */
 @font-face {
 	font-family: nanumGothic;
-	src: url("/sw4-2/res/font/NanumGothic.ttf");
+	src: url("/instory/res/font/NanumGothic.ttf");
 }
 
 @font-face {
 	font-family: nanumPen;
-	src: url("/sw4-2/res/font/NanumPen.ttf");
+	src: url("/instory/res/font/NanumPen.ttf");
 }
 
 @font-face {
 	font-family: daumRegular;
-	src: url("/sw4-2/res/font/Daum_Regular.ttf");
+	src: url("/instory/res/font/Daum_Regular.ttf");
 }
 
 @font-face {
 	font-family: binggrae;
-	src: url("/sw4-2/res/font/Binggrae.ttf");
+	src: url("/instory/res/font/Binggrae.ttf");
 }
 
 * {
