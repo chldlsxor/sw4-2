@@ -47,7 +47,7 @@ public class PhotoServiceImpl implements PhotoService {
 		// String path
 		// ="E:\\sw4-mh\\git\\sw4-2\\sw4-2\\src\\main\\webapp\\WEB-INF\\res\\image";
 		boolean flag = true;
-		String path = "E:\\sw4-2\\board";
+		String path = mRequest.getServletContext().getRealPath("/board");
 		if (mRequest.getFiles("file") != null) {
 			List<MultipartFile> list = mRequest.getFiles("file");
 			// log.debug("파일 업로드 : {}",list);
@@ -85,9 +85,9 @@ public class PhotoServiceImpl implements PhotoService {
 	}
 
 	@Override
-	public byte[] loadImage(String name) throws IOException {
+	public byte[] loadImage(String name, String path) throws IOException {
 		// TODO Auto-generated method stub
-		File target = new File("E:\\sw4-2\\board", name);
+		File target = new File(path, name);
 
 		// 파일을 읽어와서 사용자에게 쏴준다
 		byte[] data = FileUtils.readFileToByteArray(target);

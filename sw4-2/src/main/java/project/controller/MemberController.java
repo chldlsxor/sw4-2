@@ -360,7 +360,7 @@ public class MemberController {
 	
 	@RequestMapping("/image")
 	@ResponseBody
-	public byte[] image(String name) throws IOException {
-		return memberService.load_profile(name);
+	public byte[] image(String name, HttpServletRequest request) throws IOException {
+		return memberService.load_profile(name, request.getServletContext().getRealPath("/profile"));
 	}
 }

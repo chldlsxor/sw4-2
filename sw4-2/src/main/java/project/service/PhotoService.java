@@ -15,5 +15,5 @@ public interface PhotoService {
 	public List<List<PhotoDto>> getPhoto(List<BoardDto> conList);
 	public List<PhotoDto> getPhoto(int no);
 	public boolean writePhoto(PhotoDto photoDto, MultipartHttpServletRequest mRequest) throws IllegalStateException, IOException;
-	public byte[] loadImage(String name) throws IOException;
+	public byte[] loadImage(String name, String path) throws IOException;
 }

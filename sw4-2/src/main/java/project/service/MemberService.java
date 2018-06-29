@@ -26,5 +26,5 @@ public interface MemberService {
 	ModelAndView member_page_list(PageDto pageDto, HttpServletRequest request);
 	String scrapLoad(int no);
 	String scrapUpdate(int no, int bno);
-	byte[] load_profile(String name) throws IOException;
+	byte[] load_profile(String name, String path) throws IOException;
 }
