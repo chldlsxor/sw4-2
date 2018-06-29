@@ -56,7 +56,7 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public String profile(MultipartHttpServletRequest mRequest, MemberDto memberDto) throws IllegalStateException, IOException {
 //		File dir = new File(mRequest.getSession().getServletContext().getRealPath("/WEB-INF/res/img"));
-		File dir = new File("E:\\sw4-2\\profile");
+		File dir = new File(mRequest.getServletContext().getRealPath("/profile"));
 		MultipartFile file = mRequest.getFile("f");
 		String fname = memberDto.getId()+"_"+file.getOriginalFilename();
 		File target = new File(dir, fname);
@@ -65,8 +65,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public byte[] load_profile(String name) throws IOException{
-		File target = new File("E:\\sw4-2\\profile", name);
+	public byte[] load_profile(String name, String path) throws IOException{
+		File target = new File(path, name);
 
 		// 파일을 읽어와서 사용자에게 쏴준다
 		byte[] data = FileUtils.readFileToByteArray(target);
