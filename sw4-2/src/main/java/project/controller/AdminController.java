@@ -1,5 +1,6 @@
 package project.controller;
 
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -177,7 +178,8 @@ public class AdminController {
 		Map<String, Integer> sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 		try(ObjectInputStream in = new ObjectInputStream(new FileInputStream(target));){
 			sessionCountMap = (Map<String, Integer>) in.readObject();
-		}catch(Exception e) {
+		}catch (EOFException e) {	
+        }catch(Exception e) {
 			sessionCountMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 		}
 		
